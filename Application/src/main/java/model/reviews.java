@@ -4,6 +4,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 
+import java.util.Objects;
+
 public class reviews {
 
     String restaurantId;
@@ -55,5 +57,18 @@ public class reviews {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof reviews)) return false;
+        reviews reviews = (reviews) o;
+        return Objects.equals(restaurantId, reviews.restaurantId) && Objects.equals(userName, reviews.userName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(restaurantId, userName);
     }
 }
