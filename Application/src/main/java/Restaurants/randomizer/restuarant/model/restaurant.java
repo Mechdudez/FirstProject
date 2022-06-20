@@ -1,4 +1,4 @@
-package Restaurants.randomizer.restuarant;
+package Restaurants.randomizer.restuarant.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
@@ -77,3 +77,4 @@ public class restaurant {
         this.dayOfTheWeek = dayOfTheWeek;
     }
 }
+
