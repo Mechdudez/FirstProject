@@ -1,5 +1,6 @@
 package com.kenzie.appserver;
 
+import Restaurants.randomizer.DynamoDbInitializer;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJson;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

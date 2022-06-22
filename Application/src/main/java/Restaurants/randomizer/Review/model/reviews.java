@@ -1,4 +1,4 @@
-package Restaurants.randomizer.Reviews.model;
+package Restaurants.randomizer.Review.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
