@@ -4,17 +4,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
 
-public class RestaurantRequest {
+public class ReviewCreateRequest {
 
     @NotEmpty
     @JsonProperty("restaurantId")
     private String restaurantId;
 
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("userId")
+    private String userId;
 
-    @JsonProperty("category")
-    private String category;
+    @JsonProperty("description")
+    private String description;
 
     public String getRestaurantId() {
         return restaurantId;
@@ -24,19 +24,19 @@ public class RestaurantRequest {
         this.restaurantId = restaurantId;
     }
 
-    public String getName() {
-        return name;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getCategory() {
-        return category;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

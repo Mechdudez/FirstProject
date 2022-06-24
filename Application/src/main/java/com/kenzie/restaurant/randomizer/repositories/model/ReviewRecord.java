@@ -6,15 +6,16 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import java.util.Objects;
 
 public class ReviewRecord {
-    String userId;
+    private String restaurant;
+    private String userId;
 
-    String name;
+    private String name;
 
-    Integer price;
+    private Double price;
 
-    Integer rating;
+    private int rating;
 
-    String review;
+    private String review;
 
 
     @DynamoDBHashKey(attributeName = "userId")
@@ -36,11 +37,11 @@ public class ReviewRecord {
     }
 
     @DynamoDBAttribute(attributeName = "price")
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer averagePrice) {
+    public void setPrice(Double averagePrice) {
         this.price = averagePrice;
     }
 
@@ -51,6 +52,22 @@ public class ReviewRecord {
 
     public void setRating(Integer rating) {
         this.rating = rating;
+    }
+
+    public String getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(String restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
     }
 
     @DynamoDBAttribute

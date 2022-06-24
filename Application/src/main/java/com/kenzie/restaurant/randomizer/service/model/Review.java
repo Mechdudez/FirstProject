@@ -7,20 +7,28 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 import java.util.Objects;
 
-@DynamoDBTable(tableName = "review")
+
 public class Review {
 
-    String restaurantId;
+    private String restaurantId;
 
-    String userName;
+    private String userName;
 
-    int rating;
+    private int rating;
 
-    Double price;
+    private Double price;
 
-    String description;
+    private String description;
 
-    @DynamoDBHashKey(attributeName = "restaurantId")
+
+    public Review(String restaurantId, String userName, int rating,  Double price, String description) {
+        this.restaurantId = restaurantId;
+        this.userName = userName;
+        this.rating = rating;
+        this.price = price;
+        this.description = description;
+    }
+
     public String getRestaurantId() {
         return restaurantId;
     }
@@ -28,15 +36,15 @@ public class Review {
     public void setRestaurantId(String restaurantId) {
         this.restaurantId = restaurantId;
     }
-    @DynamoDBRangeKey(attributeName = "username")
-    public String getUserName() {
+
+    public String getUserId() {
         return userName;
     }
 
-    public void setUserName(String userName) {
+    public void setUserId(String userName) {
         this.userName = userName;
     }
-    @DynamoDBAttribute(attributeName = "rating")
+
     public int getRating() {
         return rating;
     }
@@ -44,7 +52,7 @@ public class Review {
     public void setRating(int rating) {
         this.rating = rating;
     }
-    @DynamoDBAttribute(attributeName = "price")
+
     public Double getPrice() {
         return price;
     }
@@ -52,7 +60,7 @@ public class Review {
     public void setPrice(Double price) {
         this.price = price;
     }
-    @DynamoDBAttribute(attributeName = "description")
+
     public String getDescription() {
         return description;
     }
