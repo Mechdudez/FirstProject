@@ -9,17 +9,17 @@ import java.util.Objects;
 
 @DynamoDBTable(tableName = "restaurants")
 public class RestaurantRecord {
-    String id;
+    private String id;
 
-    String name;
+    private String name;
 
-    Double averagePrice;
+    private Double averagePrice;
 
-    Double averageRating;
+    private Double averageRating;
 
-    String category;
+    private String category;
 
-    List<String> storeHours;
+    private List<String> storeHours;
 
 
     @DynamoDBHashKey(attributeName = "Id")
