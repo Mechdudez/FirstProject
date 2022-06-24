@@ -67,4 +67,13 @@ public class RestaurantService {
         return setReviews(restaurantList.get(rand.intValue()));
     }
 
+    public List<Restaurant> sortRestaurants(List<Restaurant> restaurantList){
+
+        for(Restaurant restaurant : restaurantList){
+            //Sorting method here
+        }
+
+        return restaurantList;
+    }
+
 }
