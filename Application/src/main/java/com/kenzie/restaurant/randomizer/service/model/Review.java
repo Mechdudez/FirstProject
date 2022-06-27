@@ -12,7 +12,9 @@ public class Review {
 
     private String restaurantId;
 
-    private String userName;
+    private String userId;
+
+    private String title;
 
     private int rating;
 
@@ -21,13 +23,15 @@ public class Review {
     private String description;
 
 
-    public Review(String restaurantId, String userName, int rating,  Double price, String description) {
+    public Review(String restaurantId, String userId, int rating, Double price, String description) {
         this.restaurantId = restaurantId;
-        this.userName = userName;
+        this.userId = userId;
         this.rating = rating;
         this.price = price;
         this.description = description;
     }
+
+    public Review(){}
 
     public String getRestaurantId() {
         return restaurantId;
@@ -38,11 +42,11 @@ public class Review {
     }
 
     public String getUserId() {
-        return userName;
+        return userId;
     }
 
-    public void setUserId(String userName) {
-        this.userName = userName;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public int getRating() {
@@ -69,16 +73,24 @@ public class Review {
         this.description = description;
     }
 
+    public void setTitle(String title){
+        this.title = title;
+    }
+
+    public String getTitle(){
+        return this.title;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Review)) return false;
         Review review = (Review) o;
-        return Objects.equals(restaurantId, review.restaurantId) && Objects.equals(userName, review.userName);
+        return Objects.equals(restaurantId, review.restaurantId) && Objects.equals(userId, review.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(restaurantId, userName);
+        return Objects.hash(restaurantId, userId);
     }
 }

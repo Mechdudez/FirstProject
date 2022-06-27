@@ -6,13 +6,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component
-public class RestaurantServiceConfig {
+//@Component
+//public class RestaurantServiceConfig {
 //    @Bean
 //    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 //    public RestaurantService getRestaurantService() {return new RestaurantService();
 //    }
-}
+//}
 
 
 

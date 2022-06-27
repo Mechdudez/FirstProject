@@ -3,10 +3,12 @@ package com.kenzie.restaurant.randomizer.service;
 import com.kenzie.restaurant.randomizer.repositories.RestaurantRepository;
 import com.kenzie.restaurant.randomizer.repositories.model.RestaurantRecord;
 import com.kenzie.restaurant.randomizer.service.model.Restaurant;
+import com.kenzie.restaurant.randomizer.service.model.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class RestaurantService {
 
@@ -27,15 +29,13 @@ public class RestaurantService {
 
         RestaurantRecord restaurantRecord = new RestaurantRecord();
         restaurantRecord.setId(restaurant.getRestaurantId());
-        restaurantRecord.setName(restaurant.getName());
+        restaurantRecord.setName(restaurant.getRestaurantName());
         restaurantRecord.setCategory(restaurant.getCategory());
         restaurantRecord.setStoreHours(restaurant.getStoreHours());
 
         restaurantRepository.save(restaurantRecord);
 
         return restaurant;
-
-
     }
 
     public Restaurant findByRestaurantId(String restaurantId) {
@@ -58,19 +58,26 @@ public class RestaurantService {
     }
 
     public Restaurant setReviews(Restaurant restaurant){
-        restaurant.setReviews(reviewService.findAllReviewsForRestaurant(restaurant.getRestaurantId()));
+        List<Review> reviews = reviewService.findAllReviewsForRestaurant(restaurant.getRestaurantId());
+        if (reviews != null){
+            restaurant.setReviews(reviews);
+        }
         return restaurant;
     }
 
-    public Restaurant getRandomRestauraunt(List<Restaurant> restaurantList){
-        Double rand = Math.floor(Math.random() * restaurantList.size()-1);
-        return setReviews(restaurantList.get(rand.intValue()));
+    public Restaurant getRandomRestaurant(){
+        List<Restaurant> restaurantList = getAllRestaurants();
+        Random rand = new Random();
+        return setReviews(restaurantList.get(rand.nextInt(restaurantList.size())));
     }
 
-    public List<Restaurant> sortRestaurants(List<Restaurant> restaurantList){
+    public List<Restaurant> sortRestaurants(List<Restaurant> restaurantList, String category, Double price){
 
+        List<Restaurant> sortedRestaurants = new ArrayList<>();
         for(Restaurant restaurant : restaurantList){
-            //Sorting method here
+            if (restaurant.getAveragePrice().compareTo(price)<=0 && restaurant.getCategory().equals(category)){
+                sortedRestaurants.add(restaurant);
+            }
         }
 
         return restaurantList;

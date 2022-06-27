@@ -64,7 +64,7 @@ public class RestaurantController {
     private RestaurantResponse createRestaurantResponse(Restaurant restaurant) {
         RestaurantResponse restaurantResponse = new RestaurantResponse();
         restaurantResponse.setRestaurantId(restaurant.getRestaurantId());
-        restaurantResponse.setName(restaurant.getName());
+        restaurantResponse.setName(restaurant.getRestaurantName());
 
         return restaurantResponse;
     }

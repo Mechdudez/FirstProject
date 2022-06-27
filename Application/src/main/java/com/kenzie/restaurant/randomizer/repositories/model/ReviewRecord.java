@@ -6,16 +6,19 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import java.util.Objects;
 
 public class ReviewRecord {
+    private String restaurantId;
+
     private String restaurant;
+    
     private String userId;
 
-    private String name;
+    private String title;
 
     private Double price;
 
     private int rating;
-
-    private String review;
+    
+    private String description;
 
 
     @DynamoDBHashKey(attributeName = "userId")
@@ -29,11 +32,11 @@ public class ReviewRecord {
 
     @DynamoDBAttribute(attributeName = "name")
     public String getName() {
-        return name;
+        return title;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.title = name;
     }
 
     @DynamoDBAttribute(attributeName = "price")
@@ -49,11 +52,12 @@ public class ReviewRecord {
     public Integer getRating() {
         return rating;
     }
-
-    public void setRating(Integer rating) {
+    
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
+    @DynamoDBAttribute(attributeName = "restaurant")
     public String getRestaurant() {
         return restaurant;
     }
@@ -62,26 +66,35 @@ public class ReviewRecord {
         this.restaurant = restaurant;
     }
 
-    public String getReview() {
-        return review;
+    @DynamoDBAttribute(attributeName = "restaurantId")
+    public String getRestaurantId() {
+        return restaurant;
     }
 
-    public void setReview(String review) {
-        this.review = review;
+    public void setRestaurantId(String restaurantId) {
+        this.restaurant = restaurant;
     }
 
-    @DynamoDBAttribute
+    @DynamoDBAttribute(attributeName = "description")
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ReviewRecord that = (ReviewRecord) o;
-        return Objects.equals(userId, that.userId) && Objects.equals(name, that.name);
+        return Objects.equals(userId, that.userId) && Objects.equals(title, that.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, name);
+        return Objects.hash(userId, title);
     }
 }

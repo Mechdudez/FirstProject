@@ -24,8 +24,8 @@ public class ReviewController {
     private ReviewService reviewService;
 
     @GetMapping("/{restaurantId}") //TODO please correct this path
-    public ResponseEntity<ReviewResponse> findReviewByUserId(@PathVariable("restaurantId") String restaurantId, String userId) {
-        Review review = reviewService.findReviewByUserId(restaurantId, userId);
+    public ResponseEntity<ReviewResponse> findReview(@PathVariable("restaurantId") String restaurantId, String userId) {
+        Review review = reviewService.findReview(restaurantId, userId);
 
         if (review == null) {
             return ResponseEntity.notFound().build();
@@ -36,8 +36,8 @@ public class ReviewController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ReviewResponse>> getAllReviews() {
-        List<Review> reviews = reviewService.getAllReviews();
+    public ResponseEntity<List<ReviewResponse>> getAllUserReviews(String userId) {
+        List<Review> reviews = reviewService.getAllUserReviews(userId);
 
         if (reviews == null || reviews.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -56,20 +56,22 @@ public class ReviewController {
         Review review = new Review(
                 reviewCreateRequest.getRestaurantId(),
                 reviewCreateRequest.getUserId(),
+                reviewCreateRequest.getRating(),
+                reviewCreateRequest.getPrice(),
                 reviewCreateRequest.getDescription());
         reviewService.addNewReview(reviewCreateRequest.getUserId(), review);
 
-        RestaurantResponse reviewResponse = createRestaurantResponse(review);
+        ReviewResponse reviewResponse = createReviewResponse(review);
 
         return ResponseEntity.created(URI.create("/reviews/" + reviewResponse.getRestaurantId())).body(reviewResponse);
     }
 
-    private RestaurantResponse createRestaurantResponse(Restaurant restaurant) {
-        RestaurantResponse restaurantResponse = new RestaurantResponse();
-        restaurantResponse.setRestaurantId(restaurant.getRestaurantId());
-        restaurantResponse.setName(restaurant.getName());
+    private ReviewResponse createReviewResponse(Review review) {
+        ReviewResponse reviewResponse = new ReviewResponse();
+        reviewResponse.setRestaurantId(review.getRestaurantId());
+        reviewResponse.setUserId(review.getUserId());
 
-        return restaurantResponse;
+        return reviewResponse;
     }
 
     //TODO implement after MVP viable

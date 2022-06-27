@@ -16,6 +16,12 @@ public class ReviewCreateRequest {
     @JsonProperty("description")
     private String description;
 
+    @JsonProperty("rating")
+    private int rating;
+
+    @JsonProperty("price")
+    private Double price;
+
     public String getRestaurantId() {
         return restaurantId;
     }
@@ -39,4 +45,12 @@ public class ReviewCreateRequest {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public int getRating() { return rating; }
+
+    public void setRating(int rating) { this.rating = rating; }
+
+    public Double getPrice() { return price; }
+
+    public void setPrice(Double price) { this.price = price; }
 }

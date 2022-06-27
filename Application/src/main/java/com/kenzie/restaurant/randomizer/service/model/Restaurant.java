@@ -6,17 +6,23 @@ import java.util.Objects;
 public class Restaurant {
     private String restaurantId;
 
-    private String name;
+    private String restaurantName;
 
     private String category;
 
     private List<String> storeHours;
 
+
+//TODO implement these properties after MVP
+    private Double averagePrice;
+
+    private Double averageRating;
+
     private List<Review> reviews;
 
-    public Restaurant(String restaurantId, String name, String category, List<String> storeHours) {
+    public Restaurant(String restaurantId, String restaurantName, String category, List<String> storeHours) {
         this.restaurantId = restaurantId;
-        this.name = name;
+        this.restaurantName = restaurantName;
         this.category = category;
         this.storeHours = storeHours;
     }
@@ -30,12 +36,12 @@ public class Restaurant {
     }
 
 
-    public String getName() {
-        return name;
+    public String getRestaurantName() {
+        return restaurantName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
     public String getCategory() {
@@ -63,18 +69,34 @@ public class Restaurant {
         return reviews;
     }
 
+    public Double getAveragePrice() {
+        return averagePrice;
+    }
+
+    public void setAveragePrice(Double averagePrice) {
+        this.averagePrice = averagePrice;
+    }
+
+    public Double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(Double averageRating) {
+        this.averageRating = averageRating;
+    }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof com.kenzie.restaurant.randomizer.repositories.model.RestaurantRecord)) return false;
-        com.kenzie.restaurant.randomizer.repositories.model.RestaurantRecord that = (com.kenzie.restaurant.randomizer.repositories.model.RestaurantRecord) o;
-        return Objects.equals(restaurantId, that.getId()) && Objects.equals(name, that.getName());
+        if (o == null || getClass() != o.getClass()) return false;
+        Restaurant that = (Restaurant) o;
+        return Objects.equals(restaurantId, that.restaurantId) && Objects.equals(restaurantName, that.restaurantName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(restaurantId, name);
+        return Objects.hash(restaurantId, restaurantName);
     }
 }
 
