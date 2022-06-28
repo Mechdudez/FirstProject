@@ -25,6 +25,7 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
+    //TODO Fix this method of the controller
     @GetMapping("/{userId}")
     public ResponseEntity<List<ReviewResponse>> getAllUserReviews(@PathVariable("userId") String userId) {
         System.out.println(userId);
