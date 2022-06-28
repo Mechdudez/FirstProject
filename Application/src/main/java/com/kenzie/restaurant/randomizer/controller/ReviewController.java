@@ -9,21 +9,40 @@ import com.kenzie.restaurant.randomizer.service.ReviewService;
 import com.kenzie.restaurant.randomizer.service.model.Restaurant;
 import com.kenzie.restaurant.randomizer.service.model.Review;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.UUID.randomUUID;
-
+@RestController
+@RequestMapping("/review")
 public class ReviewController {
     private ReviewService reviewService;
 
-    @GetMapping("/{restaurantId}") //TODO please correct this path
+    ReviewController(ReviewService reviewService){
+        this.reviewService = reviewService;
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<ReviewResponse>> getAllUserReviews(@PathVariable("userId") String userId) {
+        System.out.println(userId);
+        List<Review> reviews = reviewService.getAllUserReviews(userId);
+
+        if (reviews == null || reviews.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        List<ReviewResponse> reviewResponses = new ArrayList<>();
+        for (Review review : reviews) {
+            reviewResponses.add(createReviewResponse(review));
+        }
+
+        return ResponseEntity.ok(reviewResponses);
+    }
+
+    @GetMapping("/restaurant/{restaurantId}")
     public ResponseEntity<ReviewResponse> findReview(@PathVariable("restaurantId") String restaurantId, String userId) {
         Review review = reviewService.findReview(restaurantId, userId);
 
@@ -35,31 +54,19 @@ public class ReviewController {
         return ResponseEntity.ok(reviewResponse);
     }
 
-    @GetMapping
-    public ResponseEntity<List<ReviewResponse>> getAllUserReviews(String userId) {
-        List<Review> reviews = reviewService.getAllUserReviews(userId);
 
-        if (reviews == null || reviews.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-
-        List<ReviewResponse> reviewResponses = new ArrayList<>();
-        for (Review review : reviews) {
-            reviewResponses.add(this.createReviewResponse(review));
-        }
-
-        return ResponseEntity.ok(reviewResponses);
-    }
 
     @PostMapping
     public ResponseEntity<ReviewResponse> addNewReview(@RequestBody ReviewCreateRequest reviewCreateRequest) {
         Review review = new Review(
                 reviewCreateRequest.getRestaurantId(),
+                reviewCreateRequest.getRestaurantName(),
                 reviewCreateRequest.getUserId(),
                 reviewCreateRequest.getRating(),
                 reviewCreateRequest.getPrice(),
+                reviewCreateRequest.getTitle(),
                 reviewCreateRequest.getDescription());
-        reviewService.addNewReview(reviewCreateRequest.getUserId(), review);
+        reviewService.addNewReview(review);
 
         ReviewResponse reviewResponse = createReviewResponse(review);
 
@@ -69,7 +76,13 @@ public class ReviewController {
     private ReviewResponse createReviewResponse(Review review) {
         ReviewResponse reviewResponse = new ReviewResponse();
         reviewResponse.setRestaurantId(review.getRestaurantId());
+        reviewResponse.setRestaurantName(review.getRestaurantName());
         reviewResponse.setUserId(review.getUserId());
+        reviewResponse.setPrice(review.getPrice());
+        reviewResponse.setRating(review.getRating());
+        reviewResponse.setTitle(review.getTitle());
+        reviewResponse.setDescription(review.getDescription());
+
 
         return reviewResponse;
     }

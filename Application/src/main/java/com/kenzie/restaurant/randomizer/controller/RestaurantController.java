@@ -1,6 +1,7 @@
 package com.kenzie.restaurant.randomizer.controller;
 
 
+import com.google.gson.JsonObject;
 import com.kenzie.restaurant.randomizer.controller.model.RestaurantCreateRequest;
 import com.kenzie.restaurant.randomizer.controller.model.RestaurantResponse;
 import com.kenzie.restaurant.randomizer.service.RestaurantService;
@@ -16,9 +17,12 @@ import java.util.List;
 import static java.util.UUID.randomUUID;
 
 @RestController
+@RequestMapping("/restaurant")
 public class RestaurantController {
  // Pulls from Service
     private RestaurantService restaurantService;
+
+    RestaurantController(RestaurantService restaurantService){this.restaurantService = restaurantService;}
 
     @GetMapping("/{restaurantId}")
     public ResponseEntity<RestaurantResponse> searchRestaurantById(@PathVariable("restaurantId") String restaurantId) {
@@ -32,7 +36,7 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurantResponse);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<RestaurantResponse>> getAllRestaurants() {
         List<Restaurant> restaurants = restaurantService.getAllRestaurants();
 
@@ -44,6 +48,19 @@ public class RestaurantController {
         for (Restaurant restaurant : restaurants) {
             response.add(this.createRestaurantResponse(restaurant));
         }
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<RestaurantResponse> getRandomRestaurant() {
+        Restaurant restaurant = restaurantService.getRandomRestaurant();
+
+        if (restaurant == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        RestaurantResponse response = createRestaurantResponse(restaurant);
 
         return ResponseEntity.ok(response);
     }
@@ -64,7 +81,21 @@ public class RestaurantController {
     private RestaurantResponse createRestaurantResponse(Restaurant restaurant) {
         RestaurantResponse restaurantResponse = new RestaurantResponse();
         restaurantResponse.setRestaurantId(restaurant.getRestaurantId());
-        restaurantResponse.setName(restaurant.getRestaurantName());
+        restaurantResponse.setRestaurantName(restaurant.getRestaurantName());
+        restaurantResponse.setCategory(restaurant.getCategory());
+        restaurantResponse.setStoreHours(restaurant.getStoreHours());
+
+        if (restaurant.getReviews() != null){
+            restaurantResponse.setReviews(restaurant.getReviews());
+        }
+
+        if (restaurant.getAveragePrice() != null){
+            restaurantResponse.setAveragePrice(restaurant.getAveragePrice());
+        }
+
+        if (restaurant.getAverageRating() != null){
+            restaurantResponse.setAverageRating(restaurant.getAverageRating());
+        }
 
         return restaurantResponse;
     }

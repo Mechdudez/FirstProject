@@ -5,11 +5,12 @@ import com.kenzie.restaurant.randomizer.repositories.model.RestaurantRecord;
 import com.kenzie.restaurant.randomizer.service.model.Restaurant;
 import com.kenzie.restaurant.randomizer.service.model.Review;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+@Service
 public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;

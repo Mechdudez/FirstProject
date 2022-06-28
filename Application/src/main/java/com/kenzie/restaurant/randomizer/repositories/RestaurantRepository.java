@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 @EnableScan
 public interface RestaurantRepository extends CrudRepository<RestaurantRecord, String> {
-    List<RestaurantRecord> findMyRestaurant(String restaurant);
+//    List<RestaurantRecord> findMyRestaurant(String restaurant);
 }

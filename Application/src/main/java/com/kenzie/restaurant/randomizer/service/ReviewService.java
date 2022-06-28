@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Service
 public class ReviewService {
 
     //private RestaurantService restaurantService;
@@ -41,10 +41,7 @@ public class ReviewService {
     }
 
     public List<Review> findAllReviewsForRestaurant(String restaurantId) {
-        List<Review> reviews = new ArrayList<>();
-        reviewRepository
-                .findAll()
-                .forEach(review -> reviews.add((new Review(restaurantId, review.getUserId(), review.getRating(), review.getPrice(), review.getDescription()))));
+        List<Review> reviews = getAllReviews();
 
         List<Review> reviewsForStore = new ArrayList<>();
 
@@ -54,26 +51,24 @@ public class ReviewService {
             }
         }
 
-        if (reviewsForStore.isEmpty()){
-            throw new ReviewNotFoundException("No reviews found for store!");
-        }
-
         return reviewsForStore;
 
     }
 
-    public Review addNewReview(String reviewId, Review review) {
+    public Review addNewReview( Review review) {
 
-        if (reviewId == null || reviewId.isEmpty()) {
+        if (review == null) {
             throw new ReviewNotFoundException("No review found by id!");
 
         }
 
         ReviewRecord reviewRecord = new ReviewRecord();
-        reviewRecord.setRestaurant(review.getRestaurantId());
+        reviewRecord.setRestaurantId(review.getRestaurantId());
+        reviewRecord.setRestaurantName(review.getRestaurantName());
         reviewRecord.setUserId(review.getUserId());
         reviewRecord.setPrice(review.getPrice());
         reviewRecord.setRating(review.getRating());
+        reviewRecord.setTitle(review.getTitle());
         reviewRecord.setDescription(review.getDescription());
         reviewRepository.save(reviewRecord);
 
@@ -81,14 +76,18 @@ public class ReviewService {
     }
 
     public List<Review> getAllUserReviews(String userId) {
-        List<Review> reviews = new ArrayList<>();
-        reviewRepository
-                .findAll()
-                .forEach(review -> reviews.add((new Review(review.getRestaurantId(), review.getUserId(), review.getRating(), review.getPrice(), review.getDescription()))));
+        List<Review> reviews = getAllReviews();
+
+        if(reviews.isEmpty()){
+            throw new ReviewNotFoundException("getallReviews failed");
+        }
 
         List<Review> reviewsForUser = new ArrayList<>();
 
+        System.out.println(userId);
+
         for (Review review : reviews) {
+            System.out.println(review.getUserId());
             if (review.getUserId().equals(userId)) {
                 reviewsForUser.add(review);
             }
@@ -99,6 +98,17 @@ public class ReviewService {
         }
 
         return reviewsForUser;
+    }
+
+    public List<Review> getAllReviews(){
+        List<Review> reviews = new ArrayList<>();
+        reviewRepository
+                .findAll()
+                .forEach(review -> reviews.add((new Review(review.getRestaurantId(), review.getRestaurantName(), review.getUserId(), review.getRating(), review.getPrice(), review.getTitle(), review.getDescription()))));
+        if(reviews.isEmpty()){
+            throw new ReviewNotFoundException("Could not load reviews!");
+        }
+        return reviews;
     }
 
 

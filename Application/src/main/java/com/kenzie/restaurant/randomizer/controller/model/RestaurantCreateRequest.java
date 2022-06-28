@@ -21,7 +21,7 @@ public class RestaurantCreateRequest {
     @JsonProperty("category")
     private String category;
 
-    @JsonProperty("storehours")
+    @JsonProperty("storeHours")
     private List<String> storeHours;
 
     public String getRestaurantId() {

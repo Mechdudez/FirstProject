@@ -10,8 +10,15 @@ public class ReviewCreateRequest {
     @JsonProperty("restaurantId")
     private String restaurantId;
 
+    @NotEmpty
+    @JsonProperty("restaurantName")
+    private String restaurantName;
+
     @JsonProperty("userId")
     private String userId;
+
+    @JsonProperty("title")
+    private String title;
 
     @JsonProperty("description")
     private String description;
@@ -30,12 +37,28 @@ public class ReviewCreateRequest {
         this.restaurantId = restaurantId;
     }
 
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
+    }
+
     public String getUserId() {
         return userId;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -53,4 +76,5 @@ public class ReviewCreateRequest {
     public Double getPrice() { return price; }
 
     public void setPrice(Double price) { this.price = price; }
+
 }

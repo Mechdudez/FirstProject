@@ -32,17 +32,19 @@ public class ReviewTests {
     void canAddAReview() {
         // GIVEN
         String restaurantId = "12345";
+        String restaurantName = "Bobbies Bistro";
         String userId = "Bob";
         Double price = 20.0;
         int rating = 3;
+        String title = "Absolutely Awful";
         String description = "What a terrible place";
-        Review review = new Review(restaurantId, userId, rating, price, description);
+        Review review = new Review(restaurantId, restaurantName, userId, rating, price, title, description);
         ArgumentCaptor<ReviewRecord> reviewRecordArgumentCaptor = ArgumentCaptor.forClass(ReviewRecord.class);
 
         when(reviewRepository.save(any(ReviewRecord.class))).then(i -> i.getArgumentAt(0, ReviewRecord.class));
 
         // WHEN
-        Review returnedReview = reviewService.addNewReview("Bob", review);
+        Review returnedReview = reviewService.addNewReview(review);
 
         // THEN
         verify(reviewRepository).save(reviewRecordArgumentCaptor.capture());
@@ -69,51 +71,60 @@ public class ReviewTests {
     void canFindAllReviewsForRestaurant() {
         // GIVEN
         String restaurantId = "testId";
-        String userId = "Bob";
+        String restaurantName = "Bobbies Bistro";
+        String userId = "Bob1";
         Double price = 20.0;
         int rating = 3;
+        String title = "Absolutely Awful";
         String description = "What a terrible place";
 
-        Review review = new Review(restaurantId, userId, rating, price, description);
+        Review review = new Review(restaurantId, restaurantName, userId, rating, price, title, description);
 
         String restaurantId2 = "testId";
-        String userId2 = "Bob";
+        String userId2 = "Bob2";
         Double price2 = 20.0;
         int rating2 = 3;
+        String title2 = "Cant get worse";
         String description2 = "What a terrible place";
 
-        Review review2 = new Review(restaurantId2, userId2, rating2, price2, description2);
+        Review review2 = new Review(restaurantId2, restaurantName, userId2, rating2, price2,title2, description2);
 
         String restaurantId3 = "testId";
-        String userId3 = "Bob";
+        String userId3 = "Bob3";
         Double price3 = 20.0;
         int rating3 = 3;
+        String title3 = "Somehow got worse";
         String description3 = "What a terrible place";
 
-        Review review3 = new Review(restaurantId3, userId3, rating3, price3, description3);
+        Review review3 = new Review(restaurantId3, restaurantName, userId3, rating3, price3, title3, description3);
 
         ReviewRecord reviewRecord = new ReviewRecord();
         reviewRecord.setRestaurantId(review.getRestaurantId());
         reviewRecord.setUserId(review.getUserId());
         reviewRecord.setPrice(review.getPrice());
         reviewRecord.setRating(review.getRating());
+        reviewRecord.setTitle(review.getTitle());
         reviewRecord.setDescription(review.getDescription());
 
         ReviewRecord reviewRecord2 = new ReviewRecord();
-        reviewRecord.setRestaurantId(review2.getRestaurantId());
-        reviewRecord.setUserId(review2.getUserId());
-        reviewRecord.setPrice(review2.getPrice());
-        reviewRecord.setRating(review2.getRating());
-        reviewRecord.setDescription(review2.getDescription());
+        reviewRecord2.setRestaurantId(review2.getRestaurantId());
+        reviewRecord2.setUserId(review2.getUserId());
+        reviewRecord2.setPrice(review2.getPrice());
+        reviewRecord2.setRating(review2.getRating());
+        reviewRecord2.setTitle(review2.getTitle());
+        reviewRecord2.setDescription(review2.getDescription());
 
         ReviewRecord reviewRecord3 = new ReviewRecord();
-        reviewRecord.setRestaurantId(review3.getRestaurantId());
-        reviewRecord.setUserId(review3.getUserId());
-        reviewRecord.setPrice(review3.getPrice());
-        reviewRecord.setRating(review3.getRating());
-        reviewRecord.setDescription(review3.getDescription());
+        reviewRecord3.setRestaurantId(review3.getRestaurantId());
+        reviewRecord3.setUserId(review3.getUserId());
+        reviewRecord3.setPrice(review3.getPrice());
+        reviewRecord3.setRating(review3.getRating());
+        reviewRecord3.setTitle(review3.getTitle());
+        reviewRecord3.setDescription(review3.getDescription());
 
-        when(reviewRepository.findAll()).thenReturn(Arrays.asList(reviewRecord, reviewRecord2, reviewRecord3));
+        List<ReviewRecord> records = Arrays.asList(reviewRecord, reviewRecord2, reviewRecord3);
+
+        when(reviewRepository.findAll()).thenReturn(records);
 
         // When
         List<Review> returnedReviewList = reviewService.findAllReviewsForRestaurant(restaurantId);
@@ -128,12 +139,14 @@ public class ReviewTests {
     void canFindReview() {
         // GIVEN
         String restaurantId = "testId";
+        String restaurantName = "Bobbies Bistro";
         String userId = "Bob";
         Double price = 20.0;
         int rating = 3;
+        String title = "Absolutely Awful";
         String description = "What a terrible place";
 
-        Review review = new Review(restaurantId, userId, rating, price, description);
+        Review review = new Review(restaurantId, restaurantName, userId, rating, price, title, description);
 
         ReviewRecord reviewRecord = new ReviewRecord();
         reviewRecord.setRestaurantId(review.getRestaurantId());

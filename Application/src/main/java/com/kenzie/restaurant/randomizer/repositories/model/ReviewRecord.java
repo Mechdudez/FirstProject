@@ -2,13 +2,15 @@ package com.kenzie.restaurant.randomizer.repositories.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 import java.util.Objects;
 
+@DynamoDBTable(tableName = "reviews")
 public class ReviewRecord {
     private String restaurantId;
 
-    private String restaurant;
+    private String restaurantName;
     
     private String userId;
 
@@ -30,15 +32,6 @@ public class ReviewRecord {
         this.userId = userId;
     }
 
-    @DynamoDBAttribute(attributeName = "name")
-    public String getName() {
-        return title;
-    }
-
-    public void setName(String name) {
-        this.title = name;
-    }
-
     @DynamoDBAttribute(attributeName = "price")
     public Double getPrice() {
         return price;
@@ -49,7 +42,7 @@ public class ReviewRecord {
     }
 
     @DynamoDBAttribute(attributeName = "rating")
-    public Integer getRating() {
+    public int getRating() {
         return rating;
     }
     
@@ -57,22 +50,31 @@ public class ReviewRecord {
         this.rating = rating;
     }
 
-    @DynamoDBAttribute(attributeName = "restaurant")
-    public String getRestaurant() {
-        return restaurant;
+    @DynamoDBAttribute(attributeName = "restaurantName")
+    public String getRestaurantName() {
+        return restaurantName;
     }
 
-    public void setRestaurant(String restaurant) {
-        this.restaurant = restaurant;
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
     @DynamoDBAttribute(attributeName = "restaurantId")
     public String getRestaurantId() {
-        return restaurant;
+        return restaurantId;
     }
 
     public void setRestaurantId(String restaurantId) {
-        this.restaurant = restaurant;
+        this.restaurantId = restaurantId;
+    }
+
+    @DynamoDBAttribute(attributeName = "title")
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @DynamoDBAttribute(attributeName = "description")

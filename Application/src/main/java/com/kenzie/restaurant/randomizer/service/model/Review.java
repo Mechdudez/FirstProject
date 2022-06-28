@@ -12,6 +12,8 @@ public class Review {
 
     private String restaurantId;
 
+    private String restaurantName;
+
     private String userId;
 
     private String title;
@@ -23,11 +25,13 @@ public class Review {
     private String description;
 
 
-    public Review(String restaurantId, String userId, int rating, Double price, String description) {
+    public Review(String restaurantId, String restaurantName, String userId, int rating, Double price, String title, String description) {
         this.restaurantId = restaurantId;
+        this.restaurantName = restaurantName;
         this.userId = userId;
         this.rating = rating;
         this.price = price;
+        this.title = title;
         this.description = description;
     }
 
@@ -39,6 +43,14 @@ public class Review {
 
     public void setRestaurantId(String restaurantId) {
         this.restaurantId = restaurantId;
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
     public String getUserId() {
@@ -84,7 +96,7 @@ public class Review {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Review)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Review review = (Review) o;
         return Objects.equals(restaurantId, review.restaurantId) && Objects.equals(userId, review.userId);
     }

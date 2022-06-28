@@ -8,5 +8,5 @@ import java.util.List;
 
 @EnableScan
 public interface ReviewRepository extends CrudRepository<ReviewRecord, String> {
-    List<ReviewRecord> findMyReview(String review);
+//    List<ReviewRecord> findMyReview(String review);
 }
