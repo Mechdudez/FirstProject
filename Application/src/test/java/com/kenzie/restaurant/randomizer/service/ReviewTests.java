@@ -172,10 +172,87 @@ public class ReviewTests {
     @Test
     void getAllUserReviews() {
         // GIVEN
+        String restaurantId = "testId";
+        String restaurantName = "Bobbies Bistro";
+        String userId = "Bob";
+        Double price = 20.0;
+        int rating = 3;
+        String title = "Absolutely Awful";
+        String description = "What a terrible place";
 
-        // WHEN
+        Review review = new Review(restaurantId, restaurantName, userId, rating, price, title, description);
 
-        // THEN
+        String restaurantId2 = "testId";
+        String restaurantName2 = "Bobbies Bistro";
+        String userId2 = "Bob";
+        Double price2 = 20.0;
+        int rating2 = 3;
+        String title2 = "Absolutely Awful";
+        String description2 = "What a terrible place";
+
+        Review review2 = new Review(restaurantId2, restaurantName2, userId2, rating2, price2, title2, description2);
+
+        String restaurantId3 = "testId";
+        String restaurantName3 = "Bobbies Bistro";
+        String userId3 = "Batman";
+        Double price3 = 20.0;
+        int rating3 = 3;
+        String title3 = "Absolutely Awful";
+        String description3 = "What a terrible place";
+
+        Review review3 = new Review(restaurantId3, restaurantName3, userId3, rating3, price3, title3, description3);
+
+        ReviewRecord reviewRecord = new ReviewRecord();
+        reviewRecord.setRestaurantId(review.getRestaurantId());
+        reviewRecord.setUserId(review.getUserId());
+        reviewRecord.setPrice(review.getPrice());
+        reviewRecord.setRating(review.getRating());
+        reviewRecord.setTitle(review.getTitle());
+        reviewRecord.setDescription(review.getDescription());
+
+        ReviewRecord reviewRecord2 = new ReviewRecord();
+        reviewRecord2.setRestaurantId(review2.getRestaurantId());
+        reviewRecord2.setUserId(review2.getUserId());
+        reviewRecord2.setPrice(review2.getPrice());
+        reviewRecord2.setRating(review2.getRating());
+        reviewRecord2.setTitle(review2.getTitle());
+        reviewRecord2.setDescription(review2.getDescription());
+
+        ReviewRecord reviewRecord3 = new ReviewRecord();
+        reviewRecord3.setRestaurantId(review3.getRestaurantId());
+        reviewRecord3.setUserId(review3.getUserId());
+        reviewRecord3.setPrice(review3.getPrice());
+        reviewRecord3.setRating(review3.getRating());
+        reviewRecord3.setTitle(review3.getTitle());
+        reviewRecord3.setDescription(review3.getDescription());
+
+        List<ReviewRecord> records = Arrays.asList(reviewRecord, reviewRecord2, reviewRecord3);
+
+        when(reviewRepository.findAll()).thenReturn((records));
+
+        // When
+        List<Review> returnedReviewList = reviewService.getAllUserReviews(userId);
+
+        // Then
+        Assertions.assertTrue(returnedReviewList.contains(review));
+        Assertions.assertTrue(returnedReviewList.contains(review2));
+       Assertions.assertTrue(returnedReviewList.contains(review3));
+
+        if(reviewRecord.getUserId().equals(review.getUserId())){
+            Assertions.assertNotNull(review, "The object is returned.");
+            Assertions.assertEquals(reviewRecord.getRestaurantId(), review.getRestaurantId(), "The restaurantId matches");
+            Assertions.assertEquals(reviewRecord.getUserId(), review.getUserId(), "The userId matches");
+            Assertions.assertEquals(reviewRecord.getPrice(), review.getPrice(), "The price matches");
+            Assertions.assertEquals(reviewRecord.getRating(), review.getRating(), "The rating matches");
+            Assertions.assertEquals(reviewRecord.getDescription(), review.getDescription(), "The description matches");
+        }else{
+            Assertions.assertNotNull(review, "The object is returned.");
+            Assertions.assertEquals(reviewRecord3.getRestaurantId(), review.getRestaurantId(), "The restaurantId matches");
+            Assertions.assertEquals(reviewRecord3.getUserId(), review3.getUserId(), "The userId matches");
+            Assertions.assertEquals(reviewRecord3.getPrice(), review3.getPrice(), "The price matches");
+            Assertions.assertEquals(reviewRecord3.getRating(), review3.getRating(), "The rating matches");
+            Assertions.assertEquals(reviewRecord3.getDescription(), review3.getDescription(), "The description matches");
+    }
 
     }
 
