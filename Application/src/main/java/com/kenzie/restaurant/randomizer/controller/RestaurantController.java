@@ -3,6 +3,7 @@ package com.kenzie.restaurant.randomizer.controller;
 
 import com.google.gson.JsonObject;
 import com.kenzie.restaurant.randomizer.controller.model.RestaurantCreateRequest;
+import com.kenzie.restaurant.randomizer.controller.model.RestaurantGetRequest;
 import com.kenzie.restaurant.randomizer.controller.model.RestaurantResponse;
 import com.kenzie.restaurant.randomizer.service.RestaurantService;
 import com.kenzie.restaurant.randomizer.service.model.Restaurant;
@@ -24,9 +25,9 @@ public class RestaurantController {
 
     RestaurantController(RestaurantService restaurantService){this.restaurantService = restaurantService;}
 
-    @GetMapping("/{restaurantId}")
-    public ResponseEntity<RestaurantResponse> searchRestaurantById(@PathVariable("restaurantId") String restaurantId) {
-        Restaurant restaurant = restaurantService.findByRestaurantId(restaurantId);
+    @GetMapping("/find")
+    public ResponseEntity<RestaurantResponse> searchRestaurantById(@RequestBody RestaurantGetRequest request) {
+        Restaurant restaurant = restaurantService.findByRestaurantId(request.getRestaurantId());
 
         if (restaurant == null) {
             return ResponseEntity.notFound().build();

@@ -34,14 +34,15 @@ public class CreateJsonForTesting {
         //}
 
         // Json example to create a review
-        // {
-        //    "restaurantId":"1",
-        //    "restaurantName":"Bobbies Bistro",
-        //    "userId":"73",
-        //    "description":"food was alright, staff was bad",
-        //    "rating":"2",
-        //    "price":"10.50"
-        //}
+//         {
+//            "restaurantId":"1",
+//            "restaurantName":"Bobbies Bistro",
+//            "userId":"73",
+//            "title":"Bad Food",
+//            "description":"food was alright, staff was bad",
+//            "rating":"2",
+//            "price":"10.50"
+//        }
 
 
 

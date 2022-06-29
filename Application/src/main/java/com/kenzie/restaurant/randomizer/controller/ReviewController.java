@@ -1,9 +1,6 @@
 package com.kenzie.restaurant.randomizer.controller;
 
-import com.kenzie.restaurant.randomizer.controller.model.RestaurantCreateRequest;
-import com.kenzie.restaurant.randomizer.controller.model.RestaurantResponse;
-import com.kenzie.restaurant.randomizer.controller.model.ReviewCreateRequest;
-import com.kenzie.restaurant.randomizer.controller.model.ReviewResponse;
+import com.kenzie.restaurant.randomizer.controller.model.*;
 import com.kenzie.restaurant.randomizer.service.RestaurantService;
 import com.kenzie.restaurant.randomizer.service.ReviewService;
 import com.kenzie.restaurant.randomizer.service.model.Restaurant;
@@ -25,11 +22,11 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    //TODO Fix this method of the controller
-    @GetMapping("/{userId}")
-    public ResponseEntity<List<ReviewResponse>> getAllUserReviews(@PathVariable("userId") String userId) {
-        System.out.println(userId);
-        List<Review> reviews = reviewService.getAllUserReviews(userId);
+    //ToDo Fix this method of the controller
+    @GetMapping("/user")
+    public ResponseEntity<List<ReviewResponse>> getAllUserReviews(@RequestBody ReviewGetRequest request) {
+        System.out.println(request.getUserId());
+        List<Review> reviews = reviewService.getAllUserReviews(request.getUserId());
 
         if (reviews == null || reviews.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -43,9 +40,9 @@ public class ReviewController {
         return ResponseEntity.ok(reviewResponses);
     }
 
-    @GetMapping("/restaurant/{restaurantId}")
-    public ResponseEntity<ReviewResponse> findReview(@PathVariable("restaurantId") String restaurantId, String userId) {
-        Review review = reviewService.findReview(restaurantId, userId);
+    @GetMapping("/restaurant")
+    public ResponseEntity<ReviewResponse> findReview(@RequestBody ReviewGetRequest request) {
+        Review review = reviewService.findReview(request.getRestaurantId(), request.getUserId());
 
         if (review == null) {
             return ResponseEntity.notFound().build();
@@ -71,7 +68,7 @@ public class ReviewController {
 
         ReviewResponse reviewResponse = createReviewResponse(review);
 
-        return ResponseEntity.created(URI.create("/reviews/" + reviewResponse.getRestaurantId())).body(reviewResponse);
+        return ResponseEntity.created(URI.create("/review/" + reviewResponse.getRestaurantId())).body(reviewResponse);
     }
 
     private ReviewResponse createReviewResponse(Review review) {
