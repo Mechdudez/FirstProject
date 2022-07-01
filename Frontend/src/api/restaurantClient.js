@@ -25,19 +25,23 @@ export default class RestaurantClient extends BaseClass {
         }
     }
 
-    async getRestaurant(id, errorCallback) {
+    async getRestaurant(errorCallback) {
         try {
-            const response = await this.client.get(`/restaurant/${id}`);
+            const response = await this.client.get(`/restaurant/find`);
             return response.data;
         } catch (error) {
             this.handleError("getRestaurant", error, errorCallback)
         }
     }
 
-    async createRestaurant(restaurant, errorCallback) {
+    async createRestaurant(restaurantId, userId, name, category, storeHours, errorCallback) {
         try {
             const response = await this.client.post(`restaurant`, {
-                "restaurant": restaurant,
+                "restaurantId": restaurantId,
+                "userId": userId,
+                "name": name,
+                "category": category,
+                "storeHours": storeHours
 
             });
             return response.data;
@@ -53,6 +57,9 @@ export default class RestaurantClient extends BaseClass {
         } catch (error) {
             this.handleError("getAllRestaurants", error, errorCallback)
         }
+    }
+    async getRestaurantRequest(){
+
     }
     /**
      * Helper method to log the error and run any error functions.

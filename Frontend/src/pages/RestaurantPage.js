@@ -13,19 +13,22 @@ class RestaurantPage extends BaseClass {
         super();
         this.bindClassMethods(['onGetRestaurant', 'onCreateRestaurant', 'renderRestaurant'], this);
         this.dataStore = new DataStore();
+
     }
 
     /**
      * Once the page has loaded, set up the event handlers and fetch the concert list.
      */
     async mount() {
+
         document.getElementById('get-by-restaurant-form').addEventListener('submit', this.onGet);
      //   document.getElementById('create-form').addEventListener('submit', this.onCreate);
         this.client = new RestaurantClient();
 
-        this.dataStore.addChangeListener(this.renderRestaurant)
+        this.dataStore.addChangeListener(this.renderRestaurant);
         this.onGetRestaurant();
     }
+
 
     // Render Methods --------------------------------------------------------------------------------------------------
 
@@ -42,9 +45,11 @@ class RestaurantPage extends BaseClass {
 
                 storeHtmlRestaurant += `<ul>`;
                 storeHtmlRestaurant += `<h2><li>${restaurant.name}</li></h2>`;
+                storeHtmlRestaurant += `</ul>`;
+                resultArea.innerHTML = storeHtmlRestaurant;
                 // storeHtmlRestaurant += `<h3> By: ${restaurant.name</h3>`;
 
-                resultArea.innerHTML = storeHtmlRestaurant;
+
             } else {
                 resultArea.innerHTML = "No Restaurant";
             }
@@ -56,30 +61,22 @@ class RestaurantPage extends BaseClass {
 
     async onGetRestaurant() {
         // Prevent the page from refreshing on form submit
-        // event.preventDefault();
 
-        // let id = document.getElementById("id-field").value;
-        // this.dataStore.set("restaurant", null);
-
-        let result = await this.client.getExample(this.errorHandler);
+        let result = await this.client.getAllRestaurants(this.errorHandler);
         this.dataStore.set("restaurant", result);
 
-        //     if (result) {
-        //         this.showMessage(`Got ${result.name}!`)
-        //     } else {
-        //         this.errorHandler("Error doing GET!  Try again...");
-        //     }
     }
 
-    async onCreateRestaurant(event) {
+    async onCreateRestaurant() {
         // Prevent the page from refreshing on form submit
-        //  event.preventDefault();
-        //  this.dataStore.set("example", null);
 
-        let restaurant = document.getElementById("create-comment-restaurant").value;
+        let userId = document.getElementById("create-comment-userId").value;
+        let name = document.getElementById("create-comment-name").value;
+        let category = document.getElementById("create-comment-category").value;
+        let storeHours = document.getElementById("create-comment-storeHours").value;
 
-        const createdRestaurant = await this.client.createExample(restaurant, this.errorHandler);
-        this.dataStore.set("example", createdRestaurant);
+        const createdRestaurant = await this.client.createRestaurant(userId, name, category, storeHours, this.errorHandler);
+        this.dataStore.set("restaurant", createdRestaurant);
 
         if (createdRestaurant) {
             this.showMessage(`Created ${createdRestaurant.name}!`)
@@ -90,12 +87,27 @@ class RestaurantPage extends BaseClass {
     }
 }
 
+
 /**
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
     const restaurantPage = new RestaurantPage();
+
+    var expanded = false;
+
+    function showCheckboxes() {
+        var checkboxes = document.getElementById("checkboxes");
+        if (!expanded) {
+            checkboxes.style.display = "block";
+            expanded = true;
+        } else {
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
+    }
     restaurantPage.mount();
-};
+
+    };
 
 window.addEventListener('DOMContentLoaded', main);
