@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="restaurantPage.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+<body class="background">
+<header class="header" id="header">
+    <div class="site-title">
+        <a class="header_home" href="index.html">Restaurant Application</a>
+    </div>
+</header>
+<div class="card">
+    <h2>Review restaurant</h2>
+    <form class="card-content" id="review-restaurant-form">
+        <p class="form-field">
+            <label>Name</label>
+            <input type="text" required class="validated-field" id="create-review-field">
+        </p>
+        <button type="submit">Create</button>
+    </form>
+</div>
+<div class="card">
+    <h2>Get random restaurant</h2>
+    <form class="card-content" id="get-restaurant-form">
+        <p class="form-field">
+            <label>ID</label>
+            <input type="text" required class="validated-field" id="get-random-restaurant">
+        </p>
+        <button type="submit">Get</button>
+    </form>
+</div>
+<div class="card" id="result">
+    <h2>Result:</h2>
+    <p id="result-info"></p>
+</div>
+</body>
+</html>

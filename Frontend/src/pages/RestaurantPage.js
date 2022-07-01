@@ -24,6 +24,7 @@ class RestaurantPage extends BaseClass {
         this.client = new RestaurantClient();
 
         this.dataStore.addChangeListener(this.renderRestaurant)
+        this.onGetRestaurant();
     }
 
     // Render Methods --------------------------------------------------------------------------------------------------
@@ -31,16 +32,24 @@ class RestaurantPage extends BaseClass {
     async renderRestaurant() {
         let resultArea = document.getElementById("result-info");
 
-        const restaurant = this.dataStore.get("restaurant");
+        const restaurants = this.dataStore.get("restaurant");
 
-        if (restaurant) {
-            resultArea.innerHTML = `
-                <div>ID: ${restaurant.id}</div>
-                <div>Name: ${restaurant.name}</div>
-            `
-        } else {
-            resultArea.innerHTML = "No Item";
+        let storeHtmlRestaurant = "";
+
+        for (let restaurant of restaurants){
+
+            if (restaurant) {
+
+                storeHtmlRestaurant += `<ul>`;
+                storeHtmlRestaurant += `<h2><li>${restaurant.name}</li></h2>`;
+                // storeHtmlRestaurant += `<h3> By: ${restaurant.name</h3>`;
+
+                resultArea.innerHTML = storeHtmlRestaurant;
+            } else {
+                resultArea.innerHTML = "No Restaurant";
+            }
         }
+
     }
 
     // Event Handlers --------------------------------------------------------------------------------------------------
