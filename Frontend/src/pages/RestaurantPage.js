@@ -1,9 +1,6 @@
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import RestaurantClient from "../api/restaurantClient";
-
-
-
 /**
  * Logic needed for the view playlist page of the website.
  */
@@ -97,14 +94,7 @@ const main = async () => {
     var expanded = false;
 
     function showCheckboxes() {
-        var checkboxes = document.getElementById("checkboxes");
-        if (!expanded) {
-            checkboxes.style.display = "block";
-            expanded = true;
-        } else {
-            checkboxes.style.display = "none";
-            expanded = false;
-        }
+
     }
     restaurantPage.mount();
 
