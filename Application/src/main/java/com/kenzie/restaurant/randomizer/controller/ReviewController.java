@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.UUID.randomUUID;
 @RestController
@@ -83,6 +84,21 @@ public class ReviewController {
 
         return reviewResponse;
     }
+
+    @GetMapping("/restaurant/{restaurantId}")
+    public ResponseEntity<List<ReviewResponse>> findAllReviewsForRestaurant(@PathVariable String restaurantId){
+
+        List<Review> reviewList = reviewService.findAllReviewsForRestaurant(restaurantId);
+
+        if(reviewList.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        List<ReviewResponse> reviewResponses = reviewList.stream().map(this::createReviewResponse).collect(Collectors.toList());
+
+        return ResponseEntity.ok(reviewResponses);
+    }
+
 
     //TODO implement after MVP viable
     @PutMapping
