@@ -23,10 +23,9 @@ public class ReviewController {
     }
 
     //ToDo Fix this method of the controller
-    @GetMapping("/user")
-    public ResponseEntity<List<ReviewResponse>> getAllUserReviews(@RequestBody ReviewGetRequest request) {
-        System.out.println(request.getUserId());
-        List<Review> reviews = reviewService.getAllUserReviews(request.getUserId());
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<ReviewResponse>> getAllUserReviews(@PathVariable String userId) {
+        List<Review> reviews = reviewService.getAllUserReviews(userId);
 
         if (reviews == null || reviews.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -40,9 +39,9 @@ public class ReviewController {
         return ResponseEntity.ok(reviewResponses);
     }
 
-    @GetMapping("/restaurant")
-    public ResponseEntity<ReviewResponse> findReview(@RequestBody ReviewGetRequest request) {
-        Review review = reviewService.findReview(request.getRestaurantId(), request.getUserId());
+    @GetMapping("/restaurant/{restaurantId}{userId}")
+    public ResponseEntity<ReviewResponse> findReview(@PathVariable String restaurantId, @PathVariable String userId) {
+        Review review = reviewService.findReview(restaurantId, userId);
 
         if (review == null) {
             return ResponseEntity.notFound().build();

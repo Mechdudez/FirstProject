@@ -72,6 +72,13 @@ public class RestaurantService {
         return setReviews(restaurantList.get(rand.nextInt(restaurantList.size())));
     }
 
+    public Restaurant getSortedRestaurant(Double price, String category){
+        List<Restaurant> restaurantList = getAllRestaurants();
+        List<Restaurant> sortedList = sortRestaurants(restaurantList, category, price);
+        Random rand = new Random();
+        return setReviews(sortedList.get(rand.nextInt(sortedList.size())));
+    }
+
     public List<Restaurant> sortRestaurants(List<Restaurant> restaurantList, String category, Double price){
 
         List<Restaurant> sortedRestaurants = new ArrayList<>();
@@ -81,7 +88,24 @@ public class RestaurantService {
             }
         }
 
-        return restaurantList;
+        return sortedRestaurants;
+    }
+
+    public Restaurant updateRestaurant(Restaurant restaurant){
+
+        if (restaurant == null){
+            throw new IllegalArgumentException("No restaurant passed in");
+        }
+
+        RestaurantRecord restaurantRecord = new RestaurantRecord();
+        restaurantRecord.setId(restaurant.getRestaurantId());
+        restaurantRecord.setName(restaurant.getRestaurantName());
+        restaurantRecord.setCategory(restaurant.getCategory());
+        restaurantRecord.setStoreHours(restaurant.getStoreHours());
+
+        restaurantRepository.save(restaurantRecord);
+
+        return restaurant;
     }
 
 }

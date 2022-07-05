@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.kenzie.restaurant.randomizer.controller.model.RestaurantCreateRequest;
 import com.kenzie.restaurant.randomizer.controller.model.RestaurantGetRequest;
 import com.kenzie.restaurant.randomizer.controller.model.RestaurantResponse;
+import com.kenzie.restaurant.randomizer.controller.model.RestaurantUpdateRequest;
 import com.kenzie.restaurant.randomizer.service.RestaurantService;
 import com.kenzie.restaurant.randomizer.service.model.Restaurant;
 import org.springframework.http.HttpStatus;
@@ -25,9 +26,9 @@ public class RestaurantController {
 
     RestaurantController(RestaurantService restaurantService){this.restaurantService = restaurantService;}
 
-    @GetMapping("/find")
-    public ResponseEntity<RestaurantResponse> searchRestaurantById(@RequestBody RestaurantGetRequest request) {
-        Restaurant restaurant = restaurantService.findByRestaurantId(request.getRestaurantId());
+    @GetMapping("/find/{restaurantId}")
+    public ResponseEntity<RestaurantResponse> searchRestaurantById(@PathVariable String restaurantId) {
+        Restaurant restaurant = restaurantService.findByRestaurantId(restaurantId);
 
         if (restaurant == null) {
             return ResponseEntity.notFound().build();
@@ -65,6 +66,18 @@ public class RestaurantController {
 
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/within/{price}{category}")
+    public ResponseEntity<RestaurantResponse> getSortedRestaurant(@PathVariable Double price, @PathVariable String category) {
+        Restaurant restaurant = restaurantService.getSortedRestaurant(price, category);
+
+        if (restaurant == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        RestaurantResponse response = createRestaurantResponse(restaurant);
+
+        return ResponseEntity.ok(response);
+    }
 
     @PostMapping
     public ResponseEntity<RestaurantResponse> addNewRestaurant(@RequestBody RestaurantCreateRequest restaurantCreateRequest) {
@@ -75,6 +88,19 @@ public class RestaurantController {
         restaurantService.addNewRestaurant(restaurantCreateRequest.getUserId(), restaurant);
 
         RestaurantResponse restaurantResponse = createRestaurantResponse(restaurant);
+
+        return ResponseEntity.created(URI.create("/restaurants/" + restaurantResponse.getRestaurantId())).body(restaurantResponse);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<RestaurantResponse> updateRestaurant(@RequestBody RestaurantUpdateRequest restaurantUpdateRequest) {
+        Restaurant restaurant = new Restaurant(restaurantUpdateRequest.getRestaurantId(),
+                restaurantUpdateRequest.getName(),
+                restaurantUpdateRequest.getCategory(),
+                restaurantUpdateRequest.getStoreHours());
+
+
+        RestaurantResponse restaurantResponse = createRestaurantResponse(restaurantService.updateRestaurant(restaurant));
 
         return ResponseEntity.created(URI.create("/restaurants/" + restaurantResponse.getRestaurantId())).body(restaurantResponse);
     }
