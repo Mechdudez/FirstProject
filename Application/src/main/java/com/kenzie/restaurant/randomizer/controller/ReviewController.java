@@ -85,18 +85,22 @@ public class ReviewController {
     }
 
     //TODO implement after MVP viable
-//    @PutMapping
-//    public ResponseEntity<RestaurantResponse> updateRestaurant(@RequestBody RestaurantUpdateRequest restaurantUpdateRequest) {
-//        Restaurant restaurant = new Restaurant(restaurantUpdateRequest.getRestaurantId(),
-//                restaurantUpdateRequest.getName(),
-//                restaurantUpdateRequest.getCategory(),
-//                restaurantUpdateRequest.getStoreHours());
-//        reviewService.updateRestaurant(restaurant);
-//
-//        RestaurantResponse restaurantResponse = createRestaurantResponse(restaurant);
-//
-//        return ResponseEntity.ok(restaurantResponse);
-//    }
+    @PutMapping
+    public ResponseEntity<ReviewResponse> updateReview(@RequestBody ReviewUpdateRequest reviewUpdateRequest) {
+        Review review = new Review(reviewUpdateRequest.getRestaurantId(),
+                reviewUpdateRequest.getRestaurantName(),
+                reviewUpdateRequest.getUserId(),
+                reviewUpdateRequest.getRating(),
+                reviewUpdateRequest.getPrice(),
+                reviewUpdateRequest.getTitle(),
+                reviewUpdateRequest.getDescription());
+        reviewService.updateReview(review);
+
+        ReviewResponse reviewResponse = createReviewResponse(review);
+
+        return ResponseEntity.ok(reviewResponse);
+    }
+
 //
 //    @DeleteMapping("/{restaurantId}")
 //    public ResponseEntity deleteRestaurantById(@PathVariable("restaurantId") String restaurantId) {

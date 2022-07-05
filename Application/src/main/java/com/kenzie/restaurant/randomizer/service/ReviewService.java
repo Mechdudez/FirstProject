@@ -111,5 +111,18 @@ public class ReviewService {
         return reviews;
     }
 
+    public void updateReview(Review review) {
+        ReviewRecord reviewRecord = new ReviewRecord();
+        reviewRecord.setRestaurantId(review.getRestaurantId());
+        reviewRecord.setRestaurantName(review.getRestaurantName());
+        reviewRecord.setUserId(review.getUserId());
+        reviewRecord.setRating(review.getRating());
+        reviewRecord.setPrice(review.getPrice());
+        reviewRecord.setTitle(review.getTitle());
+        reviewRecord.setDescription(review.getDescription());
+
+        reviewRepository.save(reviewRecord);
+    }
+
 
 }
