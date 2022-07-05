@@ -127,6 +127,8 @@ public class RestaurantController {
         return restaurantResponse;
     }
 
+
+
     //TODO implement after MVP viable
 //    @PutMapping
 //    public ResponseEntity<RestaurantResponse> updateRestaurant(@RequestBody RestaurantUpdateRequest restaurantUpdateRequest) {
