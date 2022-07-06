@@ -120,10 +120,15 @@ class RestaurantPage extends BaseClass {
                storeHoursFridayStart, storeHoursFridayStartAMPM, storeHoursFridayEnd, storeHoursFridayEndAMPM,
                storeHoursSaturdayStart, storeHoursSaturdayStartAMPM, storeHoursSaturdayEnd, storeHoursSaturdayEndAMPM,
                storeHoursSundayStart, storeHoursSundayStartAMPM, storeHoursSundayEnd, storeHoursSundayEndAMPM)
-       );
+        );
+
+
+        //temporary restaurantId variable, Math.Random() may not be unique
+        //TODO: find better method, possibly uuidv4()
+        var restaurantId = Math.floor(Math.random() * 100);
 
         //input all arguments and call createRestaurant() from restaurantClient
-        const createdRestaurant = await this.client.createRestaurant(userId, name, category, storeHours, this.errorHandler);
+        const createdRestaurant = await this.client.createRestaurant(restaurantId, userId, name, category, storeHours, this.errorHandler);
         this.dataStore.set("restaurant", createdRestaurant);
 
         if (createdRestaurant) {
