@@ -70,8 +70,8 @@ class RestaurantPage extends BaseClass {
 
         // Set the loading flag for the submit/create button
         let createRestaurantButton = document.getElementById('createRestaurantButton');
-        createButton.innerText = 'creating...';
-        createButton.disabled = true;
+        createRestaurantButton.innerText = 'creating...';
+        createRestaurantButton.disabled = true;
 
         let userId = document.getElementById("create-restaurant-userId").value;
         let name = document.getElementById("create-restaurant-name").value;
@@ -142,8 +142,8 @@ class RestaurantPage extends BaseClass {
         document.getElementById("create-restaurant-form").reset();
 
         // Re-enable the form
-        createButton.innerText = 'Create';
-        createButton.disabled = false;
+        createRestaurantButton.innerText = 'Create';
+        createRestaurantButton.disabled = false;
         this.onRefresh();
     }
 }
