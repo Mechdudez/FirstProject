@@ -37,6 +37,8 @@ export default class RestaurantClient extends BaseClass {
     async createRestaurant(restaurantId, userId, name, category, storeHours, errorCallback) {
         try {
             const response = await this.client.post(`restaurant`, {
+                //TODO: need to generate UUID serverside instead of user input (KK)
+                //TODO: clarify function and application of userId (KK)
                 "restaurantId": restaurantId,
                 "userId": userId,
                 "name": name,
@@ -61,6 +63,30 @@ export default class RestaurantClient extends BaseClass {
     async getRestaurantRequest(){
 
     }
+
+    //TODO: method to take storeHours input and return formatted List of Strings (KK)
+    async createStoreHours(mondayStart, mondayStartAMPM, mondayEnd, mondayEndAMPM,
+                                tuesdayStart, tuesdayStartAMPM, tuesdayEnd, tuesdayEndAMPM,
+                                wednesdayStart, wednesdayStartAMPM, wednesdayEnd, wednesdayEndAMPM,
+                                thursdayStart, thursdayStartAMPM, thursdayEnd, thursdayEndAMPM,
+                                fridayStart, fridayStartAMPM, fridayEnd, fridayEndAMPM,
+                                saturdayStart, saturdayStartAMPM, saturdayEnd, saturdayEndAMPM,
+                                sundayStart, sundayStartAMPM, sundayEnd, sundayEndAMPM) {
+        // implement method
+        // formatted Strings for each day
+        const Monday = "Monday " + mondayStart + mondayStartAMPM + " to " + mondayEnd + mondayEndAMPM;
+        const Tuesday = "Tuesday " + tuesdayStart + tuesdayStartAMPM + " to " + tuesdayEnd + tuesdayEndAMPM;
+        const Wednesday = "Wednesday " + wednesdayStart + wednesdayStartAMPM + " to " + wednesdayEnd + wednesdayEndAMPM;
+        const Thursday = "Thursday " + thursdayStart + thursdayStartAMPM + " to " + thursdayEnd + thursdayEndAMPM;
+        const Friday = "Friday " + fridayStart + fridayStartAMPM + " to " + fridayEnd + fridayEndAMPM;
+        const Saturday = "Saturday " + saturdayStart + saturdayStartAMPM + " to " + saturdayEnd + saturdayEndAMPM;
+        const Sunday = "Sunday " + sundayStart + sundayStartAMPM + " to " + sundayEnd + sundayEndAMPM;
+
+        // list of strings variable
+        var listHours = [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday];
+        return listHours;
+    }
+
     /**
      * Helper method to log the error and run any error functions.
      * @param error The error received from the server.
