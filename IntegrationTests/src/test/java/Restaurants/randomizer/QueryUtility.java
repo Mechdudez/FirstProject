@@ -1,6 +1,7 @@
 package Restaurants.randomizer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kenzie.restaurant.randomizer.controller.model.RestaurantCreateRequest;
 import com.kenzie.restaurant.randomizer.controller.model.ReviewCreateRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,6 +38,13 @@ public class QueryUtility {
     }
 
     public class RestaurantControllerClient {
+
+        public ResultActions createRestaurant(RestaurantCreateRequest restaurantCreateRequest) throws Exception {
+            return mvc.perform(post("/user/")
+                    .accept(MediaType.APPLICATION_JSON)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(mapper.writeValueAsString(restaurantCreateRequest)));
+        }
         public ResultActions getRandomRestaurant() throws Exception {
             return mvc.perform(get("/restaurant")
                     .accept(MediaType.APPLICATION_JSON));

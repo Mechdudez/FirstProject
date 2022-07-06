@@ -30,22 +30,38 @@ public class GetRandomRestaurantIntegrationTest {
 
     // Happy Case for getRandomRestaurant
     @Test
-    void getRandomRestaurant_validParameters_returnsRestaurantItem() {
+    public void getRandomRestaurant_validParameters_returnsRestaurantItem() {
+        //GIVEN
 
+        //WHEN
+
+        //THEN
     }
 
     @Test
-    void getRandomRestaurant_invalidParameters_throwsRestaurantNotFound() {
+    public void getRandomRestaurant_invalidParameters_throwsRestaurantNotFound() {
+        //GIVEN
 
+        //WHEN
+
+        //THEN
     }
 
     @Test
-    void getRandomRestaurant_returnsRestaurantItem() {
+    public void getRandomRestaurant_returnsRestaurantItem() {
+        //GIVEN
 
+        //WHEN
+
+        //THEN
     }
 
     @Test
-    void getRandomRestaurant_noRestaurants_throwsRestaurantNotFound() {
+    public void getRandomRestaurant_noRestaurants_throwsRestaurantNotFound() {
+        //GIVEN
 
+        //WHEN
+
+        //THEN
     }
 }
