@@ -3,12 +3,13 @@ package com.kenzie.restaurant.randomizer.controller.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.UUID;
 
 public class ReviewUpdateRequest {
 
     @NotEmpty
     @JsonProperty("restaurantId")
-    private String restaurantId;
+    private UUID restaurantId;
 
     @NotEmpty
     @JsonProperty("restaurantName")
@@ -29,11 +30,11 @@ public class ReviewUpdateRequest {
     @JsonProperty("price")
     private Double price;
 
-    public String getRestaurantId() {
+    public UUID getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(String restaurantId) {
+    public void setRestaurantId(UUID restaurantId) {
         this.restaurantId = restaurantId;
     }
 

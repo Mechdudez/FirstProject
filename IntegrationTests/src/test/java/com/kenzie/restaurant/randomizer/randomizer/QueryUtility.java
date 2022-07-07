@@ -1,4 +1,4 @@
-package Restaurants.randomizer;
+package com.kenzie.restaurant.randomizer.randomizer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenzie.restaurant.randomizer.controller.model.RestaurantCreateRequest;
@@ -30,7 +30,7 @@ public class QueryUtility {
 
     public class ReviewControllerClient {
         public ResultActions createReview(ReviewCreateRequest reviewCreateRequest) throws Exception {
-            return mvc.perform(post("/restaurant/{restaurantId}{userId}")
+            return mvc.perform(post("/review/")
                     .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(mapper.writeValueAsString(reviewCreateRequest)));
@@ -40,7 +40,7 @@ public class QueryUtility {
     public class RestaurantControllerClient {
 
         public ResultActions createRestaurant(RestaurantCreateRequest restaurantCreateRequest) throws Exception {
-            return mvc.perform(post("/user/")
+            return mvc.perform(post("/restaurant/")
                     .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(mapper.writeValueAsString(restaurantCreateRequest)));

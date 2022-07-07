@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReviewResponse {
 
     @JsonProperty("restaurantId")
-    private String restaurantId;
+    private UUID restaurantId;
 
     @NotEmpty
     @JsonProperty("restaurantName")
@@ -30,11 +31,11 @@ public class ReviewResponse {
     @JsonProperty("description")
     private String description;
 
-    public String getRestaurantId() {
+    public UUID getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(String restaurantId) {
+    public void setRestaurantId(UUID restaurantId) {
         this.restaurantId = restaurantId;
     }
 

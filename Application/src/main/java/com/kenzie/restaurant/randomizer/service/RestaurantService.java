@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
+
 @Service
 public class RestaurantService {
 
@@ -23,13 +25,13 @@ public class RestaurantService {
         this.reviewService = reviewService;
     }
 
-    public Restaurant addNewRestaurant(String userId, Restaurant restaurant){
-        if (userId == null || userId.equals("")){
-            throw new IllegalArgumentException("Cannot add restaurant: userId is invalid.");
+    public Restaurant addNewRestaurant(Restaurant restaurant){
+        if (restaurant == null){
+            throw new IllegalArgumentException("Cannot add restaurant: restaurant is invalid");
         }
 
         RestaurantRecord restaurantRecord = new RestaurantRecord();
-        restaurantRecord.setId(restaurant.getRestaurantId());
+        restaurantRecord.setRestaurantId(restaurant.getRestaurantId());
         restaurantRecord.setName(restaurant.getRestaurantName());
         restaurantRecord.setCategory(restaurant.getCategory());
         restaurantRecord.setStoreHours(restaurant.getStoreHours());
@@ -41,7 +43,7 @@ public class RestaurantService {
 
     public Restaurant findByRestaurantId(String restaurantId) {
         Restaurant restaurantFromBackend = restaurantRepository.findById(restaurantId)
-                .map(restaurant -> new Restaurant(restaurant.getId(), restaurant.getName(), restaurant.getCategory(), restaurant.getStoreHours()))
+                .map(restaurant -> new Restaurant(restaurant.getRestaurantId(), restaurant.getName(), restaurant.getCategory(), restaurant.getStoreHours()))
                 .orElse(null);
 
         if (restaurantFromBackend == null){
@@ -54,7 +56,7 @@ public class RestaurantService {
     public List<Restaurant> getAllRestaurants() {
         List<Restaurant> restaurantList = new ArrayList<>();
         restaurantRepository.findAll()
-                .forEach(restaurant -> restaurantList.add(new Restaurant(restaurant.getId(), restaurant.getName(), restaurant.getCategory(), restaurant.getStoreHours())));
+                .forEach(restaurant -> restaurantList.add(new Restaurant(restaurant.getRestaurantId(), restaurant.getName(), restaurant.getCategory(), restaurant.getStoreHours())));
         return restaurantList;
     }
 
@@ -98,7 +100,7 @@ public class RestaurantService {
         }
 
         RestaurantRecord restaurantRecord = new RestaurantRecord();
-        restaurantRecord.setId(restaurant.getRestaurantId());
+        restaurantRecord.setRestaurantId(restaurant.getRestaurantId());
         restaurantRecord.setName(restaurant.getRestaurantName());
         restaurantRecord.setCategory(restaurant.getCategory());
         restaurantRecord.setStoreHours(restaurant.getStoreHours());

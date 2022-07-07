@@ -5,12 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kenzie.restaurant.randomizer.service.model.Review;
 
 import java.util.List;
+import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RestaurantResponse {
 
     @JsonProperty("restaurantId")
-    private String restaurantId;
+    private UUID restaurantId;
 
     @JsonProperty("restaurantName")
     private String restaurantName;
@@ -30,11 +31,11 @@ public class RestaurantResponse {
     @JsonProperty("reviews")
     private List<Review> reviews;
 
-    public String getRestaurantId() {
+    public UUID getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(String restaurantId) {
+    public void setRestaurantId(UUID restaurantId) {
         this.restaurantId = restaurantId;
     }
 

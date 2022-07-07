@@ -6,11 +6,12 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 import java.util.Objects;
+import java.util.UUID;
 
 
 public class Review {
 
-    private String restaurantId;
+    private UUID restaurantId;
 
     private String restaurantName;
 
@@ -25,7 +26,7 @@ public class Review {
     private String description;
 
 
-    public Review(String restaurantId, String restaurantName, String userId, int rating, Double price, String title, String description) {
+    public Review(UUID restaurantId, String restaurantName, String userId, int rating, Double price, String title, String description) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.userId = userId;
@@ -37,11 +38,11 @@ public class Review {
 
     public Review(){}
 
-    public String getRestaurantId() {
+    public UUID getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(String restaurantId) {
+    public void setRestaurantId(UUID restaurantId) {
         this.restaurantId = restaurantId;
     }
 

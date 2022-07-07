@@ -6,10 +6,11 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @DynamoDBTable(tableName = "restaurants")
 public class RestaurantRecord {
-    private String id;
+    private UUID restaurantId;
 
     private String name;
 
@@ -22,13 +23,13 @@ public class RestaurantRecord {
     private List<String> storeHours;
 
 
-    @DynamoDBHashKey(attributeName = "Id")
-    public String getId() {
-        return id;
+    @DynamoDBHashKey(attributeName = "restaurantId")
+    public UUID getRestaurantId() {
+        return restaurantId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setRestaurantId(UUID restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
     @DynamoDBAttribute(attributeName = "name")
@@ -40,7 +41,7 @@ public class RestaurantRecord {
         this.name = name;
     }
 
-    @DynamoDBAttribute(attributeName = "AveragePrice")
+    @DynamoDBAttribute(attributeName = "averagePrice")
     public Double getAveragePrice() {
         return averagePrice;
     }
@@ -49,7 +50,7 @@ public class RestaurantRecord {
         this.averagePrice = averagePrice;
     }
 
-    @DynamoDBAttribute(attributeName = "AverageRating")
+    @DynamoDBAttribute(attributeName = "averageRating")
     public Double getAverageRating() {
         return averageRating;
     }
@@ -67,7 +68,7 @@ public class RestaurantRecord {
         this.category = category;
     }
 
-    @DynamoDBAttribute(attributeName = "Hours")
+    @DynamoDBAttribute(attributeName = "hours")
     public List<String> getStoreHours() {
         return storeHours;
     }
@@ -82,12 +83,12 @@ public class RestaurantRecord {
         if (this == o) return true;
         if (!(o instanceof RestaurantRecord)) return false;
         RestaurantRecord that = (RestaurantRecord) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
+        return Objects.equals(restaurantId, that.restaurantId) && Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(restaurantId, name);
     }
 }
 

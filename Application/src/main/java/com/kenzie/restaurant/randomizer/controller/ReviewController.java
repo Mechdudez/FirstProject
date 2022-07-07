@@ -1,7 +1,9 @@
 package com.kenzie.restaurant.randomizer.controller;
 
 import com.kenzie.restaurant.randomizer.controller.model.*;
+import com.kenzie.restaurant.randomizer.service.RestaurantNotFoundException;
 import com.kenzie.restaurant.randomizer.service.RestaurantService;
+import com.kenzie.restaurant.randomizer.service.ReviewNotFoundException;
 import com.kenzie.restaurant.randomizer.service.ReviewService;
 import com.kenzie.restaurant.randomizer.service.model.Restaurant;
 import com.kenzie.restaurant.randomizer.service.model.Review;
@@ -11,16 +13,20 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static java.util.UUID.randomUUID;
 @RestController
 @RequestMapping("/review")
 public class ReviewController {
-    private ReviewService reviewService;
 
-    ReviewController(ReviewService reviewService){
+    private ReviewService reviewService;
+    private RestaurantService restaurantService;
+
+    ReviewController(ReviewService reviewService, RestaurantService restaurantService){
         this.reviewService = reviewService;
+        this.restaurantService = restaurantService;
     }
 
     //ToDo Fix this method of the controller
@@ -41,7 +47,7 @@ public class ReviewController {
     }
 
     @GetMapping("/restaurant/{restaurantId}{userId}")
-    public ResponseEntity<ReviewResponse> findReview(@PathVariable String restaurantId, @PathVariable String userId) {
+    public ResponseEntity<ReviewResponse> findReview(@PathVariable UUID restaurantId, @PathVariable String userId) {
         Review review = reviewService.findReview(restaurantId, userId);
 
         if (review == null) {
@@ -56,6 +62,15 @@ public class ReviewController {
 
     @PostMapping
     public ResponseEntity<ReviewResponse> addNewReview(@RequestBody ReviewCreateRequest reviewCreateRequest) {
+        //TODO: in progress, need to verify Restaurant exists before Review can be created
+        if (reviewCreateRequest.getRestaurantId() == null){
+            throw new RestaurantNotFoundException("Restaurant no bueno");
+        }
+
+        if (restaurantService.findByRestaurantId(reviewCreateRequest.getRestaurantId().toString()) == null){
+            throw new RestaurantNotFoundException("Restaurant no bueno");
+        }
+
         Review review = new Review(
                 reviewCreateRequest.getRestaurantId(),
                 reviewCreateRequest.getRestaurantName(),
@@ -86,7 +101,7 @@ public class ReviewController {
     }
 
     @GetMapping("/restaurant/{restaurantId}")
-    public ResponseEntity<List<ReviewResponse>> findAllReviewsForRestaurant(@PathVariable String restaurantId){
+    public ResponseEntity<List<ReviewResponse>> findAllReviewsForRestaurant(@PathVariable UUID restaurantId){
 
         List<Review> reviewList = reviewService.findAllReviewsForRestaurant(restaurantId);
 

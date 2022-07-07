@@ -1,26 +1,30 @@
-package Restaurants.randomizer;
+package com.kenzie.restaurant.randomizer.randomizer;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.kenzie.restaurant.randomizer.IntegrationTest;
 import com.kenzie.restaurant.randomizer.controller.model.RestaurantCreateRequest;
 import com.kenzie.restaurant.randomizer.controller.model.ReviewCreateRequest;
+import com.kenzie.restaurant.randomizer.service.model.Restaurant;
 import net.andreinc.mockneat.MockNeat;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.util.NestedServletException;
 
-import java.util.List;
+import java.util.Collections;
+import java.util.UUID;
+
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @IntegrationTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ReviewRestaurantIntegrationTest {
+class ReviewRestaurantIntegrationTest {
 
     @Autowired
     private MockMvc mvc;
@@ -31,44 +35,55 @@ public class ReviewRestaurantIntegrationTest {
 
     private QueryUtility queryUtility;
 
-    @BeforeAll
+    @BeforeEach
     public void setup() {
         queryUtility = new QueryUtility(mvc);
     }
 
-    // Happy Case for reviewRestaurant
+    // Happy Case
     @Test
     public void reviewRestaurant_validRestaurant_reviewIsCreated() throws Exception {
         // GIVEN
+        RestaurantCreateRequest restaurantCreateRequest = new RestaurantCreateRequest();
+        restaurantCreateRequest.setName(mockNeat.strings().get());
+        restaurantCreateRequest.setCategory(mockNeat.strings().get());
+        restaurantCreateRequest.setStoreHours(Collections.singletonList(mockNeat.strings().get()));
+
+        ResultActions result = queryUtility.restaurantControllerClient.createRestaurant(restaurantCreateRequest);
+
+        Gson gson = new Gson();
+        Restaurant restaurant = gson.fromJson(result.andReturn().getResponse().getContentAsString(), Restaurant.class);
+
         ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest();
-        reviewCreateRequest.setRestaurantId(mockNeat.strings().get());
+        reviewCreateRequest.setRestaurantId(restaurant.getRestaurantId());
         reviewCreateRequest.setUserId(mockNeat.strings().get());
         reviewCreateRequest.setRestaurantName(mockNeat.strings().get());
         reviewCreateRequest.setPrice(mockNeat.doubles().get());
         reviewCreateRequest.setRating(mockNeat.ints().get());
         reviewCreateRequest.setDescription(mockNeat.strings().get());
 
+
         // WHEN
+
         queryUtility.reviewControllerClient.createReview(reviewCreateRequest)
                 //THEN
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
     public void reviewRestaurant_EmptyReview_throwException() throws Exception {
         //GIVEN
         ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest();
-        reviewCreateRequest.setRestaurantId("");
+        reviewCreateRequest.setRestaurantId(UUID.randomUUID());
         reviewCreateRequest.setUserId("");
         reviewCreateRequest.setRestaurantName("");
         reviewCreateRequest.setPrice(0.0);
         reviewCreateRequest.setRating(0);
         reviewCreateRequest.setDescription("");
 
-        RestaurantCreateRequest restaurantCreateRequest = new RestaurantCreateRequest();
-        restaurantCreateRequest.setUserId(reviewCreateRequest.getUserId());
-        restaurantCreateRequest.setUserId(reviewCreateRequest.getRestaurantId());
-        restaurantCreateRequest.setUserId(reviewCreateRequest.getRestaurantName());
+//        RestaurantCreateRequest restaurantCreateRequest = new RestaurantCreateRequest();
+//        restaurantCreateRequest.setUserId(reviewCreateRequest.getUserId());
+//        restaurantCreateRequest.setUserId(reviewCreateRequest.getRestaurantName());
 
 
         //WHEN/THEN
@@ -80,8 +95,9 @@ public class ReviewRestaurantIntegrationTest {
     @Test
     public void reviewRestaurant_NullRestaurant_ReturnBadRequest() throws Exception {
         //GIVEN
+
         ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest();
-        reviewCreateRequest.setRestaurantId(mockNeat.strings().get());
+        reviewCreateRequest.setRestaurantId(null);
         reviewCreateRequest.setUserId(mockNeat.strings().get());
         reviewCreateRequest.setRestaurantName(mockNeat.strings().get());
         reviewCreateRequest.setPrice(mockNeat.doubles().get());
@@ -89,9 +105,8 @@ public class ReviewRestaurantIntegrationTest {
         reviewCreateRequest.setDescription(mockNeat.strings().get());
 
         //WHEN //THEN
-        queryUtility.restaurantControllerClient.createRestaurant(null);
-        queryUtility.reviewControllerClient.createReview(reviewCreateRequest)
-                .andExpect(status().isBadRequest());
+
+        Assertions.assertThrows(NestedServletException.class, ()->  queryUtility.reviewControllerClient.createReview(reviewCreateRequest));
     }
 
 }

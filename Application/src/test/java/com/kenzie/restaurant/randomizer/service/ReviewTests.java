@@ -31,7 +31,7 @@ public class ReviewTests {
     @Test
     void canAddAReview() {
         // GIVEN
-        String restaurantId = "12345";
+        UUID restaurantId = UUID.randomUUID();
         String restaurantName = "Bobbies Bistro";
         String userId = "Bob";
         Double price = 20.0;
@@ -70,7 +70,7 @@ public class ReviewTests {
     @Test
     void canFindAllReviewsForRestaurant() {
         // GIVEN
-        String restaurantId = "testId";
+        UUID restaurantId = UUID.randomUUID();
         String restaurantName = "Bobbies Bistro";
         String userId = "Bob1";
         Double price = 20.0;
@@ -80,23 +80,21 @@ public class ReviewTests {
 
         Review review = new Review(restaurantId, restaurantName, userId, rating, price, title, description);
 
-        String restaurantId2 = "testId";
         String userId2 = "Bob2";
         Double price2 = 20.0;
         int rating2 = 3;
         String title2 = "Cant get worse";
         String description2 = "What a terrible place";
 
-        Review review2 = new Review(restaurantId2, restaurantName, userId2, rating2, price2, title2, description2);
+        Review review2 = new Review(restaurantId, restaurantName, userId2, rating2, price2, title2, description2);
 
-        String restaurantId3 = "testId";
         String userId3 = "Bob3";
         Double price3 = 20.0;
         int rating3 = 3;
         String title3 = "Somehow got worse";
         String description3 = "What a terrible place";
 
-        Review review3 = new Review(restaurantId3, restaurantName, userId3, rating3, price3, title3, description3);
+        Review review3 = new Review(restaurantId, restaurantName, userId3, rating3, price3, title3, description3);
 
         ReviewRecord reviewRecord = new ReviewRecord();
         reviewRecord.setRestaurantId(review.getRestaurantId());
@@ -138,7 +136,7 @@ public class ReviewTests {
     @Test
     void canFindReview() {
         // GIVEN
-        String restaurantId = "testId";
+        UUID restaurantId = UUID.randomUUID();
         String restaurantName = "Bobbies Bistro";
         String userId = "Bob";
         Double price = 20.0;
@@ -172,7 +170,7 @@ public class ReviewTests {
     @Test
     void getAllUserReviews() {
         // GIVEN
-        String restaurantId = "testId";
+        UUID restaurantId = UUID.randomUUID();
         String restaurantName = "Bobbies Bistro";
         String userId = "Bob";
         Double price = 20.0;
@@ -182,7 +180,7 @@ public class ReviewTests {
 
         Review review = new Review(restaurantId, restaurantName, userId, rating, price, title, description);
 
-        String restaurantId2 = "testId";
+        UUID restaurantId2= UUID.randomUUID();
         String restaurantName2 = "Bobbies Bistro";
         String userId2 = "Bob";
         Double price2 = 20.0;
@@ -192,7 +190,7 @@ public class ReviewTests {
 
         Review review2 = new Review(restaurantId2, restaurantName2, userId2, rating2, price2, title2, description2);
 
-        String restaurantId3 = "testId";
+        UUID restaurantId3 = UUID.randomUUID();
         String restaurantName3 = "Bobbies Bistro";
         String userId3 = "Batman";
         Double price3 = 20.0;
@@ -239,7 +237,6 @@ public class ReviewTests {
         // Then
         Assertions.assertTrue(returnedReviewList.contains(review));
         Assertions.assertTrue(returnedReviewList.contains(review2));
-     //   Assertions.assertTrue(returnedReviewList.contains(review3));
 
         if (reviewRecord.getUserId().equals(review.getUserId())) {
             Assertions.assertNotNull(review, "The object is returned.");

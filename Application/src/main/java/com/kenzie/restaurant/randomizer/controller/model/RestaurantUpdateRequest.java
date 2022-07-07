@@ -5,12 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class RestaurantUpdateRequest {
 
     @NotEmpty
     @JsonProperty("restaurantId")
-    private String restaurantId;
+    private UUID restaurantId;
 
     @JsonProperty("userId")
     private String userId;
@@ -24,11 +25,11 @@ public class RestaurantUpdateRequest {
     @JsonProperty("storeHours")
     private List<String> storeHours;
 
-    public String getRestaurantId() {
+    public UUID getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(String restaurantId) {
+    public void setRestaurantId(UUID restaurantId) {
         this.restaurantId = restaurantId;
     }
 

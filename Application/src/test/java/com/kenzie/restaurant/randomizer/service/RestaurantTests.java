@@ -35,7 +35,7 @@ public class RestaurantTests {
     @Test
     void canAddRestaurant(){
         //GIVEN
-        String restaurantId = "testId";
+        UUID restaurantId = UUID.randomUUID();
         String name = "test";
         String category = "bad food";
         List<String> storeHours = new ArrayList<>(Arrays.asList("Monday - Friday: 9-5", "Weekend: 12-6"));
@@ -50,14 +50,14 @@ public class RestaurantTests {
 
 
         // When
-        Restaurant returnedRestaurant = restaurantService.addNewRestaurant(userId, restaurant);
+        Restaurant returnedRestaurant = restaurantService.addNewRestaurant(restaurant);
 
         // Then
         verify(restaurantRepository).save(restaurantRecordCaptor.capture());
         RestaurantRecord restaurantRecord = restaurantRecordCaptor.getValue();
 
         Assertions.assertNotNull(restaurantRecord, "The object is saved");
-        Assertions.assertEquals(restaurantRecord.getId(), restaurant.getRestaurantId(), "The id matches");
+        Assertions.assertEquals(restaurantRecord.getRestaurantId(), restaurant.getRestaurantId(), "The id matches");
         Assertions.assertEquals(restaurantRecord.getName(), restaurant.getRestaurantName(), "The name matches");
         Assertions.assertEquals(restaurantRecord.getCategory(), restaurant.getCategory(), "The category matches");
         Assertions.assertEquals(restaurantRecord.getStoreHours(), restaurant.getStoreHours(), "The store hours match");
@@ -71,12 +71,12 @@ public class RestaurantTests {
 
     @Test
     void getRandomRestaurant(){
-        String restaurantId = "testId";
+        UUID restaurantId = UUID.randomUUID();
         String name = "test";
         String category = "bad food";
         List<String> storeHours = new ArrayList<>(Arrays.asList("Monday - Friday: 9-5", "Weekend: 12-6"));
 
-        String restaurantId2 = "testId2";
+        UUID restaurantId2 = UUID.randomUUID();
         String name2 = "test2";
         String category2 = "good food";
         List<String> storeHours2 = new ArrayList<>(Arrays.asList("Monday - Friday: 9-6", "Weekend: 10-5"));
@@ -90,13 +90,13 @@ public class RestaurantTests {
         restaurantRecord.setStoreHours(restaurant.getStoreHours());
         restaurantRecord.setName(restaurant.getRestaurantName());
         restaurantRecord.setCategory(restaurant.getCategory());
-        restaurantRecord.setId(restaurant.getRestaurantId());
+        restaurantRecord.setRestaurantId(restaurant.getRestaurantId());
 
         RestaurantRecord restaurantRecord2 = new RestaurantRecord();
         restaurantRecord2.setStoreHours(restaurant2.getStoreHours());
         restaurantRecord2.setName(restaurant2.getRestaurantName());
         restaurantRecord2.setCategory(restaurant2.getCategory());
-        restaurantRecord2.setId(restaurant2.getRestaurantId());
+        restaurantRecord2.setRestaurantId(restaurant2.getRestaurantId());
 
         List<RestaurantRecord> restaurantRecords = Arrays.asList(restaurantRecord, restaurantRecord2);
 
@@ -140,7 +140,7 @@ public class RestaurantTests {
 
     @Test
     void findByRestaurantId(){
-        String restaurantId = "testId";
+        UUID restaurantId = UUID.randomUUID();
         String name = "test";
         String category = "bad food";
         List<String> storeHours = new ArrayList<>(Arrays.asList("Monday - Friday: 9-5", "Weekend: 12-6"));
@@ -153,7 +153,7 @@ public class RestaurantTests {
         restaurantRecord.setStoreHours(restaurant.getStoreHours());
         restaurantRecord.setName(restaurant.getRestaurantName());
         restaurantRecord.setCategory(restaurant.getCategory());
-        restaurantRecord.setId(restaurant.getRestaurantId());
+        restaurantRecord.setRestaurantId(restaurant.getRestaurantId());
 
 
         Review review = new Review();
@@ -164,11 +164,11 @@ public class RestaurantTests {
         review.setRating(5);
         review.setPrice(10.0);
 
-        when(restaurantRepository.findById(restaurantId)).thenReturn(Optional.of(restaurantRecord));
+        when(restaurantRepository.findById(restaurantId.toString())).thenReturn(Optional.of(restaurantRecord));
         when(reviewService.findReview(restaurantId, userId)).thenReturn(review);
 
         // When
-        Restaurant returnedRestaurant = restaurantService.findByRestaurantId(restaurantId);
+        Restaurant returnedRestaurant = restaurantService.findByRestaurantId(restaurantId.toString());
 
         // Then
         Assertions.assertNotNull(returnedRestaurant, "The object is returned.");

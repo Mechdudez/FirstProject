@@ -16,8 +16,6 @@ public class CreateJsonForTesting {
         request.setStoreHours(storeHours);
         request.setName("Jeff");
         request.setCategory("Bad food");
-        request.setRestaurantId("1");
-        request.setUserId("No");
 
         System.out.println(new Gson().toJson(request));
 

@@ -1,4 +1,4 @@
-package Restaurants.randomizer;
+package com.kenzie.restaurant.randomizer.randomizer;
 
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;

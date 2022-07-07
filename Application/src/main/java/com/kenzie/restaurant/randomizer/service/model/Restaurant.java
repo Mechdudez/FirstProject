@@ -2,9 +2,10 @@ package com.kenzie.restaurant.randomizer.service.model;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Restaurant {
-    private String restaurantId;
+    private UUID restaurantId;
 
     private String restaurantName;
 
@@ -12,26 +13,24 @@ public class Restaurant {
 
     private List<String> storeHours;
 
-
-//TODO implement these properties after MVP
     private Double averagePrice;
 
     private Double averageRating;
 
     private List<Review> reviews;
 
-    public Restaurant(String restaurantId, String restaurantName, String category, List<String> storeHours) {
+    public Restaurant(UUID restaurantId, String restaurantName, String category, List<String> storeHours) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.category = category;
         this.storeHours = storeHours;
     }
 
-    public String getRestaurantId() {
+    public UUID getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(String restaurantId) {
+    public void setRestaurantId(UUID restaurantId) {
         this.restaurantId = restaurantId;
     }
 

@@ -15,16 +15,19 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
 
 @RestController
 @RequestMapping("/restaurant")
 public class RestaurantController {
- // Pulls from Service
+    // Pulls from Service
     private RestaurantService restaurantService;
 
-    RestaurantController(RestaurantService restaurantService){this.restaurantService = restaurantService;}
+    RestaurantController(RestaurantService restaurantService) {
+        this.restaurantService = restaurantService;
+    }
 
     @GetMapping("/find/{restaurantId}")
     public ResponseEntity<RestaurantResponse> searchRestaurantById(@PathVariable String restaurantId) {
@@ -42,7 +45,7 @@ public class RestaurantController {
     public ResponseEntity<List<RestaurantResponse>> getAllRestaurants() {
         List<Restaurant> restaurants = restaurantService.getAllRestaurants();
 
-        if (restaurants == null ||  restaurants.isEmpty()) {
+        if (restaurants == null || restaurants.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
@@ -66,6 +69,7 @@ public class RestaurantController {
 
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("/within/{price}{category}")
     public ResponseEntity<RestaurantResponse> getSortedRestaurant(@PathVariable Double price, @PathVariable String category) {
         Restaurant restaurant = restaurantService.getSortedRestaurant(price, category);
@@ -81,11 +85,11 @@ public class RestaurantController {
 
     @PostMapping
     public ResponseEntity<RestaurantResponse> addNewRestaurant(@RequestBody RestaurantCreateRequest restaurantCreateRequest) {
-        Restaurant restaurant = new Restaurant(randomUUID().toString(),
+        Restaurant restaurant = new Restaurant(UUID.randomUUID(),
                 restaurantCreateRequest.getName(),
                 restaurantCreateRequest.getCategory(),
                 restaurantCreateRequest.getStoreHours());
-        restaurantService.addNewRestaurant(restaurantCreateRequest.getUserId(), restaurant);
+        restaurantService.addNewRestaurant(restaurant);
 
         RestaurantResponse restaurantResponse = createRestaurantResponse(restaurant);
 
@@ -112,42 +116,18 @@ public class RestaurantController {
         restaurantResponse.setCategory(restaurant.getCategory());
         restaurantResponse.setStoreHours(restaurant.getStoreHours());
 
-        if (restaurant.getReviews() != null){
+        if (restaurant.getReviews() != null) {
             restaurantResponse.setReviews(restaurant.getReviews());
         }
 
-        if (restaurant.getAveragePrice() != null){
+        if (restaurant.getAveragePrice() != null) {
             restaurantResponse.setAveragePrice(restaurant.getAveragePrice());
         }
 
-        if (restaurant.getAverageRating() != null){
+        if (restaurant.getAverageRating() != null) {
             restaurantResponse.setAverageRating(restaurant.getAverageRating());
         }
 
         return restaurantResponse;
     }
-
-
-
-    //TODO implement after MVP viable
-//    @PutMapping
-//    public ResponseEntity<RestaurantResponse> updateRestaurant(@RequestBody RestaurantUpdateRequest restaurantUpdateRequest) {
-//        Restaurant restaurant = new Restaurant(restaurantUpdateRequest.getRestaurantId(),
-//                restaurantUpdateRequest.getName(),
-//                restaurantUpdateRequest.getCategory(),
-//                restaurantUpdateRequest.getStoreHours());
-//        restaurantService.updateRestaurant(restaurant);
-//
-//        RestaurantResponse restaurantResponse = createRestaurantResponse(restaurant);
-//
-//        return ResponseEntity.ok(restaurantResponse);
-//    }
-//
-//    @DeleteMapping("/{restaurantId}")
-//    public ResponseEntity deleteRestaurantById(@PathVariable("restaurantId") String restaurantId) {
-//        restaurantService.deleteRestaurant(restaurantId);
-//        return ResponseEntity.noContent().build();
-//    }
-
-
 }

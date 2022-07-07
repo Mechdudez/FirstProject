@@ -17,13 +17,14 @@ class RestaurantPage extends BaseClass {
      * Once the page has loaded, set up the event handlers and fetch the concert list.
      */
     async mount() {
+        document.getElementById('get-restaurant-form').addEventListener('submit', this.onGet);
+        document.getElementById('create-restaurant-form').addEventListener('submit', this.onCreate)
+        document.getElementById('review-restaurant-form').addEventListener('submit', this.onCreate);
 
-        document.getElementById('get-by-restaurant-form').addEventListener('submit', this.onGet);
-     //   document.getElementById('create-form').addEventListener('submit', this.onCreate);
         this.client = new RestaurantClient();
 
         this.dataStore.addChangeListener(this.renderRestaurant);
-        this.onGetRestaurant();
+        // this.onGetRestaurant();
     }
 
 
@@ -119,7 +120,7 @@ class RestaurantPage extends BaseClass {
                storeHoursThursdayStart, storeHoursThursdayStartAMPM, storeHoursThursdayEnd, storeHoursThursdayEndAMPM,
                storeHoursFridayStart, storeHoursFridayStartAMPM, storeHoursFridayEnd, storeHoursFridayEndAMPM,
                storeHoursSaturdayStart, storeHoursSaturdayStartAMPM, storeHoursSaturdayEnd, storeHoursSaturdayEndAMPM,
-               storeHoursSundayStart, storeHoursSundayStartAMPM, storeHoursSundayEnd, storeHoursSundayEndAMPM)
+               storeHoursSundayStart, storeHoursSundayStartAMPM, storeHoursSundayEnd, storeHoursSundayEndAMPM
         );
 
 
@@ -155,13 +156,13 @@ class RestaurantPage extends BaseClass {
 const main = async () => {
     const restaurantPage = new RestaurantPage();
 
-    var expanded = false;
-
-    function showCheckboxes() {
-
-    }
+    // var expanded = false;
+    //
+    // function showCheckboxes() {
+    //
+    // }
     restaurantPage.mount();
 
-    };
+};
 
 window.addEventListener('DOMContentLoaded', main);

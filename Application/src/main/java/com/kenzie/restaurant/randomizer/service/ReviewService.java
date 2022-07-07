@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ReviewService {
@@ -27,7 +28,7 @@ public class ReviewService {
         this.reviewRepository = reviewRepository;
     }
 
-    public Review findReview(String restaurantId, String userId) {
+    public Review findReview(UUID restaurantId, String userId) {
         List<Review> reviews = findAllReviewsForRestaurant(restaurantId);
         if (reviews == null) {
             throw new ReviewNotFoundException("No review found by id!");
@@ -40,7 +41,7 @@ public class ReviewService {
         throw new ReviewNotFoundException("No review found by id!");
     }
 
-    public List<Review> findAllReviewsForRestaurant(String restaurantId) {
+    public List<Review> findAllReviewsForRestaurant(UUID restaurantId) {
         List<Review> reviews = getAllReviews();
 
         List<Review> reviewsForStore = new ArrayList<>();
@@ -61,6 +62,8 @@ public class ReviewService {
             throw new ReviewNotFoundException("No review found by id!");
 
         }
+
+
 
         ReviewRecord reviewRecord = new ReviewRecord();
         reviewRecord.setRestaurantId(review.getRestaurantId());
@@ -84,10 +87,7 @@ public class ReviewService {
 
         List<Review> reviewsForUser = new ArrayList<>();
 
-        System.out.println(userId);
-
         for (Review review : reviews) {
-            System.out.println(review.getUserId());
             if (review.getUserId().equals(userId)) {
                 reviewsForUser.add(review);
             }
@@ -105,9 +105,6 @@ public class ReviewService {
         reviewRepository
                 .findAll()
                 .forEach(review -> reviews.add((new Review(review.getRestaurantId(), review.getRestaurantName(), review.getUserId(), review.getRating(), review.getPrice(), review.getTitle(), review.getDescription()))));
-        if(reviews.isEmpty()){
-            throw new ReviewNotFoundException("Could not load reviews!");
-        }
         return reviews;
     }
 
