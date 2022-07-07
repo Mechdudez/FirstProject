@@ -180,7 +180,7 @@ public class ReviewTests {
 
         Review review = new Review(restaurantId, restaurantName, userId, rating, price, title, description);
 
-        UUID restaurantId2= UUID.randomUUID();
+        UUID restaurantId2 = UUID.randomUUID();
         String restaurantName2 = "Bobbies Bistro";
         String userId2 = "Bob";
         Double price2 = 20.0;
@@ -251,5 +251,43 @@ public class ReviewTests {
 
     }
 
+    @Test
+    void findReview_ReviewIsNull_ThrowException() {
+        // GIVEN
+
+        // WHEN
+
+        //THEN
+
+
+    }
+
+    @Test
+    void getAllUserReviews_ReviewIsNull_ThrowException() {
+        // GIVEN
+
+        // WHEN
+
+        //THEN
+    }
+
+    @Test
+    void findAllReviewsForRestaurant_ReviewIsNull_ThrowException() {
+        // GIVEN
+
+        // WHEN
+
+        //THEN
+    }
+
+    @Test
+    void updateReview_reviewIsUpdated_returnsNewUpdatedReview() {
+        // GIVEN
+
+        // WHEN
+
+        //THEN
+
+    }
 
 }

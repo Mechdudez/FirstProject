@@ -18,8 +18,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
-
-
 public class RestaurantTests {
     private RestaurantRepository restaurantRepository;
     private RestaurantService restaurantService;
@@ -33,7 +31,7 @@ public class RestaurantTests {
     }
 
     @Test
-    void canAddRestaurant(){
+    void canAddRestaurant() {
         //GIVEN
         UUID restaurantId = UUID.randomUUID();
         String name = "test";
@@ -70,7 +68,7 @@ public class RestaurantTests {
     }
 
     @Test
-    void getRandomRestaurant(){
+    void getRandomRestaurant() {
         UUID restaurantId = UUID.randomUUID();
         String name = "test";
         String category = "bad food";
@@ -115,21 +113,20 @@ public class RestaurantTests {
         // When
         Restaurant returnedRestaurant = restaurantService.getRandomRestaurant();
         List<Restaurant> restaurantList = new ArrayList<>();
-        for (int i = 0; i < 5 ; i++){
+        for (int i = 0; i < 5; i++) {
             restaurantList.add(restaurantService.getRandomRestaurant());
         }
 
         // Then
         Assertions.assertTrue(restaurantList.contains(restaurant));
         Assertions.assertTrue(restaurantList.contains(restaurant2));
-        if(returnedRestaurant.getRestaurantId().equals(restaurant.getRestaurantId())) {
+        if (returnedRestaurant.getRestaurantId().equals(restaurant.getRestaurantId())) {
             Assertions.assertNotNull(returnedRestaurant, "The object is saved");
             Assertions.assertEquals(returnedRestaurant.getRestaurantId(), restaurant.getRestaurantId(), "The id matches");
             Assertions.assertEquals(returnedRestaurant.getRestaurantName(), restaurant.getRestaurantName(), "The name matches");
             Assertions.assertEquals(returnedRestaurant.getCategory(), restaurant.getCategory(), "The category matches");
             Assertions.assertEquals(returnedRestaurant.getStoreHours(), restaurant.getStoreHours(), "The store hours match");
-        }
-        else {
+        } else {
             Assertions.assertNotNull(returnedRestaurant, "The object is saved");
             Assertions.assertEquals(returnedRestaurant.getRestaurantId(), restaurant2.getRestaurantId(), "The id matches");
             Assertions.assertEquals(returnedRestaurant.getRestaurantName(), restaurant2.getRestaurantName(), "The name matches");
@@ -139,7 +136,7 @@ public class RestaurantTests {
     }
 
     @Test
-    void findByRestaurantId(){
+    void findByRestaurantId() {
         UUID restaurantId = UUID.randomUUID();
         String name = "test";
         String category = "bad food";
@@ -179,7 +176,44 @@ public class RestaurantTests {
     }
 
     @Test
-    void setReviews(){
-        //TODO implement
+    void canAddRestaurant_RestaurantIsNull_ThrowsException() {
+
+        //GIVEN // WHEN // THEN
+        Assertions.assertThrows(RestaurantNotFoundException.class, () -> restaurantService.addNewRestaurant(null));
+
     }
+
+    @Test
+    void findByRestaurantId_RestaurantIdIsNull_ThrowsException() {
+        //GIVEN
+        String restaurantId = UUID.randomUUID().toString();
+
+        when(restaurantRepository.findById(restaurantId)).thenReturn(Optional.empty());
+
+        //WHEN //THEN
+        Assertions.assertThrows(RestaurantNotFoundException.class, () -> restaurantService.findByRestaurantId(restaurantId));
+    }
+
+    @Test
+    void updateRestaurant_restaurantIsUpdated_returnNewRestaurant() {
+        //GIVEN
+
+        // WHEN
+
+
+        //THEN
+
+
+    }
+
+    @Test
+    void updateRestaurant_restaurantIsnull_throwsException() {
+        //GIVEN
+
+        // WHEN
+
+
+        //THEN
+    }
+
 }

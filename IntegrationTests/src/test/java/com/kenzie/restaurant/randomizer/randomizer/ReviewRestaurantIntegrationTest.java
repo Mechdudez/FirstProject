@@ -81,10 +81,6 @@ class ReviewRestaurantIntegrationTest {
         reviewCreateRequest.setRating(0);
         reviewCreateRequest.setDescription("");
 
-//        RestaurantCreateRequest restaurantCreateRequest = new RestaurantCreateRequest();
-//        restaurantCreateRequest.setUserId(reviewCreateRequest.getUserId());
-//        restaurantCreateRequest.setUserId(reviewCreateRequest.getRestaurantName());
-
 
         //WHEN/THEN
         Assertions.assertThrows(NestedServletException.class, () -> {

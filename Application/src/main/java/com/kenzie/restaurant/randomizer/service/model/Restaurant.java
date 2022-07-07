@@ -19,6 +19,12 @@ public class Restaurant {
 
     private List<Review> reviews;
 
+
+
+    // For use in RestaurantTests
+    public Restaurant() {
+    }
+
     public Restaurant(UUID restaurantId, String restaurantName, String category, List<String> storeHours) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;

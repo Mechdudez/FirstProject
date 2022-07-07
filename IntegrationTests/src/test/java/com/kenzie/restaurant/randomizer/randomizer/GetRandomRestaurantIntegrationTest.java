@@ -49,21 +49,8 @@ class GetRandomRestaurantIntegrationTest {
         queryUtility.restaurantControllerClient.createRestaurant(restaurantCreateRequest);
         //WHEN
         queryUtility.restaurantControllerClient.getRandomRestaurant()
-
-        //THEN
+                //THEN
                 .andExpect(status().isOk());
 
     }
-
-//    @Test
-//    public void getRandomRestaurant_noRestaurants_ReturnBadRequest() throws Exception {
-//        //GIVEN
-//
-//        //WHEN //THEN
-//        queryUtility.restaurantControllerClient.getRandomRestaurant()
-//                .andExpect(status().isBadRequest());
-//    }
-
-    // Happy Case
-
 }

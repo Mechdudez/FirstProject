@@ -27,7 +27,7 @@ public class RestaurantService {
 
     public Restaurant addNewRestaurant(Restaurant restaurant){
         if (restaurant == null){
-            throw new IllegalArgumentException("Cannot add restaurant: restaurant is invalid");
+            throw new RestaurantNotFoundException("Cannot add restaurant: restaurant is invalid");
         }
 
         RestaurantRecord restaurantRecord = new RestaurantRecord();
