@@ -18,7 +18,7 @@ public class RestaurantCreateRequest {
     private String category;
 
     @JsonProperty("storeHours")
-    private List<String> storeHours;
+    private String[] storeHours;
 
 
     public String getName() {
@@ -37,12 +37,12 @@ public class RestaurantCreateRequest {
         this.category = category;
     }
 
-    public List<String> getStoreHours() {
+    public String[] getStoreHours() {
         return storeHours;
     }
 
     public void setStoreHours(String[] storeHours) {
-        this.storeHours = Arrays.asList(storeHours);
+        this.storeHours = storeHours;
     }
 
 

@@ -23,7 +23,7 @@ public class RestaurantUpdateRequest {
     private String category;
 
     @JsonProperty("storeHours")
-    private List<String> storeHours;
+    private String[] storeHours;
 
     public UUID getRestaurantId() {
         return restaurantId;
@@ -49,11 +49,11 @@ public class RestaurantUpdateRequest {
         this.category = category;
     }
 
-    public List<String> getStoreHours() {
+    public String[] getStoreHours() {
         return storeHours;
     }
 
-    public void setStoreHours(List<String> storeHours) {
+    public void setStoreHours(String[] storeHours) {
         this.storeHours = storeHours;
     }
 

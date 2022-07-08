@@ -20,7 +20,7 @@ public class RestaurantRecord {
 
     private String category;
 
-    private List<String> storeHours;
+    private String[] storeHours;
 
 
     @DynamoDBHashKey(attributeName = "restaurantId")
@@ -69,11 +69,11 @@ public class RestaurantRecord {
     }
 
     @DynamoDBAttribute(attributeName = "hours")
-    public List<String> getStoreHours() {
+    public String[] getStoreHours() {
         return storeHours;
     }
 
-    public void setStoreHours(List<String> storeHours) {
+    public void setStoreHours(String[] storeHours) {
         this.storeHours = storeHours;
     }
 

@@ -1,6 +1,7 @@
 package com.kenzie.restaurant.randomizer.randomizer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.gson.Gson;
 import com.kenzie.restaurant.randomizer.IntegrationTest;
 import com.kenzie.restaurant.randomizer.controller.model.RestaurantCreateRequest;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.util.NestedServletException;
@@ -20,10 +22,13 @@ import java.util.Collections;
 import java.util.UUID;
 
 
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @IntegrationTest
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ReviewRestaurantIntegrationTest {
 
     @Autowired
@@ -42,31 +47,66 @@ class ReviewRestaurantIntegrationTest {
 
     // Happy Case
     @Test
-    public void reviewRestaurant_validRestaurant_reviewIsCreated() throws Exception {
-        // GIVEN
+    public void reviewRestaurant_validReview_reviewIsCreated() throws Exception {
+        String userId = mockNeat.strings().get();
+        String restaurant = mockNeat.strings().get();
+        Double price = mockNeat.doubles().get();
+        Integer rating = mockNeat.ints().get();
+        String description = mockNeat.strings().get();
+
+
+
+        String category = mockNeat.strings().get();
+        String[] storeHours = new String[]{mockNeat.strings().get()};
+
         RestaurantCreateRequest restaurantCreateRequest = new RestaurantCreateRequest();
-        restaurantCreateRequest.setName(mockNeat.strings().get());
-        restaurantCreateRequest.setCategory(mockNeat.strings().get());
-        restaurantCreateRequest.setStoreHours(Collections.singletonList(mockNeat.strings().get()));
+        restaurantCreateRequest.setName(restaurant);
+        restaurantCreateRequest.setCategory(category);
+        restaurantCreateRequest.setStoreHours(storeHours);
 
-        ResultActions result = queryUtility.restaurantControllerClient.createRestaurant(restaurantCreateRequest);
+        mapper.registerModule(new JavaTimeModule());
 
-        Gson gson = new Gson();
-        Restaurant restaurant = gson.fromJson(result.andReturn().getResponse().getContentAsString(), Restaurant.class);
+        mvc.perform(post("/restaurant")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(restaurantCreateRequest)))
+                .andExpect(jsonPath("restaurant")
+                        .exists())
+                .andExpect(jsonPath("restaurant")
+                        .value(is(userId)))
+                .andExpect(jsonPath("category")
+                        .value(is(category)))
+                .andExpect(jsonPath("storehours")
+                        .value(is(storeHours)))
+                .andExpect(status().isCreated());
+
 
         ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest();
-        reviewCreateRequest.setRestaurantId(restaurant.getRestaurantId());
-        reviewCreateRequest.setUserId(mockNeat.strings().get());
-        reviewCreateRequest.setRestaurantName(mockNeat.strings().get());
-        reviewCreateRequest.setPrice(mockNeat.doubles().get());
-        reviewCreateRequest.setRating(mockNeat.ints().get());
-        reviewCreateRequest.setDescription(mockNeat.strings().get());
+        reviewCreateRequest.setUserId(userId);
+        reviewCreateRequest.setRestaurantName(restaurant);
+        reviewCreateRequest.setPrice(price);
+        reviewCreateRequest.setRating(rating);
+        reviewCreateRequest.setDescription(description);
+
+        mapper.registerModule(new JavaTimeModule());
 
 
-        // WHEN
-
-        queryUtility.reviewControllerClient.createReview(reviewCreateRequest)
-                //THEN
+        mvc.perform(post("/review")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(reviewCreateRequest)))
+                .andExpect(jsonPath("review")
+                        .exists())
+                .andExpect(jsonPath("userId")
+                        .value(is(userId)))
+                .andExpect(jsonPath("restaurant")
+                        .value(is(restaurant)))
+                .andExpect(jsonPath("price")
+                        .value(is(price)))
+                .andExpect(jsonPath("rating")
+                        .value(is(rating)))
+                .andExpect(jsonPath("description")
+                        .value(is(description)))
                 .andExpect(status().isCreated());
     }
 
@@ -102,7 +142,7 @@ class ReviewRestaurantIntegrationTest {
 
         //WHEN //THEN
 
-        Assertions.assertThrows(NestedServletException.class, ()->  queryUtility.reviewControllerClient.createReview(reviewCreateRequest));
+        Assertions.assertThrows(NestedServletException.class, () -> queryUtility.reviewControllerClient.createReview(reviewCreateRequest));
     }
 
 }

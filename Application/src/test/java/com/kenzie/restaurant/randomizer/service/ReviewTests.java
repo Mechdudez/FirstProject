@@ -265,23 +265,55 @@ public class ReviewTests {
         });
 
     }
-
-    @Test
-    void getAllUserReviews_ReviewIsNull_ThrowException() {
-        // GIVEN
-
-        // WHEN
-
-        //THEN
-    }
     @Test
     void updateReview_reviewIsUpdated_returnsNewUpdatedReview() {
         // GIVEN
+        UUID restaurantId = UUID.randomUUID();
+        String restaurantName = "Bobbies Bistro";
+        String userId = "Bob";
+        Double price = 20.0;
+        int rating = 3;
+        String title = "Absolutely Awful";
+        String description = "What a terrible place";
+
+        ReviewRecord reviewRecord = new ReviewRecord();
+        reviewRecord.setRestaurantName(restaurantName);
+        reviewRecord.setTitle(title);
+        reviewRecord.setRestaurantId(restaurantId);
+        reviewRecord.setUserId(userId);
+        reviewRecord.setPrice(price);
+        reviewRecord.setRating(rating);
+        reviewRecord.setDescription(description);
+
+
+        // UUID restaurantId, String restaurantName, String userId, int rating, Double price, String title, String description
+
+        Review review = new Review(
+                reviewRecord.getRestaurantId(),
+                reviewRecord.getRestaurantName(),
+                reviewRecord.getUserId(),
+                reviewRecord.getRating(),
+                reviewRecord.getPrice(),
+                reviewRecord.getTitle(),
+                reviewRecord.getDescription());
+
+        ArgumentCaptor<ReviewRecord> reviewRecordArgumentCaptor = ArgumentCaptor.forClass(ReviewRecord.class);
+
 
         // WHEN
+        reviewService.updateReview(review);
 
         //THEN
+        verify(reviewRepository).save(reviewRecordArgumentCaptor.capture());
+        ReviewRecord storedReview = reviewRecordArgumentCaptor.getValue();
 
+        Assertions.assertNotNull(review);
+        Assertions.assertEquals(storedReview.getRestaurantId(), review.getRestaurantId(), "The concert id matches");
+        Assertions.assertEquals(storedReview.getRestaurantName(), review.getRestaurantName(), "The reservation date matches");
+        Assertions.assertEquals(storedReview.getUserId(), review.getUserId(), "The reservationClosed matches");
+        Assertions.assertEquals(storedReview.getRating(), review.getRating(), "The ticketPurchased matches");
+        Assertions.assertEquals(storedReview.getTitle(), review.getTitle(), "The reservation closed date matches");
+        Assertions.assertEquals(storedReview.getDescription(), review.getDescription(), "The reservation closed date matches");
     }
 
 }

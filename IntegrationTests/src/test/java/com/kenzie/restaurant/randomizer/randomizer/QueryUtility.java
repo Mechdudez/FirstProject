@@ -46,7 +46,7 @@ public class QueryUtility {
                     .content(mapper.writeValueAsString(restaurantCreateRequest)));
         }
         public ResultActions getRandomRestaurant() throws Exception {
-            return mvc.perform(get("/restaurant")
+            return mvc.perform(get("/restaurant/")
                     .accept(MediaType.APPLICATION_JSON));
         }
     }

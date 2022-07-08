@@ -12,6 +12,7 @@ import org.mockito.ArgumentCaptor;
 
 import java.util.*;
 
+import static java.util.UUID.randomUUID;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -33,10 +34,10 @@ public class RestaurantTests {
     @Test
     void canAddRestaurant() {
         //GIVEN
-        UUID restaurantId = UUID.randomUUID();
+        UUID restaurantId = randomUUID();
         String name = "test";
         String category = "bad food";
-        List<String> storeHours = new ArrayList<>(Arrays.asList("Monday - Friday: 9-5", "Weekend: 12-6"));
+        String[] storeHours = new String[]{"Monday - Friday: 9-5", "Weekend: 12-6"};
 
         String userId = "XxTESTMAN69xX";
 
@@ -69,15 +70,15 @@ public class RestaurantTests {
 
     @Test
     void getRandomRestaurant() {
-        UUID restaurantId = UUID.randomUUID();
+        UUID restaurantId = randomUUID();
         String name = "test";
         String category = "bad food";
-        List<String> storeHours = new ArrayList<>(Arrays.asList("Monday - Friday: 9-5", "Weekend: 12-6"));
+        String[] storeHours = new String[]{"Monday - Friday: 9-5", "Weekend: 12-6"};
 
-        UUID restaurantId2 = UUID.randomUUID();
+        UUID restaurantId2 = randomUUID();
         String name2 = "test2";
         String category2 = "good food";
-        List<String> storeHours2 = new ArrayList<>(Arrays.asList("Monday - Friday: 9-6", "Weekend: 10-5"));
+        String[] storeHours2 = new String[]{"Monday - Friday: 9-6", "Weekend: 10-5"};
 
         String userId = "XxTESTMAN69xX";
 
@@ -137,10 +138,10 @@ public class RestaurantTests {
 
     @Test
     void findByRestaurantId() {
-        UUID restaurantId = UUID.randomUUID();
+        UUID restaurantId = randomUUID();
         String name = "test";
         String category = "bad food";
-        List<String> storeHours = new ArrayList<>(Arrays.asList("Monday - Friday: 9-5", "Weekend: 12-6"));
+        String[] storeHours = new String[]{"Monday - Friday: 9-5", "Weekend: 12-6"};
 
         String userId = "XxTESTMAN69xX";
 
@@ -186,7 +187,7 @@ public class RestaurantTests {
     @Test
     void findByRestaurantId_RestaurantIdIsNull_ThrowsException() {
         //GIVEN
-        String restaurantId = UUID.randomUUID().toString();
+        String restaurantId = randomUUID().toString();
 
         when(restaurantRepository.findById(restaurantId)).thenReturn(Optional.empty());
 
@@ -197,23 +198,48 @@ public class RestaurantTests {
     @Test
     void updateRestaurant_restaurantIsUpdated_returnNewRestaurant() {
         //GIVEN
+        String[] storeHours = new String[]{"Monday - Friday: 9-5", "Weekend: 12-6"};
 
+        RestaurantRecord restaurantRecord = new RestaurantRecord();
+        restaurantRecord.setStoreHours(storeHours);
+        restaurantRecord.setName("bob");
+        restaurantRecord.setCategory("burger");
+        restaurantRecord.setRestaurantId(UUID.fromString(randomUUID().toString()));
+
+        Restaurant restaurant = new Restaurant(
+                restaurantRecord.getRestaurantId(),
+                restaurantRecord.getName(),
+                restaurantRecord.getCategory(),
+                restaurantRecord.getStoreHours());
+
+
+        ArgumentCaptor<RestaurantRecord> restaurantRecordArgumentCaptor = ArgumentCaptor.forClass(RestaurantRecord.class);
         // WHEN
+        restaurantService.updateRestaurant(restaurant);
 
 
         //THEN
+        verify(restaurantRepository).save(restaurantRecordArgumentCaptor.capture());
+        RestaurantRecord storedRestaurant = restaurantRecordArgumentCaptor.getValue();
 
-
+        Assertions.assertNotNull(restaurant);
+        Assertions.assertEquals(storedRestaurant.getRestaurantId(), restaurant.getRestaurantId(), "The concert id matches");
+        Assertions.assertEquals(storedRestaurant.getName(), restaurant.getRestaurantName(), "The reservation date matches");
+        Assertions.assertEquals(storedRestaurant.getCategory(), restaurant.getCategory(), "The reservationClosed matches");
+        Assertions.assertEquals(storedRestaurant.getStoreHours(), restaurant.getStoreHours(), "The ticketPurchased matches");
     }
 
     @Test
     void updateRestaurant_restaurantIsnull_throwsException() {
         //GIVEN
+//        UUID restaurantId = null;
+//        String name = null;
+//        String category = "bad food";
+//        String[] storeHours = new String[]{"Monday - Friday: 9-5", "Weekend: 12-6"};
 
-        // WHEN
 
-
-        //THEN
+        // WHEN //THEN
+        Assertions.assertThrows(IllegalArgumentException.class, () -> restaurantService.updateRestaurant(null));
     }
 
 }
