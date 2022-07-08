@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script type="text/javascript" src="pages/RestaurantPage.js"></script>
+    <script type="text/javascript" src="restaurantPage.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
@@ -12,28 +12,33 @@
     </div>
 </header>
 <div class="card">
-    <h2>Review restaurant</h2>
+    <h2>Review Restaurant</h2>
     <form class="card-content" id="review-restaurant-form" accept-charset=utf-8>
         <p class="form-field">
-            <label>Name</label>
-            <input type="text" required class="validated-field" id="create-review-field">
+<!--            <label>Name</label>-->
+            <input name="restaurantName" placeholder="Name of Restaurant" required class="validated-field">
+            <input name="userId" placeholder="User ID" required class="validated-field">
+            <input name="title" placeholder="Review Title/Header" required class="validated-field">
+            <input name="rating" placeholder="Your Review Rating (0-5, 0 is the worst and 5 being the best)" required class="validated-field">
+            <input name="price" placeholder="Price Rating (1-4, 1 being very affordable and 4 very expensive)" required class="validated-field">
+            <textarea name="description" rows="5" placeholder="Enter description here..." form="review-restaurant-form"></textarea>
         </p>
-        <button type="submit">Create</button>
+        <button type="submit" id="submitReviewButton">Submit Review</button>
     </form>
 </div>
 <div class="card">
-    <h2>Get random restaurant</h2>
+    <h2>Get Random Restaurant</h2>
     <form class="card-content" id="get-restaurant-form" accept-charset=utf-8>
-        <p class="form-field">
-            <label>ID</label>
-            <input type="text" required class="validated-field" id="get-random-restaurant">
-        </p>
-        <button type="submit">Get</button>
+<!--        <p class="form-field">-->
+<!--&lt;!&ndash;            <label>Label Placeholder</label>&ndash;&gt; -->
+<!--            <input placeholder="Name of Restaurant" id="randomRestaurant" required class="validated-field">-->
+<!--        </p>-->
+        <button type="button" id="generateRandomRestaurant">Generate</button>
     </form>
 </div>
 </div>
 <div class="card">
-    <h2>Create a restaurant</h2>
+    <h2>Add a Restaurant</h2>
     <form class="card-content" id="create-restaurant-form" accept-charset=utf-8>
         <p class="form-field">
             <label>User ID</label>
@@ -53,7 +58,7 @@
 <!--        </p>-->
         <p class="form-field">
         <div id="list1" class="dropdown-check-list" tabindex="100">
-            <span class="anchor">Select Days/Hours</span>
+            <span class="anchor">Select Business Days/Hours</span>
             <ul class="storeHours">
                 <li>Monday:
                     <select name="monday-start" id="create-restaurant-monday-start">
@@ -99,7 +104,7 @@
                     </select>
                 </li>
                 <li>Tuesday:
-                    <select name="tuesday-start" id="create-restaurant-tueday-start">
+                    <select name="tuesday-start" id="create-restaurant-tuesday-start">
                         <option value="-">--</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -114,7 +119,7 @@
                         <option value="11">11</option>
                         <option value="12">12</option>
                     </select>
-                    <select name="tuesday-start" id="create-restaurant-tueday-am-pm">
+                    <select name="tuesday-start" id="create-restaurant-tuesday-am-pm">
                         <option value="-">--</option>
                         <option value="am">am</option>
                         <option value="pm">pm</option>
@@ -358,33 +363,6 @@
                 </li>
             </ul>
         </div>
-
-
-            <!--            <div class="multiselect">-->
-<!--                <div class="selectBox" onclick="showCheckboxes()">-->
-<!--                    <select>-->
-<!--                        <option>Select an option</option>-->
-<!--                    </select>-->
-<!--                    <div class="overSelect"></div>-->
-<!--                </div>-->
-<!--                <div id="checkboxes">-->
-<!--                    <label for="one">-->
-<!--                        <input type="checkbox" id="one" />First checkbox</label>-->
-<!--                    <label for="two">-->
-<!--                        <input type="checkbox" id="two" />Second checkbox</label>-->
-<!--                    <label for="three">-->
-<!--                        <input type="checkbox" id="three" />Third checkbox</label>-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--        <label for="Monday-name">Choose a dog name:</label>-->
-<!--        <select name="store-hours" id="store-hours">-->
-<!--            <option value="rigatoni">Rigatoni</option>-->
-<!--            <option value="dave">Dave</option>-->
-<!--            <option value="pumpernickel">Pumpernickel</option>-->
-<!--            <option value="reeses">Reeses</option>-->
-<!--        </select>-->
-
         </p>
 <!--        <button type="submit">Add</button>-->
         <button type="submit" id="createRestaurantButton">Create</button>
@@ -392,6 +370,7 @@
 </div>
 <div class="card" id="result">
     <h2>Result:</h2>
+    <h1 id="randomRestaurant"></h1>
     <p id="result-info"></p>
 </div>
 </body>

@@ -10,6 +10,7 @@ module.exports = {
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
+    restaurantPage: path.resolve(__dirname, 'src', 'pages', 'restaurantPage.js')
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -24,7 +25,7 @@ module.exports = {
 
     openPage: 'http://localhost:8080',
 
-    // diableHostChecks, otherwise we get an error about headers and the page won't render
+    // disableHostChecks, otherwise we get an error about headers and the page won't render
 
     disableHostCheck: true,
 
@@ -41,7 +42,7 @@ module.exports = {
         context: [
 
           '/restaurant',
-          'review',
+          'review'
 
         ],
 
@@ -56,6 +57,11 @@ module.exports = {
       filename: 'index.html',
       inject: false
     }),
+    new HtmlWebpackPlugin({
+      template: './src/restaurant.html',
+      filename: 'restaurant.html',
+      inject: false
+    }),
     new CopyPlugin({
       patterns: [
         {
@@ -64,6 +70,6 @@ module.exports = {
         }
       ]
     }),
-    new CleanWebpackPlugin()   
+    new CleanWebpackPlugin()
   ]
 }

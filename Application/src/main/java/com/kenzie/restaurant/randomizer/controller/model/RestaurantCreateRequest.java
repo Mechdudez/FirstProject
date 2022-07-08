@@ -3,6 +3,7 @@ package com.kenzie.restaurant.randomizer.controller.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -40,8 +41,8 @@ public class RestaurantCreateRequest {
         return storeHours;
     }
 
-    public void setStoreHours(List<String> storeHours) {
-        this.storeHours = storeHours;
+    public void setStoreHours(String[] storeHours) {
+        this.storeHours = Arrays.asList(storeHours);
     }
 
 

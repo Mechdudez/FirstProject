@@ -44,7 +44,7 @@ class GetRandomRestaurantIntegrationTest {
         RestaurantCreateRequest restaurantCreateRequest = new RestaurantCreateRequest();
         restaurantCreateRequest.setName(mockNeat.strings().get());
         restaurantCreateRequest.setCategory(mockNeat.strings().get());
-        restaurantCreateRequest.setStoreHours(Collections.singletonList(mockNeat.strings().get()));
+//        restaurantCreateRequest.setStoreHours(Collections.singletonList(mockNeat.strings().get()));
 
         queryUtility.restaurantControllerClient.createRestaurant(restaurantCreateRequest);
         //WHEN

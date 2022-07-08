@@ -10,14 +10,20 @@ public class CreateJsonForTesting {
 
     public static void main(String[] args){
         RestaurantCreateRequest request = new RestaurantCreateRequest();
-        List<String> storeHours = new ArrayList<>();
-        storeHours.add("Monday: 9-5");
-        storeHours.add("Tuesday: 9-10");
-        request.setStoreHours(storeHours);
+//        List<String> storeHours = new ArrayList<>();
+//        storeHours.add("Monday: 9-5");
+//        storeHours.add("Tuesday: 9-10");
+//        request.setStoreHours(storeHours);
         request.setName("Jeff");
         request.setCategory("Bad food");
 
-        System.out.println(new Gson().toJson(request));
+        List<String> test = new ArrayList<>();
+        test.add("Monday : 90");
+        test.add("Tuesday: 90");
+
+        Gson gson = new Gson();
+
+        System.out.println(gson.toJson(request));
 
         // Json example to create a restaurant
         // {
@@ -41,6 +47,9 @@ public class CreateJsonForTesting {
 //            "rating":"2",
 //            "price":"10.50"
 //        }
+
+
+
 
 
 

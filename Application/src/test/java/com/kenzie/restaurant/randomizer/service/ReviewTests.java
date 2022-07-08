@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.ArgumentCaptor;
+import org.springframework.web.util.NestedServletException;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -254,11 +255,14 @@ public class ReviewTests {
     @Test
     void findReview_ReviewIsNull_ThrowException() {
         // GIVEN
+        UUID restaurantId = null;
+        String userId = null;
 
-        // WHEN
 
-        //THEN
-
+        // WHEN//THEN
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            reviewService.findReview(restaurantId, userId);
+        });
 
     }
 
@@ -270,16 +274,6 @@ public class ReviewTests {
 
         //THEN
     }
-
-    @Test
-    void findAllReviewsForRestaurant_ReviewIsNull_ThrowException() {
-        // GIVEN
-
-        // WHEN
-
-        //THEN
-    }
-
     @Test
     void updateReview_reviewIsUpdated_returnsNewUpdatedReview() {
         // GIVEN

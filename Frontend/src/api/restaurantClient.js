@@ -1,14 +1,17 @@
 import BaseClass from "../util/baseClass";
 import axios from 'axios'
 
+var _List = require("collections/list");
+
 /**
- * Client to call the ExampleService.
+ * Client to call the RestaurantService.
  */
 export default class RestaurantClient extends BaseClass {
 
     constructor(props = {}){
         super();
-        const methodsToBind = ['clientLoaded', 'getRestaurant', 'createRestaurant', 'getAllRestaurants'];
+        const methodsToBind = ['clientLoaded', 'getRestaurant', 'createRestaurant', 'getAllRestaurants', 'createReview',
+            'getAllReviews', 'getRandomRestaurant'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -34,16 +37,45 @@ export default class RestaurantClient extends BaseClass {
         }
     }
 
-    async createRestaurant(restaurantId, userId, name, category, storeHours, errorCallback) {
+    async getRandomRestaurant(errorCallback) {
+        try {
+            //TODO: fix pathing (KK)
+            const response = await this.client.get(`/restaurant`);
+            return response.data;
+        } catch (error) {
+            this.handleError("getRandomRestaurant", error, errorCallback)
+        }
+    }
+
+    async createReview(restaurantId, restaurantName, userId, title,
+                       rating, price, description, errorCallback) {
+        try {
+            const response = await this.client.post(`review`, {
+                //TODO: need to get restaurantId without user input (implemented now in restaurantPage.js)
+                "restaurantId": restaurantId,
+                "restaurantName": restaurantName,
+                "userId": userId,
+                "title": title,
+                "rating": rating,
+                "price": price,
+                "description": description
+
+            });
+            return response.data;
+        } catch (error) {
+            this.handleError("createReview", error, errorCallback);
+        }
+
+    }
+
+    async createRestaurant( name, category, storeHours, errorCallback) {
         try {
             const response = await this.client.post(`restaurant`, {
                 //TODO: need to generate UUID serverside instead of user input (KK)
                 //TODO: clarify function and application of userId (KK)
-                "restaurantId": restaurantId,
-                "userId": userId,
                 "name": name,
                 "category": category,
-                "storeHours": storeHours
+                "storeHours":storeHours
 
             });
             return response.data;
@@ -60,32 +92,17 @@ export default class RestaurantClient extends BaseClass {
             this.handleError("getAllRestaurants", error, errorCallback)
         }
     }
-    async getRestaurantRequest(){
-
+    async getAllReviews(errorCallback) {
+        try {
+            const response = await this.client.get(`/review/all`);
+            return response.data;
+        } catch (error) {
+            this.handleError("getAllReviews", error, errorCallback)
+        }
     }
 
     //TODO: method to take storeHours input and return formatted List of Strings (KK)
-    async createStoreHours(mondayStart, mondayStartAMPM, mondayEnd, mondayEndAMPM,
-                                tuesdayStart, tuesdayStartAMPM, tuesdayEnd, tuesdayEndAMPM,
-                                wednesdayStart, wednesdayStartAMPM, wednesdayEnd, wednesdayEndAMPM,
-                                thursdayStart, thursdayStartAMPM, thursdayEnd, thursdayEndAMPM,
-                                fridayStart, fridayStartAMPM, fridayEnd, fridayEndAMPM,
-                                saturdayStart, saturdayStartAMPM, saturdayEnd, saturdayEndAMPM,
-                                sundayStart, sundayStartAMPM, sundayEnd, sundayEndAMPM) {
-        // implement method
-        // formatted Strings for each day
-        const Monday = "Monday " + mondayStart + mondayStartAMPM + " to " + mondayEnd + mondayEndAMPM;
-        const Tuesday = "Tuesday " + tuesdayStart + tuesdayStartAMPM + " to " + tuesdayEnd + tuesdayEndAMPM;
-        const Wednesday = "Wednesday " + wednesdayStart + wednesdayStartAMPM + " to " + wednesdayEnd + wednesdayEndAMPM;
-        const Thursday = "Thursday " + thursdayStart + thursdayStartAMPM + " to " + thursdayEnd + thursdayEndAMPM;
-        const Friday = "Friday " + fridayStart + fridayStartAMPM + " to " + fridayEnd + fridayEndAMPM;
-        const Saturday = "Saturday " + saturdayStart + saturdayStartAMPM + " to " + saturdayEnd + saturdayEndAMPM;
-        const Sunday = "Sunday " + sundayStart + sundayStartAMPM + " to " + sundayEnd + sundayEndAMPM;
 
-        // list of strings variable
-        var listHours = [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday];
-        return listHours;
-    }
 
     /**
      * Helper method to log the error and run any error functions.

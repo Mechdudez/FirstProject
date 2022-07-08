@@ -29,6 +29,11 @@ public class ReviewService {
     }
 
     public Review findReview(UUID restaurantId, String userId) {
+
+        if (restaurantId == null || userId == null){
+            throw new IllegalArgumentException();
+        }
+
         List<Review> reviews = findAllReviewsForRestaurant(restaurantId);
         if (reviews == null) {
             throw new ReviewNotFoundException("No review found by id!");

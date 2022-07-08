@@ -1,40 +1,403 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script type="text/javascript" src="pages/examplePage.js"></script>
+    <script type="text/javascript" src="pages/RestaurantPage.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 <body class="background">
-    <header class="header" id="header">
-        <div class="site-title">
-            <a class="header_home" href="index.html">Example App</a>
+<header class="header" id="header">
+    <div class="site-title">
+        <a class="header_home" href="restaurant.html">Restaurant Application</a>
+    </div>
+</header>
+<div class="card">
+    <h2>Review restaurant</h2>
+    <form class="card-content" id="review-restaurant-form" accept-charset=utf-8>
+        <p class="form-field">
+            <label>Name</label>
+            <input name="restaurantName" placeholder="Name of Restaurant" required class="validated-field">
+            <input name="userId" placeholder="User ID" required class="validated-field">
+            <input name="title" placeholder="Review Title/Header" required class="validated-field">
+            <input name="rating" placeholder="Your Review Rating (0-5, 5 is best)" required class="validated-field">
+            <input name="price" placeholder="Name of Restaurant" required class="validated-field">
+            <textarea name="description" placeholder="Enter description here..." form="review-restaurant-form"></textarea>
+        </p>
+        <button type="submit">Create</button>
+    </form>
+</div>
+<div class="card">
+    <h2>Get random restaurant</h2>
+    <form class="card-content" id="get-restaurant-form" accept-charset=utf-8>
+        <p class="form-field">
+            <label>ID</label>
+            <input type="text" required class="validated-field" id="get-random-restaurant">
+        </p>
+        <button type="submit" id="createReviewButton">Submit Review</button>
+    </form>
+</div>
+</div>
+<div class="card">
+    <h2>Create a restaurant</h2>
+    <form class="card-content" id="create-restaurant-form" accept-charset=utf-8>
+        <p class="form-field">
+            <label>User ID</label>
+            <input type="text" required class="validated-field" id="create-restaurant-userId">
+        </p>
+        <p class="form-field">
+            <label>Restaurant Name</label>
+            <input type="text" required class="validated-field" id="create-restaurant-name">
+        </p>
+        <p class="form-field">
+            <label>Restaurant Category</label>
+            <input type="text" required class="validated-field" id="create-restaurant-category">
+        </p>
+        <!--        <p class="form-field">-->
+        <!--            <label>Store Hours</label>-->
+        <!--            <input type="text" required class="validated-field" id="create-restaurant-storeHours">-->
+        <!--        </p>-->
+        <p class="form-field">
+        <div id="list1" class="dropdown-check-list" tabindex="100">
+            <span class="anchor">Select Days/Hours</span>
+            <ul class="storeHours">
+                <li>Monday:
+                    <select name="monday-start" id="create-restaurant-monday-start">
+                        <option value="-">--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select name="monday-start" id="create-restaurant-monday-am-pm">
+                        <option value="-">--</option>
+                        <option value="am">am</option>
+                        <option value="pm">pm</option>
+                    </select>
+                    to:
+                    <select name="store-hours" id="create-restaurant-monday-end">
+                        <option value="-">--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select name="monday-start" id="create-restaurant-monday-end-am-pm">
+                        <option value="-">--</option>
+                        <option value="am">am</option>
+                        <option value="pm">pm</option>
+                    </select>
+                </li>
+                <li>Tuesday:
+                    <select name="tuesday-start" id="create-restaurant-tueday-start">
+                        <option value="-">--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select name="tuesday-start" id="create-restaurant-tueday-am-pm">
+                        <option value="-">--</option>
+                        <option value="am">am</option>
+                        <option value="pm">pm</option>
+                    </select>
+                    to:
+                    <select name="store-hours" id="create-restaurant-tuesday-end">
+                        <option value="-">--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select name="tuesday-start" id="create-restaurant-tuesday-end-am-pm">
+                        <option value="-">--</option>
+                        <option value="am">am</option>
+                        <option value="pm">pm</option>
+                    </select>
+                </li>
+                <li>Wednesday:
+                    <select name="wednesday-start" id="create-restaurant-wednesday-start">
+                        <option value="-">--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select name="wednesday-start" id="create-restaurant-wednesday-am-pm">
+                        <option value="-">--</option>
+                        <option value="am">am</option>
+                        <option value="pm">pm</option>
+                    </select>
+                    to:
+                    <select name="store-hours" id="create-restaurant-wednesday-end">
+                        <option value="-">--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select name="wednesday-start" id="create-restaurant-wednesday-end-am-pm">
+                        <option value="-">--</option>
+                        <option value="am">am</option>
+                        <option value="pm">pm</option>
+                    </select>
+                </li>
+                <li>Thursday:
+                    <select name="thursday-start" id="create-restaurant-thursday-start">
+                        <option value="-">--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select name="thursday-start" id="create-restaurant-thursday-am-pm">
+                        <option value="-">--</option>
+                        <option value="am">am</option>
+                        <option value="pm">pm</option>
+                    </select>
+                    to:
+                    <select name="store-hours" id="create-restaurant-thursday-end">
+                        <option value="-">--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select name="thursday-start" id="create-restaurant-thursday-end-am-pm">
+                        <option value="-">--</option>
+                        <option value="am">am</option>
+                        <option value="pm">pm</option>
+                    </select>
+                </li>
+                <li>Friday:
+                    <select name="friday-start" id="create-restaurant-friday-start">
+                        <option value="-">--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select name="friday-start" id="create-restaurant-friday-am-pm">
+                        <option value="-">--</option>
+                        <option value="am">am</option>
+                        <option value="pm">pm</option>
+                    </select>
+                    to:
+                    <select name="store-hours" id="create-restaurant-friday-end">
+                        <option value="-">--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select name="friday-start" id="create-restaurant-friday-end-am-pm">
+                        <option value="-">--</option>
+                        <option value="am">am</option>
+                        <option value="pm">pm</option>
+                    </select>
+                </li>
+                <li>Saturday:
+                    <select name="saturday-start" id="create-restaurant-saturday-start">
+                        <option value="-">--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select name="saturday-start" id="create-restaurant-saturday-am-pm">
+                        <option value="-">--</option>
+                        <option value="am">am</option>
+                        <option value="pm">pm</option>
+                    </select>
+                    to:
+                    <select name="store-hours" id="create-restaurant-saturday-end">
+                        <option value="-">--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select name="saturday-start" id="create-restaurant-saturday-end-am-pm">
+                        <option value="-">--</option>
+                        <option value="am">am</option>
+                        <option value="pm">pm</option>
+                    </select>
+                </li>
+                <li>Sunday:
+                    <select name="sunday-start" id="create-restaurant-sunday-start">
+                        <option value="-">--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select name="sunday-start" id="create-restaurant-sunday-am-pm">
+                        <option value="-">--</option>
+                        <option value="am">am</option>
+                        <option value="pm">pm</option>
+                    </select>
+                    to:
+                    <select name="store-hours" id="create-restaurant-sunday-end">
+                        <option value="-">--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select name="sunday-start" id="create-restaurant-sunday-end-am-pm">
+                        <option value="-">--</option>
+                        <option value="am">am</option>
+                        <option value="pm">pm</option>
+                    </select>
+                </li>
+            </ul>
         </div>
-    </header>
-    <div class="card">
-        <h2>Create Example</h2>
-        <form class="card-content" id="create-form">
-            <p class="form-field">
-                <label>Name</label>
-                <input type="text" required class="validated-field" id="create-name-field">
-            </p>
-            <button type="submit">Create</button>
-        </form>
-    </div>
-    <div class="card">
-        <h2>Get By ID</h2>
-        <form class="card-content" id="get-by-id-form">
-            <p class="form-field">
-                <label>ID</label>
-                <input type="text" required class="validated-field" id="id-field">
-            </p>
-            <button type="submit">Get</button>
-        </form>
-    </div>
-    <div class="card" id="result">
-        <h2>Result:</h2>
-        <p id="result-info"></p>
-    </div>
 
+
+        <!--            <div class="multiselect">-->
+        <!--                <div class="selectBox" onclick="showCheckboxes()">-->
+        <!--                    <select>-->
+        <!--                        <option>Select an option</option>-->
+        <!--                    </select>-->
+        <!--                    <div class="overSelect"></div>-->
+        <!--                </div>-->
+        <!--                <div id="checkboxes">-->
+        <!--                    <label for="one">-->
+        <!--                        <input type="checkbox" id="one" />First checkbox</label>-->
+        <!--                    <label for="two">-->
+        <!--                        <input type="checkbox" id="two" />Second checkbox</label>-->
+        <!--                    <label for="three">-->
+        <!--                        <input type="checkbox" id="three" />Third checkbox</label>-->
+        <!--                </div>-->
+        <!--            </div>-->
+
+        <!--        <label for="Monday-name">Choose a dog name:</label>-->
+        <!--        <select name="store-hours" id="store-hours">-->
+        <!--            <option value="rigatoni">Rigatoni</option>-->
+        <!--            <option value="dave">Dave</option>-->
+        <!--            <option value="pumpernickel">Pumpernickel</option>-->
+        <!--            <option value="reeses">Reeses</option>-->
+        <!--        </select>-->
+
+        </p>
+        <!--        <button type="submit">Add</button>-->
+        <button type="submit" id="createRestaurantButton">Create</button>
+    </form>
+</div>
+<div class="card" id="result">
+    <h2>Result:</h2>
+    <p id="result-info"></p>
+</div>
 </body>
 </html>
