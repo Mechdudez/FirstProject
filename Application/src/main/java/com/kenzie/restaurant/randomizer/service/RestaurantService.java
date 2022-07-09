@@ -57,18 +57,8 @@ public class RestaurantService {
 
     public List<Restaurant> getAllRestaurants() {
 
-        //this.restaurantId = restaurantId;
-        //        this.restaurantName = restaurantName;
-        //        this.category = category;
-        //        this.storeHours = storeHours;
-
-//        UUID test = UUID.randomUUID();
-//        String bob = "bob";
-//        String category = "Mystery";
-//        String[] hours = new String[]{"Monday 9-5"};
-//        Restaurant restaurantTest = new Restaurant(test, bob, category, hours);
         List<Restaurant> restaurantList = new ArrayList<>();
-//        restaurantList.add(restaurantTest);
+
         restaurantRepository.findAll()
                 .forEach(restaurant -> restaurantList.add(new Restaurant(restaurant.getRestaurantId(), restaurant.getName(), restaurant.getCategory(), restaurant.getStoreHours())));
         return restaurantList;
