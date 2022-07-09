@@ -99,17 +99,11 @@ class RestaurantPage extends BaseClass {
         this.fetchReviews();
     }
 
-    // to generate a random index for random restaurant generation (KK)
-    getRandomInt(max) {
-        return Math.floor(Math.random() * max);
-    }
-
     async onGetReview(event) {
         event.preventDefault();
 
         let result = await this.client.getAllReviews(this.errorHandler);
         this.dataStore.set("review", result);
-
     }
 
 
@@ -173,12 +167,18 @@ class RestaurantPage extends BaseClass {
 //        document.getElementById('randomRestaurant').value = randomRestaurant.restaurantName;
 //        document.getElementById('randomRestaurant').value = randomRestaurant;
         let resultArea = document.getElementById("randomRestaurant");
-        resultArea.innerHTML = randomRestaurant.restaurantName;
+        if (randomRestaurant) {
+            resultArea.innerHTML = randomRestaurant.restaurantName;
+        } else {
+            resultArea.innerHTML = "No restaurant available";
+        }
+
+
 
         // Re-enable
         generateRestaurantButton.innerText = 'Generate';
         generateRestaurantButton.disabled = false;
-        this.onRefresh();
+//        this.onRefresh();
     }
 
 
