@@ -1,7 +1,7 @@
 import BaseClass from "../util/baseClass";
 import axios from 'axios'
 
-var _List = require("collections/list");
+// var _List = require("collections/list");
 
 /**
  * Client to call the RestaurantService.

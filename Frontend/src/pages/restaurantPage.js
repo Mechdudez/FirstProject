@@ -17,10 +17,10 @@ class RestaurantPage extends BaseClass {
      * Once the page has loaded, set up the event handlers and fetch the restaurant/review list.
      */
     mount() {
-        document.getElementById('get-restaurant-form').addEventListener('submit', this.onGet);
+        document.getElementById('get-restaurant-form').addEventListener('click', this.onGetRandomRestaurant);
         document.getElementById('create-restaurant-form').addEventListener('submit', this.onCreateRestaurant);
-        document.getElementById('review-restaurant-form').addEventListener('submit', this.onCreate);
-        document.getElementById('generateRandomRestaurant').addEventListener("click", this.onGetRandomRestaurant);
+        document.getElementById('review-restaurant-form').addEventListener('submit', this.onCreateReview);
+        // document.getElementById('generateRandomRestaurant').addEventListener("click", this.onGetRandomRestaurant);
 
 
         this.client = new RestaurantClient();
@@ -78,11 +78,11 @@ class RestaurantPage extends BaseClass {
             if (restaurant) {
 
                 storeHtmlRestaurant += `<ul>`;
-                storeHtmlRestaurant += `<h2><li>${restaurant.restaurantName}</li></h2>`;
+                storeHtmlRestaurant += `<p>${restaurant.name}</p>`;
+                storeHtmlRestaurant += `<p>${restaurant.category}</p>`;
+                storeHtmlRestaurant += `<p>${restaurant.storeHours}</p>`;
                 storeHtmlRestaurant += `</ul>`;
                 resultArea.innerHTML = storeHtmlRestaurant;
-                // storeHtmlRestaurant += `<h3> By: ${restaurant.name</h3>`;
-
 
             } else {
                 resultArea.innerHTML = "No Restaurant";
