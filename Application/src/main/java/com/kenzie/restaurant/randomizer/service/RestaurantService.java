@@ -7,6 +7,8 @@ import com.kenzie.restaurant.randomizer.service.model.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -54,7 +56,19 @@ public class RestaurantService {
     }
 
     public List<Restaurant> getAllRestaurants() {
+
+        //this.restaurantId = restaurantId;
+        //        this.restaurantName = restaurantName;
+        //        this.category = category;
+        //        this.storeHours = storeHours;
+
+//        UUID test = UUID.randomUUID();
+//        String bob = "bob";
+//        String category = "Mystery";
+//        String[] hours = new String[]{"Monday 9-5"};
+//        Restaurant restaurantTest = new Restaurant(test, bob, category, hours);
         List<Restaurant> restaurantList = new ArrayList<>();
+//        restaurantList.add(restaurantTest);
         restaurantRepository.findAll()
                 .forEach(restaurant -> restaurantList.add(new Restaurant(restaurant.getRestaurantId(), restaurant.getName(), restaurant.getCategory(), restaurant.getStoreHours())));
         return restaurantList;
@@ -69,9 +83,14 @@ public class RestaurantService {
     }
 
     public Restaurant getRandomRestaurant(){
-        List<Restaurant> restaurantList = getAllRestaurants();
+        List<Restaurant> restaurantList = getAllRestaurants(); //TODO this is empty
         Random rand = new Random();
-        return setReviews(restaurantList.get(rand.nextInt(restaurantList.size())));
+        if (restaurantList.isEmpty()) {
+            throw new RestaurantNotFoundException("No restaurant in database.");
+        } else {
+            return setReviews(restaurantList.get(rand.nextInt(restaurantList.size())));
+        }
+
     }
 
     public Restaurant getSortedRestaurant(Double price, String category){

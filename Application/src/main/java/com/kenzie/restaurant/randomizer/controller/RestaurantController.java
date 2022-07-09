@@ -20,7 +20,7 @@ import java.util.UUID;
 import static java.util.UUID.randomUUID;
 
 @RestController
-@RequestMapping("/restaurant")
+@RequestMapping("/restaurants")
 public class RestaurantController {
     // Pulls from Service
     private RestaurantService restaurantService;
@@ -57,7 +57,7 @@ public class RestaurantController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/random")
+    @PostMapping ("/random")
     public ResponseEntity<RestaurantResponse> getRandomRestaurant() {
         Restaurant restaurant = restaurantService.getRandomRestaurant();
 
