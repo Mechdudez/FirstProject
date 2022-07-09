@@ -46,69 +46,34 @@ class ReviewRestaurantIntegrationTest {
     }
 
     // Happy Case
-//    @Test
-//    public void reviewRestaurant_validReview_reviewIsCreated() throws Exception {
-//        String userId = mockNeat.strings().get();
-//        String restaurant = mockNeat.strings().get();
-//        Double price = mockNeat.doubles().get();
-//        Integer rating = mockNeat.ints().get();
-//        String description = mockNeat.strings().get();
-//
-//
-//
-//        String category = mockNeat.strings().get();
-//        String[] storeHours = new String[]{mockNeat.strings().get()};
-//
-//        RestaurantCreateRequest restaurantCreateRequest = new RestaurantCreateRequest();
-//        restaurantCreateRequest.setName(restaurant);
-//        restaurantCreateRequest.setCategory(category);
-//        restaurantCreateRequest.setStoreHours(storeHours);
-//
-//        mapper.registerModule(new JavaTimeModule());
-//
-//        mvc.perform(post("/restaurant")
-//                        .accept(MediaType.APPLICATION_JSON)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(mapper.writeValueAsString(restaurantCreateRequest)))
-//                .andExpect(jsonPath("restaurant")
-//                        .exists())
-//                .andExpect(jsonPath("restaurant")
-//                        .value(is(userId)))
-//                .andExpect(jsonPath("category")
-//                        .value(is(category)))
-//                .andExpect(jsonPath("storehours")
-//                        .value(is(storeHours)))
-//                .andExpect(status().isCreated());
-//
-//
-//        ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest();
-//        reviewCreateRequest.setUserId(userId);
-//        reviewCreateRequest.setRestaurantName(restaurant);
-//        reviewCreateRequest.setPrice(price);
-//        reviewCreateRequest.setRating(rating);
-//        reviewCreateRequest.setDescription(description);
-//
-//        mapper.registerModule(new JavaTimeModule());
-//
-//
-//        mvc.perform(post("/review")
-//                        .accept(MediaType.APPLICATION_JSON)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(mapper.writeValueAsString(reviewCreateRequest)))
-//                .andExpect(jsonPath("review")
-//                        .exists())
-//                .andExpect(jsonPath("userId")
-//                        .value(is(userId)))
-//                .andExpect(jsonPath("restaurant")
-//                        .value(is(restaurant)))
-//                .andExpect(jsonPath("price")
-//                        .value(is(price)))
-//                .andExpect(jsonPath("rating")
-//                        .value(is(rating)))
-//                .andExpect(jsonPath("description")
-//                        .value(is(description)))
-//                .andExpect(status().isCreated());
-//    }
+    @Test
+    public void reviewRestaurant_validReview_reviewIsCreated() throws Exception {
+// GIVEN
+        RestaurantCreateRequest restaurantCreateRequest = new RestaurantCreateRequest();
+        restaurantCreateRequest.setName(mockNeat.strings().get());
+        restaurantCreateRequest.setCategory(mockNeat.strings().get());
+        restaurantCreateRequest.setStoreHours(new String[]{mockNeat.strings().get()});
+
+        ResultActions result = queryUtility.restaurantControllerClient.createRestaurant(restaurantCreateRequest);
+
+        Gson gson = new Gson();
+        Restaurant restaurant = gson.fromJson(result.andReturn().getResponse().getContentAsString(), Restaurant.class);
+
+        ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest();
+        reviewCreateRequest.setRestaurantId(UUID.fromString(mockNeat.strings().get()));
+        reviewCreateRequest.setRestaurantId(restaurant.getRestaurantId());
+        reviewCreateRequest.setUserId(mockNeat.strings().get());
+        reviewCreateRequest.setRestaurantName(mockNeat.strings().get());
+        reviewCreateRequest.setPrice(mockNeat.doubles().get());
+        reviewCreateRequest.setRating(mockNeat.ints().get());
+        reviewCreateRequest.setDescription(mockNeat.strings().get());
+
+        // WHEN
+
+        queryUtility.reviewControllerClient.createReview(reviewCreateRequest)
+                //THEN
+                .andExpect(status().isCreated());
+    }
 
     @Test
     public void reviewRestaurant_EmptyReview_throwException() throws Exception {

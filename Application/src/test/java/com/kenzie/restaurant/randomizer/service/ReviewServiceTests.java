@@ -1,15 +1,12 @@
 package com.kenzie.restaurant.randomizer.service;
 
 import com.kenzie.restaurant.randomizer.repositories.ReviewRepository;
-import com.kenzie.restaurant.randomizer.repositories.model.RestaurantRecord;
 import com.kenzie.restaurant.randomizer.repositories.model.ReviewRecord;
-import com.kenzie.restaurant.randomizer.service.model.Restaurant;
 import com.kenzie.restaurant.randomizer.service.model.Review;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.ArgumentCaptor;
-import org.springframework.web.util.NestedServletException;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -19,7 +16,7 @@ import static org.mockito.Mockito.when;
 import java.util.*;
 
 
-public class ReviewTests {
+public class ReviewServiceTests {
     private ReviewRepository reviewRepository;
     private ReviewService reviewService;
 

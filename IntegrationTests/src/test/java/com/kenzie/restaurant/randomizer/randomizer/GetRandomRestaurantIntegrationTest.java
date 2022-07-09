@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 
@@ -40,17 +41,17 @@ class GetRandomRestaurantIntegrationTest {
     // Happy Case
     @Test
     public void getRandomRestaurant_returnsRestaurantItem() throws Exception {
-//        //GIVEN
-//        RestaurantCreateRequest restaurantCreateRequest = new RestaurantCreateRequest();
-//        restaurantCreateRequest.setName(mockNeat.strings().get());
-//        restaurantCreateRequest.setCategory(mockNeat.strings().get());
-//        restaurantCreateRequest.setStoreHours(new String[]{(mockNeat.strings().get())});
-//
-//        queryUtility.restaurantControllerClient.createRestaurant(restaurantCreateRequest);
-//        //WHEN
-//        queryUtility.restaurantControllerClient.getRandomRestaurant()
-//                //THEN
-//                .andExpect(status().isOk());
+        //GIVEN
+        RestaurantCreateRequest restaurantCreateRequest = new RestaurantCreateRequest();
+        restaurantCreateRequest.setName(mockNeat.strings().get());
+        restaurantCreateRequest.setCategory(mockNeat.strings().get());
+        restaurantCreateRequest.setStoreHours(new String[]{(mockNeat.strings().get())});
+
+        queryUtility.restaurantControllerClient.createRestaurant(restaurantCreateRequest);
+        //WHEN
+        queryUtility.restaurantControllerClient.getRandomRestaurant()
+                //THEN
+                .andExpect(status().isOk());
 
     }
 }

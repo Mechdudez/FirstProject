@@ -40,13 +40,13 @@ public class QueryUtility {
     public class RestaurantControllerClient {
 
         public ResultActions createRestaurant(RestaurantCreateRequest restaurantCreateRequest) throws Exception {
-            return mvc.perform(post("/restaurant/")
+            return mvc.perform(post("/restaurants/")
                     .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(mapper.writeValueAsString(restaurantCreateRequest)));
         }
         public ResultActions getRandomRestaurant() throws Exception {
-            return mvc.perform(get("/restaurant/")
+            return mvc.perform(get("/restaurants/")
                     .accept(MediaType.APPLICATION_JSON));
         }
     }

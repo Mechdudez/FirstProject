@@ -1,6 +1,5 @@
 package com.kenzie.restaurant.randomizer.service;
 
-import com.kenzie.restaurant.randomizer.controller.model.RestaurantResponse;
 import com.kenzie.restaurant.randomizer.repositories.RestaurantRepository;
 import com.kenzie.restaurant.randomizer.repositories.model.RestaurantRecord;
 import com.kenzie.restaurant.randomizer.service.model.Restaurant;
@@ -19,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
-public class RestaurantTests {
+public class RestaurantServiceTests {
     private RestaurantRepository restaurantRepository;
     private RestaurantService restaurantService;
     private ReviewService reviewService;

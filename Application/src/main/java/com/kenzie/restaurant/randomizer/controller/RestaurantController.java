@@ -30,7 +30,7 @@ public class RestaurantController {
     }
 
     @GetMapping("/{restaurantId}")
-    public ResponseEntity<RestaurantResponse> findByRestaurantId(@PathVariable String restaurantId) {
+    public ResponseEntity<RestaurantResponse> findByRestaurantId(@PathVariable("restaurantId") String restaurantId) {
         Restaurant restaurant = restaurantService.findByRestaurantId(restaurantId);
 
         if (restaurant == null) {
@@ -71,7 +71,7 @@ public class RestaurantController {
     }
 
     @GetMapping("/within/{price}{category}")
-    public ResponseEntity<RestaurantResponse> getSortedRestaurant(@PathVariable Double price, @PathVariable String category) {
+    public ResponseEntity<RestaurantResponse> getSortedRestaurant(@PathVariable ("price") Double price, @PathVariable ("category") String category) {
         Restaurant restaurant = restaurantService.getSortedRestaurant(price, category);
 
         if (restaurant == null) {

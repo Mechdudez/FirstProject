@@ -48,7 +48,7 @@ public class ReviewController {
 
     //ToDo Fix this method of the controller
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<ReviewResponse>> getAllUserReviews(@PathVariable String userId) {
+    public ResponseEntity<List<ReviewResponse>> getAllUserReviews(@PathVariable ("userId") String userId) {
         List<Review> reviews = reviewService.getAllUserReviews(userId);
 
         if (reviews == null || reviews.isEmpty()) {
@@ -64,7 +64,7 @@ public class ReviewController {
     }
 
     @GetMapping("/restaurant/{restaurantId}/{userId}")
-    public ResponseEntity<ReviewResponse> findReview(@PathVariable UUID restaurantId, @PathVariable String userId) {
+    public ResponseEntity<ReviewResponse> findReview(@PathVariable ("restaurantId") UUID restaurantId, @PathVariable("userId") String userId) {
         Review review = reviewService.findReview(restaurantId, userId);
 
         if (review == null) {
