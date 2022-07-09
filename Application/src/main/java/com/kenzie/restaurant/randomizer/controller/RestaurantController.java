@@ -57,7 +57,7 @@ public class RestaurantController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping
+    @GetMapping("/restaurant")
     public ResponseEntity<RestaurantResponse> getRandomRestaurant() {
         Restaurant restaurant = restaurantService.getRandomRestaurant();
 

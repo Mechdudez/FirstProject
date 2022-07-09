@@ -23,7 +23,7 @@ module.exports = {
 
     open: true,
 
-    openPage: 'http://localhost:8080',
+    openPage: 'http://localhost:8080/restaurant.html',
 
     // disableHostChecks, otherwise we get an error about headers and the page won't render
 
@@ -42,7 +42,7 @@ module.exports = {
         context: [
 
           '/restaurant',
-          'review'
+          '/review'
 
         ],
 

@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Configuration;
 public class DynamoDbConfig {
     @Value("${dynamodb.override_endpoint}")
     String dynamoOverrideEndpoint;
+    @Value("${dynamodb.endpoint}")
+    String dynamoEndpoint;
 
     @Bean
     @ConditionalOnProperty(name = "dynamodb.override_endpoint", havingValue = "true")

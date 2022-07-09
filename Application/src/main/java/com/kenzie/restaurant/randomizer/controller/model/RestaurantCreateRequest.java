@@ -11,6 +11,7 @@ import java.util.UUID;
 public class RestaurantCreateRequest {
 
 
+    @NotEmpty
     @JsonProperty("name")
     private String name;
 
