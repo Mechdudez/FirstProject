@@ -10,7 +10,7 @@ export default class RestaurantClient extends BaseClass {
 
     constructor(props = {}){
         super();
-        const methodsToBind = ['clientLoaded', 'getRestaurant', 'createRestaurant', 'getAllRestaurants', 'createReview',
+        const methodsToBind = ['clientLoaded', 'findByRestaurantId', 'createRestaurant', 'getAllRestaurants', 'createReview',
             'getAllReviews', 'getRandomRestaurant'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
@@ -28,19 +28,18 @@ export default class RestaurantClient extends BaseClass {
         }
     }
 
-    async getRestaurant(errorCallback) {
+    async findByRestaurantId(restaurantId, errorCallback) {
         try {
-            const response = await this.client.get(`/restaurant/find`);
+            const response = await this.client.get(`/restaurant/${restaurantId}`);
             return response.data;
         } catch (error) {
-            this.handleError("getRestaurant", error, errorCallback)
+            this.handleError("findByRestaurantId", error, errorCallback)
         }
     }
 
     async getRandomRestaurant(errorCallback) {
         try {
-            //TODO: fix pathing (KK)
-            const response = await this.client.get(`/restaurant`);
+            const response = await this.client.get(`/restaurant/random`);
             return response.data;
         } catch (error) {
             this.handleError("getRandomRestaurant", error, errorCallback)
@@ -50,7 +49,7 @@ export default class RestaurantClient extends BaseClass {
     async createReview(restaurantId, restaurantName, userId, title,
                        rating, price, description, errorCallback) {
         try {
-            const response = await this.client.post(`review`, {
+            const response = await this.client.post(`/review/all`, {
                 //TODO: need to get restaurantId without user input (implemented now in restaurantPage.js)
                 "restaurantId": restaurantId,
                 "restaurantName": restaurantName,
@@ -100,8 +99,6 @@ export default class RestaurantClient extends BaseClass {
             this.handleError("getAllReviews", error, errorCallback)
         }
     }
-
-    //TODO: method to take storeHours input and return formatted List of Strings (KK)
 
 
     /**

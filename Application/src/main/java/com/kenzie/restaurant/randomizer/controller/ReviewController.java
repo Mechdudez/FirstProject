@@ -29,6 +29,23 @@ public class ReviewController {
         this.restaurantService = restaurantService;
     }
 
+    // (7/9 KK)
+    @GetMapping("/all")
+    public ResponseEntity<List<ReviewResponse>> getAllReviews() {
+        List<Review> reviews = reviewService.getAllReviews();
+
+        if (reviews == null || reviews.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        List<ReviewResponse> reviewResponses = new ArrayList<>();
+        for (Review review : reviews) {
+            reviewResponses.add(createReviewResponse(review));
+        }
+
+        return ResponseEntity.ok(reviewResponses);
+    }
+
     //ToDo Fix this method of the controller
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<ReviewResponse>> getAllUserReviews(@PathVariable String userId) {
@@ -46,7 +63,7 @@ public class ReviewController {
         return ResponseEntity.ok(reviewResponses);
     }
 
-    @GetMapping("/restaurant/{restaurantId}{userId}")
+    @GetMapping("/restaurant/{restaurantId}/{userId}")
     public ResponseEntity<ReviewResponse> findReview(@PathVariable UUID restaurantId, @PathVariable String userId) {
         Review review = reviewService.findReview(restaurantId, userId);
 
@@ -83,7 +100,8 @@ public class ReviewController {
 
         ReviewResponse reviewResponse = createReviewResponse(review);
 
-        return ResponseEntity.created(URI.create("/review/" + reviewResponse.getRestaurantId())).body(reviewResponse);
+        //TODO: verify correct pathing
+        return ResponseEntity.created(URI.create("/review/all/" + reviewResponse.getRestaurantId())).body(reviewResponse);
     }
 
     private ReviewResponse createReviewResponse(Review review) {

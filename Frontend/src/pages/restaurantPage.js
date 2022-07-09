@@ -33,14 +33,14 @@ class RestaurantPage extends BaseClass {
         const allRestaurants = await this.client.getAllRestaurants(this.errorHandler)
 
         //TODO: verify path
-        this.dataStore.set("restaurants", allRestaurants);
+        this.dataStore.set("restaurant/all", allRestaurants);
     }
 
     async fetchReviews() {
         const allReviews = await this.client.getAllReviews(this.errorHandler)
 
         //TODO: verify path
-        this.dataStore.set("reviews", allReviews);
+        this.dataStore.set("review/all", allReviews);
     }
 
     async checkRestaurants(inputRestaurantName) {
@@ -69,7 +69,8 @@ class RestaurantPage extends BaseClass {
     async renderRestaurant() {
         let resultArea = document.getElementById("result-info");
 
-        const restaurants = this.dataStore.get("restaurants");
+        // (KK) changed pathing
+        const restaurants = this.dataStore.get("restaurant/all");
 
         let storeHtmlRestaurant = "";
 
@@ -169,7 +170,10 @@ class RestaurantPage extends BaseClass {
         let randomRestaurant = await this.client.getRandomRestaurant(this.errorHandler);
 
         // populates form field with random restaurant name
-        document.getElementById('randomRestaurant').value = randomRestaurant.restaurantName;
+//        document.getElementById('randomRestaurant').value = randomRestaurant.restaurantName;
+//        document.getElementById('randomRestaurant').value = randomRestaurant;
+        let resultArea = document.getElementById("randomRestaurant");
+        resultArea.innerHTML = randomRestaurant.restaurantName;
 
         // Re-enable
         generateRestaurantButton.innerText = 'Generate';

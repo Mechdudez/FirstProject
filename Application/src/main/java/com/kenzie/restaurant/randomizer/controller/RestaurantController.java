@@ -29,8 +29,8 @@ public class RestaurantController {
         this.restaurantService = restaurantService;
     }
 
-    @GetMapping("/find/{restaurantId}")
-    public ResponseEntity<RestaurantResponse> searchRestaurantById(@PathVariable String restaurantId) {
+    @GetMapping("/{restaurantId}")
+    public ResponseEntity<RestaurantResponse> findByRestaurantId(@PathVariable String restaurantId) {
         Restaurant restaurant = restaurantService.findByRestaurantId(restaurantId);
 
         if (restaurant == null) {
@@ -57,7 +57,7 @@ public class RestaurantController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/restaurant")
+    @GetMapping("/random")
     public ResponseEntity<RestaurantResponse> getRandomRestaurant() {
         Restaurant restaurant = restaurantService.getRandomRestaurant();
 
@@ -93,7 +93,7 @@ public class RestaurantController {
 
         RestaurantResponse restaurantResponse = createRestaurantResponse(restaurant);
 
-        return ResponseEntity.created(URI.create("/restaurants/" + restaurantResponse.getRestaurantId())).body(restaurantResponse);
+        return ResponseEntity.created(URI.create("/restaurant/" + restaurantResponse.getRestaurantId())).body(restaurantResponse);
     }
 
     @PutMapping("/update")
@@ -106,7 +106,7 @@ public class RestaurantController {
 
         RestaurantResponse restaurantResponse = createRestaurantResponse(restaurantService.updateRestaurant(restaurant));
 
-        return ResponseEntity.created(URI.create("/restaurants/" + restaurantResponse.getRestaurantId())).body(restaurantResponse);
+        return ResponseEntity.created(URI.create("/restaurant/" + restaurantResponse.getRestaurantId())).body(restaurantResponse);
     }
 
     private RestaurantResponse createRestaurantResponse(Restaurant restaurant) {
