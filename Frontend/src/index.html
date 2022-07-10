@@ -16,12 +16,12 @@
     <form class="card-content" id="review-restaurant-form" accept-charset=utf-8>
         <p class="form-field">
             <label>Name</label>
-            <input name="restaurantName" placeholder="Name of Restaurant" required class="validated-field">
-            <input name="userId" placeholder="User ID" required class="validated-field">
-            <input name="title" placeholder="Review Title/Header" required class="validated-field">
-            <input name="rating" placeholder="Your Review Rating (0-5, 5 is best)" required class="validated-field">
-            <input name="price" placeholder="Name of Restaurant" required class="validated-field">
-            <textarea name="description" placeholder="Enter description here..." form="review-restaurant-form"></textarea>
+            <input name="restaurantName" placeholder="Name of Restaurant" required class="validated-field" id="review-restaurant-name">
+            <input name="userId" placeholder="User ID" required class="validated-field" id="review-restaurant-userId">
+            <input name="title" placeholder="Review Title/Header" required class="validated-field" id="review-restaurant-title">
+            <input name="rating" placeholder="Your Review Rating (0-5, 5 is best)" required class="validated-field" id="review-restaurant-rating">
+            <input name="price" placeholder="Name of Restaurant" required class="validated-field" id="review-restaurant-price">
+            <textarea name="description" placeholder="Enter description here..." form="review-restaurant-form" id="review-restaurant-description"></textarea>
         </p>
         <button type="submit">Create</button>
     </form>
@@ -35,7 +35,6 @@
         </p>
         <button type="submit" id="createReviewButton">Submit Review</button>
     </form>
-</div>
 </div>
 <div class="card">
     <h2>Create a restaurant</h2>

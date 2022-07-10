@@ -49,7 +49,7 @@ export default class RestaurantClient extends BaseClass {
     async createReview(restaurantId, restaurantName, userId, title,
                        rating, price, description, errorCallback) {
         try {
-            const response = await this.client.post(`/review/all`, {
+            const response = await this.client.post(`/review`, {
                 //TODO: need to get restaurantId without user input (implemented now in restaurantPage.js)
                 "restaurantId": restaurantId,
                 "restaurantName": restaurantName,

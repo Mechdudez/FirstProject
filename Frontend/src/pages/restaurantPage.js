@@ -142,12 +142,12 @@ class RestaurantPage extends BaseClass {
         submitReviewButton.disabled = true;
 
         // let restaurantId = document.getElementsByName("restaurantName").value;
-        let restaurantName = document.getElementsByName("restaurantName").value;
-        let userId = document.getElementsByName("userId").value;
-        let title = document.getElementsByName("title").value;
-        let rating = document.getElementsByName("rating").value;
-        let price = document.getElementsByName("price").value;
-        let description = document.getElementsByName("description").value;
+        let restaurantName = document.getElementById("review-restaurant-name").value;
+        let userId = document.getElementById("review-restaurant-userId").value;
+        let title = document.getElementById("review-restaurant-title").value;
+        let rating = document.getElementById("review-restaurant-rating").value;
+        let price = document.getElementById("review-restaurant-price").value;
+        let description = document.getElementById("review-restaurant-description").value;
 
         // restaurantId is pulled from dataStore
         let restaurantId = this.checkRestaurants(restaurantName);
