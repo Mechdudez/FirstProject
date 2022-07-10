@@ -8,7 +8,7 @@ class RestaurantPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGetRandomRestaurant', 'onCreateRestaurant', 'renderRestaurant', 'onGetReview', 'onCreateReview'], this);
+        this.bindClassMethods(['onGetRandomRestaurant', 'onCreateRestaurant', 'renderRestaurant', 'onClearResults', 'onGetReview', 'onCreateReview'], this);
         this.dataStore = new DataStore();
 
     }
@@ -20,6 +20,8 @@ class RestaurantPage extends BaseClass {
         document.getElementById('get-restaurant-form').addEventListener('click', this.onGetRandomRestaurant);
         document.getElementById('create-restaurant-form').addEventListener('submit', this.onCreateRestaurant);
         document.getElementById('review-restaurant-form').addEventListener('submit', this.onCreateReview);
+
+        document.getElementById('result').addEventListener('click', this.onClearResults);
         // document.getElementById('generateRandomRestaurant').addEventListener("click", this.onGetRandomRestaurant);
 
 
@@ -106,6 +108,19 @@ class RestaurantPage extends BaseClass {
         let result = await this.client.getAllReviews(this.errorHandler);
         this.dataStore.set("review", result);
     }
+
+    async onClearResults(events) {
+        event.preventDefault();
+
+        let clearResultsButton = document.getElementById('clearResultsButton');
+        let randomResultArea = document.getElementById("randomRestaurant");
+        let resultArea = document.getElementById("result-info");
+
+
+        randomResultArea.innerHTML = "";
+        resultArea.innerHTML = "";
+    }
+
 
 
     async onCreateReview(event) {

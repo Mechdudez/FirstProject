@@ -53,6 +53,16 @@
     background: #9cc3e4;
 }
 
+#clearResultsButton {
+    position:absolute;
+    margin-top: 23px;
+    margin-left: 10px;
+}
+
+#resultHeader {
+    display: inline-block;
+}
+
 .card {
     color: var(--primary-color);
     background-color: var(--secondary-color);
