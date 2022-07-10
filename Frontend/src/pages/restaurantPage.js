@@ -141,7 +141,7 @@ class RestaurantPage extends BaseClass {
         submitReviewButton.innerText = 'submitting...';
         submitReviewButton.disabled = true;
 
-        // let restaurantId = document.getElementsByName("restaurantName").value;
+        // let restaurantId = document.getElementsByName("restaurantName").value ;
         let restaurantName = document.getElementById("review-restaurant-name").value;
         let userId = document.getElementById("review-restaurant-userId").value;
         let title = document.getElementById("review-restaurant-title").value;
