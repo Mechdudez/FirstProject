@@ -44,13 +44,15 @@ public class SampleRestaurantGenerator {
         }
         // Have to get rid of the double quotes, by iterating through the list?
 
+        // "restaurantId","averagePrice","averageRating","category","name" // Try to figure out how to get it back into the CSV
+        // Do a one for all if statement for the first line
 
 // Have to iterate through the String array for each restaurant object
         for (String[] detailsRestaurant : stringList) {
             Restaurant restaurant = new Restaurant();
             UUID uuid = UUID.randomUUID();
             restaurant.setRestaurantId(uuid);
-            restaurant.setAveragePrice(Double.valueOf(detailsRestaurant[1]));
+            restaurant.setAveragePrice(Double.valueOf((detailsRestaurant[1])));
             restaurant.setAverageRating(Double.valueOf(detailsRestaurant[2]));
             restaurant.setCategory(detailsRestaurant[3]);
             restaurant.setRestaurantName(detailsRestaurant[4]);
