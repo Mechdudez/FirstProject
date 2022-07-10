@@ -40,22 +40,23 @@
 }
 
 .button, button {
-    background: #aed9ff;
-    padding: 3px;
+    background: #C50D0D;
+    padding: 5px;
     border-radius: 3px;
     text-decoration: none;
-    color: black;
-    border: 1px solid black;
+    color: white;
+    border: 1px;
+    border-color: #D61616;
     cursor: pointer;
 }
 
 .button:hover, button:hover {
-    background: #9cc3e4;
+    background: #9E0808;
 }
 
 #clearResultsButton {
     position:absolute;
-    margin-top: 23px;
+    margin-top: 25px;
     margin-left: 10px;
 }
 
@@ -67,7 +68,7 @@
     color: var(--primary-color);
     background-color: var(--secondary-color);
     margin: 20px;
-    padding: 10px 20px;
+    padding: 10px 85px 20px 50px;
 }
 
 .validated-field:invalid {

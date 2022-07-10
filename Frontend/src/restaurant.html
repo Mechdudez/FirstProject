@@ -16,13 +16,42 @@
     <!--    Google Font Family-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Satisfy&display=swap" rel="stylesheet">
 
     <style>
         h1.main {
             font-family: "Satisfy", cursive;
-            padding: 10px;
+            padding-left: 10px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            font-size: 50px;
         }
+
+        h1.finalRandom {
+            font-family: "Satisfy", cursive;
+            margin-top: 0px;
+            margin-bottom: 15px;
+            font-size: 40px;
+        }
+
+        h2 {
+            font-family: 'Nunito', sans-serif;;
+        }
+
+        h3.listName {
+            font-family: "Satisfy", cursive;
+            margin-top: 0px;
+            margin-bottom: -10px;
+            font-size: 30px;
+        }
+
+
+        hr {
+            border: 0;
+            border-top: 1px solid;
+            border-top-color: #AD0101;
+        }
+
     </style>
 
 
@@ -386,7 +415,7 @@
 <div class="card" id="result">
     <h2 id="resultHeader">Result: </h2><button type="submit" id="clearResultsButton">clear</button>
 
-    <p id="randomRestaurant"></p>
+    <h1 class="finalRandom" id="randomRestaurant" style="color:red;"></h1>
     <p id="result-info"></p>
 </div>
 </body>

@@ -8,7 +8,7 @@ class RestaurantPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGetRandomRestaurant', 'onCreateRestaurant', 'renderRestaurant', 'onClearResults', 'onGetReview', 'onCreateReview'], this);
+        this.bindClassMethods(['onGetRandomRestaurant', 'onCreateRestaurant', 'renderRestaurant', 'clearResults', 'onManualClearResults', 'onGetReview', 'onCreateReview'], this);
         this.dataStore = new DataStore();
 
     }
@@ -21,7 +21,7 @@ class RestaurantPage extends BaseClass {
         document.getElementById('create-restaurant-form').addEventListener('submit', this.onCreateRestaurant);
         document.getElementById('review-restaurant-form').addEventListener('submit', this.onCreateReview);
 
-        document.getElementById('result').addEventListener('click', this.onClearResults);
+        document.getElementById('clearResultsButton').addEventListener('click', this.onManualClearResults);
         // document.getElementById('generateRandomRestaurant').addEventListener("click", this.onGetRandomRestaurant);
 
 
@@ -79,11 +79,11 @@ class RestaurantPage extends BaseClass {
         for (let restaurant of restaurants){
 
             if (restaurant) {
-
                 storeHtmlRestaurant += `<ul>`;
-                storeHtmlRestaurant += `<p>Restaurant Name: ${restaurant.restaurantName}</p>`;
-                storeHtmlRestaurant += `<p>Category: ${restaurant.category}</p>`;
-                storeHtmlRestaurant += `<p>Store Hours: ${restaurant.storeHours}</p>`;
+                storeHtmlRestaurant += `<p><h3 class="listName" style="color:red;">${restaurant.restaurantName}</h3></p>`;
+                storeHtmlRestaurant += `<p><b>Category: </b>${restaurant.category}</p>`;
+                storeHtmlRestaurant += `<p><b>Store Hours: </b>${restaurant.storeHours}</p>`;
+                storeHtmlRestaurant += `<hr></hr>`;
                 storeHtmlRestaurant += `<p></p>`;
                 storeHtmlRestaurant += `</ul>`;
                 resultArea.innerHTML = storeHtmlRestaurant;
@@ -93,6 +93,14 @@ class RestaurantPage extends BaseClass {
             }
         }
 
+    }
+
+    async clearResults() {
+        let randomResultArea = document.getElementById("randomRestaurant");
+        let resultArea = document.getElementById("result-info");
+
+        randomResultArea.innerHTML = "";
+        resultArea.innerHTML = "";
     }
 
     // Event Handlers --------------------------------------------------------------------------------------------------
@@ -109,16 +117,17 @@ class RestaurantPage extends BaseClass {
         this.dataStore.set("review", result);
     }
 
-    async onClearResults(events) {
+    async onManualClearResults(events) {
         event.preventDefault();
 
         let clearResultsButton = document.getElementById('clearResultsButton');
-        let randomResultArea = document.getElementById("randomRestaurant");
-        let resultArea = document.getElementById("result-info");
-
-
-        randomResultArea.innerHTML = "";
-        resultArea.innerHTML = "";
+//        let randomResultArea = document.getElementById("randomRestaurant");
+//        let resultArea = document.getElementById("result-info");
+//
+//
+//        randomResultArea.innerHTML = "";
+//        resultArea.innerHTML = "";
+        this.clearResults();
     }
 
 
@@ -131,8 +140,6 @@ class RestaurantPage extends BaseClass {
         let submitReviewButton = document.getElementById('submitReviewButton');
         submitReviewButton.innerText = 'submitting...';
         submitReviewButton.disabled = true;
-
-        //TODO: figure out how to get restaurantId without front end user input
 
         // let restaurantId = document.getElementsByName("restaurantName").value;
         let restaurantName = document.getElementsByName("restaurantName").value;
@@ -167,7 +174,6 @@ class RestaurantPage extends BaseClass {
 
     }
 
-    //TODO: finish implementation
     async onGetRandomRestaurant(event) {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
@@ -180,8 +186,6 @@ class RestaurantPage extends BaseClass {
         let randomRestaurant = await this.client.getRandomRestaurant(this.errorHandler);
 
         // populates form field with random restaurant name
-//        document.getElementById('randomRestaurant').value = randomRestaurant.restaurantName;
-//        document.getElementById('randomRestaurant').value = randomRestaurant;
         let resultArea = document.getElementById("randomRestaurant");
         if (randomRestaurant) {
             resultArea.innerHTML = randomRestaurant.restaurantName;
