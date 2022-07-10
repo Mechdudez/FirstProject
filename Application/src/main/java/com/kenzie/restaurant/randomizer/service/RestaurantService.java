@@ -1,5 +1,6 @@
 package com.kenzie.restaurant.randomizer.service;
 
+import com.kenzie.restaurant.randomizer.controller.sampleRestaurants.SampleRestaurantGenerator;
 import com.kenzie.restaurant.randomizer.repositories.RestaurantRepository;
 import com.kenzie.restaurant.randomizer.repositories.model.RestaurantRecord;
 import com.kenzie.restaurant.randomizer.service.model.Restaurant;
@@ -7,6 +8,7 @@ import com.kenzie.restaurant.randomizer.service.model.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -21,11 +23,36 @@ public class RestaurantService {
 
     private final ReviewService reviewService;
 
+    private SampleRestaurantGenerator sampleRestaurantGenerator;
+
     @Autowired
     public RestaurantService(RestaurantRepository restaurantRepository, ReviewService reviewService){
         this.restaurantRepository = restaurantRepository;
         this.reviewService = reviewService;
     }
+
+
+    public List<Restaurant> getReadDate(List<Restaurant> restaurantList) throws IOException{
+
+
+        restaurantList = sampleRestaurantGenerator.readData();
+
+        if(restaurantList == null){
+            throw new RestaurantNotFoundException("Cannot find a restaurant");
+        }
+//        RestaurantRecord restaurantRecord = new RestaurantRecord();
+//        restaurantRecord.setRestaurantId(restaurant.getRestaurantId());
+//        restaurantRecord.setAveragePrice(restaurant.getAveragePrice());
+//        restaurantRecord.setAverageRating(restaurant.getAverageRating());
+//        restaurantRecord.setName(restaurant.getRestaurantName());
+//        restaurantRecord.setCategory(restaurant.getCategory());
+
+      //  restaurantRepository.save(restaurantRecord);
+
+
+        return restaurantList;
+    }
+
 
     public Restaurant addNewRestaurant(Restaurant restaurant){
         if (restaurant == null){

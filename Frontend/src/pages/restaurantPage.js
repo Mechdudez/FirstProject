@@ -33,7 +33,7 @@ class RestaurantPage extends BaseClass {
         const allRestaurants = await this.client.getAllRestaurants(this.errorHandler)
 
         //TODO: verify path
-        this.dataStore.set("restaurant/all", allRestaurants);
+        this.dataStore.set("restaurants/all", allRestaurants);
     }
 
     async fetchReviews() {
@@ -70,7 +70,7 @@ class RestaurantPage extends BaseClass {
         let resultArea = document.getElementById("result-info");
 
         // (KK) changed pathing
-        const restaurants = this.dataStore.get("restaurant/all");
+        const restaurants = this.dataStore.get("restaurants/all");
 
         let storeHtmlRestaurant = "";
 
@@ -79,9 +79,10 @@ class RestaurantPage extends BaseClass {
             if (restaurant) {
 
                 storeHtmlRestaurant += `<ul>`;
-                storeHtmlRestaurant += `<p>${restaurant.name}</p>`;
-                storeHtmlRestaurant += `<p>${restaurant.category}</p>`;
-                storeHtmlRestaurant += `<p>${restaurant.storeHours}</p>`;
+                storeHtmlRestaurant += `<p>Restaurant Name: ${restaurant.restaurantName}</p>`;
+                storeHtmlRestaurant += `<p>Category: ${restaurant.category}</p>`;
+                storeHtmlRestaurant += `<p>Store Hours: ${restaurant.storeHours}</p>`;
+                storeHtmlRestaurant += `<p></p>`;
                 storeHtmlRestaurant += `</ul>`;
                 resultArea.innerHTML = storeHtmlRestaurant;
 
@@ -191,7 +192,6 @@ class RestaurantPage extends BaseClass {
         createRestaurantButton.innerText = 'creating...';
         createRestaurantButton.disabled = true;
 
-        let userId = document.getElementById("create-restaurant-userId").value;
         let name = document.getElementById("create-restaurant-name").value;
         let category = document.getElementById("create-restaurant-category").value;
 
@@ -232,12 +232,12 @@ class RestaurantPage extends BaseClass {
 
         //input all storeHours variables, calls createStoreHours from restaurantClient.js (KK)
         const Monday = "Monday "  + mondayStart + mondayStartAMPM + " to " + mondayEnd + mondayEndAMPM;
-        const Tuesday = "Tuesday " + tuesdayStart + tuesdayStartAMPM + " to " + tuesdayEnd + tuesdayEndAMPM;
-        const Wednesday = "Wednesday " + wednesdayStart + wednesdayStartAMPM + " to " + wednesdayEnd + wednesdayEndAMPM;
-        const Thursday = "Thursday " + thursdayStart + thursdayStartAMPM + " to " + thursdayEnd + thursdayEndAMPM;
-        const Friday = "Friday " + fridayStart + fridayStartAMPM + " to " + fridayEnd + fridayEndAMPM;
-        const Saturday = "Saturday " + saturdayStart + saturdayStartAMPM + " to " + saturdayEnd + saturdayEndAMPM;
-        const Sunday = "Sunday " + sundayStart + sundayStartAMPM + " to " + sundayEnd + sundayEndAMPM;
+        const Tuesday = " Tuesday " + tuesdayStart + tuesdayStartAMPM + " to " + tuesdayEnd + tuesdayEndAMPM;
+        const Wednesday = " Wednesday " + wednesdayStart + wednesdayStartAMPM + " to " + wednesdayEnd + wednesdayEndAMPM;
+        const Thursday = " Thursday " + thursdayStart + thursdayStartAMPM + " to " + thursdayEnd + thursdayEndAMPM;
+        const Friday = " Friday " + fridayStart + fridayStartAMPM + " to " + fridayEnd + fridayEndAMPM;
+        const Saturday = " Saturday " + saturdayStart + saturdayStartAMPM + " to " + saturdayEnd + saturdayEndAMPM;
+        const Sunday = " Sunday " + sundayStart + sundayStartAMPM + " to " + sundayEnd + sundayEndAMPM;
 
         // list of strings variable
         let storeHours = [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday];
@@ -248,10 +248,10 @@ class RestaurantPage extends BaseClass {
 
         //input all arguments and call createRestaurant() from restaurantClient
         const createdRestaurant = await this.client.createRestaurant(name, category, storeHours, this.errorHandler);
-        this.dataStore.set("restaurant", createdRestaurant);
+        this.dataStore.set("restaurants", createdRestaurant);
 
         if (createdRestaurant) {
-            this.showMessage(`Created ${createdRestaurant.name}!`)
+            this.showMessage(`Created ${createdRestaurant.restaurantName}!`);
         } else {
             this.errorHandler("Error creating!  Try again...");
         }

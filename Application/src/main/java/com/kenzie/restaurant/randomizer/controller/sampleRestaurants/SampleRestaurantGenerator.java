@@ -1,5 +1,6 @@
 package com.kenzie.restaurant.randomizer.controller.sampleRestaurants;
 
+import com.kenzie.restaurant.randomizer.controller.RestaurantController;
 import com.kenzie.restaurant.randomizer.service.model.Restaurant;
 
 import java.io.*;
@@ -11,7 +12,7 @@ import java.util.UUID;
 
 public class SampleRestaurantGenerator {
 
-    public static List<Restaurant> readData() throws IOException {
+    public  List<Restaurant> readData() throws IOException {
 
         List<Restaurant> restaurantList = new ArrayList<>(); // Will hold the restaurants, so they don't go poof
         List<String[]> stringList = new ArrayList<>();
@@ -32,9 +33,7 @@ public class SampleRestaurantGenerator {
                     columns[i] = columns[i].replaceAll("^\"|\"$", "");
 
                 }
-                // print all columns
-                //  System.out.println("Restaurant[" + String.join(", ", columns) + "]");
-                // adds all the Strings into a List.
+
                 stringList.add(columns);
 
             }
@@ -42,12 +41,7 @@ public class SampleRestaurantGenerator {
             ex.printStackTrace();
 
         }
-        // Have to get rid of the double quotes, by iterating through the list?
-
-        // "restaurantId","averagePrice","averageRating","category","name" // Try to figure out how to get it back into the CSV
-        // Do a one for all if statement for the first line
-
-// Have to iterate through the String array for each restaurant object
+        // Have to iterate through the String array for each restaurant object
         for (String[] detailsRestaurant : stringList) {
             Restaurant restaurant = new Restaurant();
             UUID uuid = UUID.randomUUID();
@@ -57,14 +51,12 @@ public class SampleRestaurantGenerator {
             restaurant.setCategory(detailsRestaurant[3]);
             restaurant.setRestaurantName(detailsRestaurant[4]);
 
-            restaurantList.add(restaurant); // Only grabbing the first one. How can I get it to grab each one?
+            restaurantList.add(restaurant);
 
         }
         System.out.println(restaurantList);
         return restaurantList;
     }
 
-    public static void main(String[] args) throws IOException {
-        readData();
-    }
+
 }

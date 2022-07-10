@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -45,7 +46,7 @@ class GetRandomRestaurantIntegrationTest {
         RestaurantCreateRequest restaurantCreateRequest = new RestaurantCreateRequest();
         restaurantCreateRequest.setName(mockNeat.strings().get());
         restaurantCreateRequest.setCategory(mockNeat.strings().get());
-        restaurantCreateRequest.setStoreHours(new String[]{(mockNeat.strings().get())});
+        restaurantCreateRequest.setStoreHours(Collections.singletonList((mockNeat.strings().get())));
 
         queryUtility.restaurantControllerClient.createRestaurant(restaurantCreateRequest);
         //WHEN

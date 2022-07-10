@@ -11,7 +11,7 @@ public class Restaurant {
 
     private String category;
 
-    private String[] storeHours;
+    private List<String> storeHours;
 
     private Double averagePrice;
 
@@ -25,7 +25,7 @@ public class Restaurant {
     public Restaurant() {
     }
 
-    public Restaurant(UUID restaurantId, String restaurantName, String category, String[] storeHours) {
+    public Restaurant(UUID restaurantId, String restaurantName, String category, List<String> storeHours) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.category = category;
@@ -58,11 +58,11 @@ public class Restaurant {
     }
 
 
-    public String[] getStoreHours() {
+    public List<String> getStoreHours() {
         return storeHours;
     }
 
-    public void setStoreHours(String[] storeHours) {
+    public void setStoreHours(List<String> storeHours) {
         this.storeHours = storeHours;
     }
 

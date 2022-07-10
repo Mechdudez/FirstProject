@@ -6,12 +6,15 @@ import com.kenzie.restaurant.randomizer.controller.model.RestaurantCreateRequest
 import com.kenzie.restaurant.randomizer.controller.model.RestaurantGetRequest;
 import com.kenzie.restaurant.randomizer.controller.model.RestaurantResponse;
 import com.kenzie.restaurant.randomizer.controller.model.RestaurantUpdateRequest;
+import com.kenzie.restaurant.randomizer.controller.sampleRestaurants.SampleRestaurantGenerator;
 import com.kenzie.restaurant.randomizer.service.RestaurantService;
 import com.kenzie.restaurant.randomizer.service.model.Restaurant;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +28,28 @@ public class RestaurantController {
     // Pulls from Service
     private RestaurantService restaurantService;
 
+    private SampleRestaurantGenerator sampleRestaurantGenerator;
+
+    @Autowired
     RestaurantController(RestaurantService restaurantService) {
         this.restaurantService = restaurantService;
+    }
+    RestaurantController(){
+
+    }
+
+    @PostMapping("/all")
+    public  ResponseEntity<List<RestaurantResponse>> getReadData() throws IOException {
+        List<Restaurant> restaurantList = sampleRestaurantGenerator.readData();
+
+        if (restaurantList == null) {
+            return ResponseEntity.notFound().build();
+        }
+        List<RestaurantResponse> response = new ArrayList<>();
+        for (Restaurant restaurant : restaurantList) {
+            response.add(this.createRestaurantResponse(restaurant));
+        }
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{restaurantId}")
@@ -57,7 +80,7 @@ public class RestaurantController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping ("/random")
+    @GetMapping("/random")
     public ResponseEntity<RestaurantResponse> getRandomRestaurant() {
         Restaurant restaurant = restaurantService.getRandomRestaurant();
 
@@ -71,7 +94,7 @@ public class RestaurantController {
     }
 
     @GetMapping("/within/{price}{category}")
-    public ResponseEntity<RestaurantResponse> getSortedRestaurant(@PathVariable ("price") Double price, @PathVariable ("category") String category) {
+    public ResponseEntity<RestaurantResponse> getSortedRestaurant(@PathVariable("price") Double price, @PathVariable("category") String category) {
         Restaurant restaurant = restaurantService.getSortedRestaurant(price, category);
 
         if (restaurant == null) {
@@ -129,5 +152,9 @@ public class RestaurantController {
         }
 
         return restaurantResponse;
+    }
+    public static void main(String[] args) throws IOException {
+        RestaurantController restaurantController = new RestaurantController();
+        System.out.println(restaurantController.getReadData());
     }
 }

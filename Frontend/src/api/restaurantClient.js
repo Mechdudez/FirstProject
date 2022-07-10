@@ -30,7 +30,7 @@ export default class RestaurantClient extends BaseClass {
 
     async findByRestaurantId(restaurantId, errorCallback) {
         try {
-            const response = await this.client.get(`/restaurant/${restaurantId}`);
+            const response = await this.client.get(`/restaurants/${restaurantId}`);
             return response.data;
         } catch (error) {
             this.handleError("findByRestaurantId", error, errorCallback)
@@ -39,7 +39,7 @@ export default class RestaurantClient extends BaseClass {
 
     async getRandomRestaurant(errorCallback) {
         try {
-            const response = await this.client.post(`/restaurant/random`);
+            const response = await this.client.get(`/restaurants/random`);
             return response.data;
         } catch (error) {
             this.handleError("getRandomRestaurant", error, errorCallback)
@@ -69,7 +69,7 @@ export default class RestaurantClient extends BaseClass {
 
     async createRestaurant( name, category, storeHours, errorCallback) {
         try {
-            const response = await this.client.post(`restaurant`, {
+            const response = await this.client.post(`restaurants`, {
                 //TODO: need to generate UUID serverside instead of user input (KK)
                 //TODO: clarify function and application of userId (KK)
                 "name": name,
@@ -85,7 +85,7 @@ export default class RestaurantClient extends BaseClass {
     }
     async getAllRestaurants(errorCallback) {
         try {
-            const response = await this.client.get(`/restaurant/all`);
+            const response = await this.client.get(`/restaurants/all`);
             return response.data;
         } catch (error) {
             this.handleError("getAllRestaurants", error, errorCallback)

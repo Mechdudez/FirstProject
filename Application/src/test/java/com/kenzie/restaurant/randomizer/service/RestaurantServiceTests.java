@@ -36,9 +36,9 @@ public class RestaurantServiceTests {
         UUID restaurantId = randomUUID();
         String name = "test";
         String category = "bad food";
-        String[] storeHours = new String[]{"Monday - Friday: 9-5", "Weekend: 12-6"};
-
-        String userId = "XxTESTMAN69xX";
+        List<String> storeHours = new ArrayList<>();
+        String hours = "6:30am";
+        storeHours.add(hours);
 
         Restaurant restaurant = new Restaurant(restaurantId, name, category, storeHours);
 
@@ -72,12 +72,16 @@ public class RestaurantServiceTests {
         UUID restaurantId = randomUUID();
         String name = "test";
         String category = "bad food";
-        String[] storeHours = new String[]{"Monday - Friday: 9-5", "Weekend: 12-6"};
+        List<String> storeHours = new ArrayList<>();
+        String hours = "6:30am";
+        storeHours.add(hours);
 
         UUID restaurantId2 = randomUUID();
         String name2 = "test2";
         String category2 = "good food";
-        String[] storeHours2 = new String[]{"Monday - Friday: 9-6", "Weekend: 10-5"};
+        List<String> storeHours2 = new ArrayList<>();
+        String hours2 = "6:30am";
+        storeHours.add(hours2);
 
         String userId = "XxTESTMAN69xX";
 
@@ -140,7 +144,9 @@ public class RestaurantServiceTests {
         UUID restaurantId = randomUUID();
         String name = "test";
         String category = "bad food";
-        String[] storeHours = new String[]{"Monday - Friday: 9-5", "Weekend: 12-6"};
+        List<String> storeHours = new ArrayList<>();
+        String hours = "6:30am";
+        storeHours.add(hours);
 
         String userId = "XxTESTMAN69xX";
 
@@ -197,7 +203,9 @@ public class RestaurantServiceTests {
     @Test
     void updateRestaurant_restaurantIsUpdated_returnNewRestaurant() {
         //GIVEN
-        String[] storeHours = new String[]{"Monday - Friday: 9-5", "Weekend: 12-6"};
+        List<String> storeHours = new ArrayList<>();
+        String hours = "6:30am";
+        storeHours.add(hours);
 
         RestaurantRecord restaurantRecord = new RestaurantRecord();
         restaurantRecord.setStoreHours(storeHours);

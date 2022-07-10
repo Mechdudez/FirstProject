@@ -24,7 +24,6 @@ public class ReviewService {
 
     @Autowired
     public ReviewService(ReviewRepository reviewRepository) {
-        //this.restaurantService = restaurantService;
         this.reviewRepository = reviewRepository;
     }
 

@@ -20,7 +20,7 @@ public class RestaurantResponse {
     private String category;
 
     @JsonProperty("storeHours")
-    private String[] storeHours;
+    private List<String> storeHours;
 
     @JsonProperty("averagePrice")
     private Double averagePrice;
@@ -55,11 +55,11 @@ public class RestaurantResponse {
         this.category = category;
     }
 
-    public String[] getStoreHours() {
+    public List<String> getStoreHours() {
         return storeHours;
     }
 
-    public void setStoreHours(String[] storeHours) {
+    public void setStoreHours(List<String> storeHours) {
         this.storeHours = storeHours;
     }
 

@@ -52,7 +52,7 @@ class ReviewRestaurantIntegrationTest {
         RestaurantCreateRequest restaurantCreateRequest = new RestaurantCreateRequest();
         restaurantCreateRequest.setName(mockNeat.strings().get());
         restaurantCreateRequest.setCategory(mockNeat.strings().get());
-        restaurantCreateRequest.setStoreHours(new String[]{mockNeat.strings().get()});
+        restaurantCreateRequest.setStoreHours(Collections.singletonList(mockNeat.strings().get()));
 
         ResultActions result = queryUtility.restaurantControllerClient.createRestaurant(restaurantCreateRequest);
 
@@ -60,7 +60,6 @@ class ReviewRestaurantIntegrationTest {
         Restaurant restaurant = gson.fromJson(result.andReturn().getResponse().getContentAsString(), Restaurant.class);
 
         ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest();
-        reviewCreateRequest.setRestaurantId(UUID.fromString(mockNeat.strings().get()));
         reviewCreateRequest.setRestaurantId(restaurant.getRestaurantId());
         reviewCreateRequest.setUserId(mockNeat.strings().get());
         reviewCreateRequest.setRestaurantName(mockNeat.strings().get());
