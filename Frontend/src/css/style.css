@@ -7,6 +7,9 @@
 
 .background {
     background-color: #eaeded;
+    background-image: url("8106.jpg");
+    background-repeat: repeat;
+    background-size: 10%;
     margin: 0;
     counter-reset: section;
 }
