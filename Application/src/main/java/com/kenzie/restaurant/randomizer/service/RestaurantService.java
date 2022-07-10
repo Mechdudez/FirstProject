@@ -32,26 +32,29 @@ public class RestaurantService {
     }
 
 
-    public List<Restaurant> getReadDate(List<Restaurant> restaurantList) throws IOException{
 
 
-        restaurantList = sampleRestaurantGenerator.readData();
-
-        if(restaurantList == null){
-            throw new RestaurantNotFoundException("Cannot find a restaurant");
-        }
+    //TODO implement later
+//    public List<Restaurant> getReadDate(List<Restaurant> restaurantList) throws IOException{
+//
+//
+//        restaurantList = sampleRestaurantGenerator.readData();
+//
+//        if(restaurantList == null){
+//            throw new RestaurantNotFoundException("Cannot find a restaurant");
+//        }
 //        RestaurantRecord restaurantRecord = new RestaurantRecord();
 //        restaurantRecord.setRestaurantId(restaurant.getRestaurantId());
 //        restaurantRecord.setAveragePrice(restaurant.getAveragePrice());
 //        restaurantRecord.setAverageRating(restaurant.getAverageRating());
 //        restaurantRecord.setName(restaurant.getRestaurantName());
 //        restaurantRecord.setCategory(restaurant.getCategory());
-
-      //  restaurantRepository.save(restaurantRecord);
-
-
-        return restaurantList;
-    }
+//
+//        restaurantRepository.save(restaurantRecord);
+//
+//
+//        return restaurantList;
+//    }
 
 
     public Restaurant addNewRestaurant(Restaurant restaurant){

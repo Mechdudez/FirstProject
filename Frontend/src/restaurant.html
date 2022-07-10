@@ -18,7 +18,121 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Satisfy&display=swap" rel="stylesheet">
 
+    <meta charset="UTF-8">
+    <style type="text/css">
+        #burger {
+            width: 400px;
+        }
+        #burger #top-bun {
+            height: 100px;
+            border-radius: 900px 900px 10px 10px;
+            background-color: #A27732;
+            border-top: 9px solid #906725;
+        }
+        #burger #lettuce {
+            border-radius: 8px;
+            background-color: #80D041;
+            height: 8px;
+            border-bottom: 3px solid #0F6D12;
+        }
+        #burger #tomato {
+            border-radius: 14px;
+            background-color: #F13233;
+            height: 20px;
+            border-bottom: 5px solid #940C0E;
+        }
+        #burger #onion {
+            border-radius: 8px;
+            background-color: #B95381;
+            height: 13px;
+            border-bottom: 4px solid #7E1846;
+        }
+        #burger #cheese {
+            background-color: #E8EA02;
+            border-radius: 10px;
+            height: 15px;
+            border-bottom: 5px solid #EAB902;
+        }
+        #burger #beef {
+            border-radius: 15px;
+            background-color: #603102;
+            height: 30px;
+            border-bottom: 16px solid #402408;
+        }
+        #burger #bottom-bun {
+            background-color: #A27732;
+            border-radius: 10px 10px 50px 50px;
+            height: 60px;
+            border-bottom: 11px solid #724D12;
+        }
+    </style>
+    <style type="text/css">
+        #burger {
+            width: 400px;
+        }
+        #burger #top-bun {
+            height: 100px;
+            border-radius: 900px 900px 10px 10px;
+            background-color: #A27732;
+            border-top: 9px solid #906725;
+        }
+        #burger #lettuce {
+            border-radius: 8px;
+            background-color: #80D041;
+            height: 8px;
+            border-bottom: 3px solid #0F6D12;
+        }
+        #burger #tomato {
+            border-radius: 14px;
+            background-color: #F13233;
+            height: 20px;
+            border-bottom: 5px solid #940C0E;
+        }
+        #burger #onion {
+            border-radius: 8px;
+            background-color: #B95381;
+            height: 13px;
+            border-bottom: 4px solid #7E1846;
+        }
+        #burger #cheese {
+            background-color: #E8EA02;
+            border-radius: 10px;
+            height: 15px;
+            border-bottom: 5px solid #EAB902;
+        }
+        #burger #beef {
+            border-radius: 15px;
+            background-color: #603102;
+            height: 30px;
+            border-bottom: 16px solid #402408;
+        }
+        #burger #bottom-bun {
+            background-color: #A27732;
+            border-radius: 10px 10px 50px 50px;
+            height: 60px;
+            border-bottom: 11px solid #724D12;
+        }
+    </style>
+</head>
+<body>
+<div id="burger">
+    <div id="top-bun"></div>
+    <div id="lettuce"></div>
+    <div id="tomato"></div>
+    <div id="onion"></div>
+    <div id="cheese"></div>
+    <div id="beef"></div>
+    <div id="bottom-bun"></div>
+</div>
+</body>
+
     <style>
+        @keyframes mover {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+
+
         h1.main {
             font-family: "Satisfy", cursive;
             padding-left: 10px;
