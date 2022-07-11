@@ -62,7 +62,7 @@ public class RestaurantController {
     }
 
 
-    @GetMapping("/within{price}{category}")
+    @GetMapping("within/{price}/{category}")
     public ResponseEntity<RestaurantResponse> getSortedRestaurant(@PathVariable("price") Double price, @PathVariable("category") String category) {
         Restaurant restaurant = restaurantService.getSortedRestaurant(price, category);
 
