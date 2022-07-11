@@ -76,18 +76,7 @@ public class ReviewController {
         return ResponseEntity.ok(reviewResponse);
     }
 
-//    @GetMapping("/all")
-//    public ResponseEntity<ReviewResponse> getSortedRestaurant(Double price, String category) {
-//        Review review = restaurantService.getSortedRestaurant(price, category);
-//
-//        if (review == null) {
-//            return ResponseEntity.noContent().build();
-//        }
-//
-//        ReviewResponse response = createReviewResponse(review);
-//
-//        return ResponseEntity.ok(response);
-//    }
+
 
     @PostMapping
     public ResponseEntity<ReviewResponse> addNewReview(@RequestBody ReviewCreateRequest reviewCreateRequest) {
