@@ -55,7 +55,7 @@ public class RestaurantController {
 //    }
 
     @GetMapping("/{restaurantId}")
-    public ResponseEntity<RestaurantResponse> findByRestaurantId(@PathVariable("restaurantId") String restaurantId) {
+    public ResponseEntity<RestaurantResponse> findByRestaurantId(@PathVariable("restaurantId") UUID restaurantId) {
         Restaurant restaurant = restaurantService.findByRestaurantId(restaurantId);
 
         if (restaurant == null) {
@@ -117,19 +117,6 @@ public class RestaurantController {
         restaurantService.addNewRestaurant(restaurant);
 
         RestaurantResponse restaurantResponse = createRestaurantResponse(restaurant);
-
-        return ResponseEntity.created(URI.create("/restaurant/" + restaurantResponse.getRestaurantId())).body(restaurantResponse);
-    }
-
-    @PutMapping("/update")
-    public ResponseEntity<RestaurantResponse> updateRestaurant(@RequestBody RestaurantUpdateRequest restaurantUpdateRequest) {
-        Restaurant restaurant = new Restaurant(restaurantUpdateRequest.getRestaurantId(),
-                restaurantUpdateRequest.getName(),
-                restaurantUpdateRequest.getCategory(),
-                restaurantUpdateRequest.getStoreHours());
-
-
-        RestaurantResponse restaurantResponse = createRestaurantResponse(restaurantService.updateRestaurant(restaurant));
 
         return ResponseEntity.created(URI.create("/restaurant/" + restaurantResponse.getRestaurantId())).body(restaurantResponse);
     }

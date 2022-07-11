@@ -1,7 +1,6 @@
 package com.kenzie.restaurant.randomizer.randomizer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.gson.Gson;
 import com.kenzie.restaurant.randomizer.IntegrationTest;
 import com.kenzie.restaurant.randomizer.controller.model.RestaurantCreateRequest;
@@ -11,7 +10,6 @@ import net.andreinc.mockneat.MockNeat;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;

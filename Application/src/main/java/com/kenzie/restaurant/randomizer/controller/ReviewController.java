@@ -85,7 +85,7 @@ public class ReviewController {
             throw new RestaurantNotFoundException("Restaurant no bueno");
         }
 
-        if (restaurantService.findByRestaurantId(reviewCreateRequest.getRestaurantId().toString()) == null){
+        if (restaurantService.findByRestaurantId(reviewCreateRequest.getRestaurantId()) == null){
             throw new RestaurantNotFoundException("Restaurant no bueno");
         }
 

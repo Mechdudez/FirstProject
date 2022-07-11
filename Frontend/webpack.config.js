@@ -10,7 +10,8 @@ module.exports = {
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
-    restaurantPage: path.resolve(__dirname, 'src', 'pages', 'restaurantPage.js')
+    restaurantPage: path.resolve(__dirname, 'src', 'pages', 'restaurantPage.js'),
+    loginPage: path.resolve(__dirname, 'src', 'pages', 'loginPage.js')
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -23,7 +24,7 @@ module.exports = {
 
     open: true,
 
-    openPage: 'http://localhost:8080/restaurant.html',
+    openPage: 'http://localhost:8080',
 
     // disableHostChecks, otherwise we get an error about headers and the page won't render
 
@@ -42,6 +43,7 @@ module.exports = {
         context: [
 
           '/restaurant',
+          '/login',
           '/review'
 
         ],
@@ -60,6 +62,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/restaurant.html',
       filename: 'restaurant.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/login.html',
+      filename: 'login.html',
       inject: false
     }),
     new CopyPlugin({

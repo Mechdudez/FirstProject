@@ -73,7 +73,8 @@ public class RestaurantService {
         return restaurant;
     }
 
-    public Restaurant findByRestaurantId(String restaurantId) {
+
+    public Restaurant findByRestaurantId(UUID restaurantId) {
         Restaurant restaurantFromBackend = restaurantRepository.findById(restaurantId)
                 .map(restaurant -> new Restaurant(restaurant.getRestaurantId(), restaurant.getName(), restaurant.getCategory(), restaurant.getStoreHours()))
                 .orElse(null);
@@ -134,9 +135,11 @@ public class RestaurantService {
 
     public Restaurant updateRestaurant(Restaurant restaurant){
 
-        if (restaurant == null){
+        if (restaurantId == null){
             throw new IllegalArgumentException("No restaurant passed in");
         }
+
+        Restaurant restaurant = reviewService.getAverageRatingAndPriceForRestaurant(restaurantId);
 
         RestaurantRecord restaurantRecord = new RestaurantRecord();
         restaurantRecord.setRestaurantId(restaurant.getRestaurantId());

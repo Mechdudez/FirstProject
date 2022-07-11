@@ -8,7 +8,7 @@ class RestaurantPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGetRandomRestaurant', 'onCreateRestaurant', 'renderRestaurant', 'clearResults', 'onManualClearResults', 'onGetReview', 'onCreateReview'], this);
+        this.bindClassMethods(['onGetRandomRestaurant', 'onCreateRestaurant', 'renderRestaurant', 'clearResults', 'onManualClearResults', 'onGetReview', 'onCreateReview', 'onGetRandomRestaurantFiltered'], this);
         this.dataStore = new DataStore();
 
     }
@@ -20,6 +20,7 @@ class RestaurantPage extends BaseClass {
         document.getElementById('get-restaurant-form').addEventListener('click', this.onGetRandomRestaurant);
         document.getElementById('create-restaurant-form').addEventListener('submit', this.onCreateRestaurant);
         document.getElementById('review-restaurant-form').addEventListener('submit', this.onCreateReview);
+        document.getElementById('get-restaurant-filtered-form').addEventListener('submit', this.onGetRandomRestaurantFiltered);
 
         document.getElementById('clearResultsButton').addEventListener('click', this.onManualClearResults);
         // document.getElementById('generateRandomRestaurant').addEventListener("click", this.onGetRandomRestaurant);
@@ -68,32 +69,26 @@ class RestaurantPage extends BaseClass {
 
     // Render Methods --------------------------------------------------------------------------------------------------
 
-    async renderRestaurant() {
+    async renderRestaurant(restaurant) {
         let resultArea = document.getElementById("result-info");
-
-        // (KK) changed pathing
-        const restaurants = this.dataStore.get("restaurants/all");
 
         let storeHtmlRestaurant = "";
 
-        for (let restaurant of restaurants){
+        if (restaurant) {
+            storeHtmlRestaurant += `<ul>`;
+            storeHtmlRestaurant += `<p><h3 class="listName" style="color:red;">${restaurant.restaurantName}</h3></p>`;
+            storeHtmlRestaurant += `<p><b>Category: </b>${restaurant.category}</p>`;
+            storeHtmlRestaurant += `<p><b>Store Hours: </b>${restaurant.storeHours}</p>`;
+            storeHtmlRestaurant += `<hr></hr>`;
+            storeHtmlRestaurant += `<p></p>`;
+            storeHtmlRestaurant += `</ul>`;
+            resultArea.innerHTML = storeHtmlRestaurant;
 
-            if (restaurant) {
-                storeHtmlRestaurant += `<ul>`;
-                storeHtmlRestaurant += `<p><h3 class="listName" style="color:red;">${restaurant.restaurantName}</h3></p>`;
-                storeHtmlRestaurant += `<p><b>Category: </b>${restaurant.category}</p>`;
-                storeHtmlRestaurant += `<p><b>Store Hours: </b>${restaurant.storeHours}</p>`;
-                storeHtmlRestaurant += `<hr></hr>`;
-                storeHtmlRestaurant += `<p></p>`;
-                storeHtmlRestaurant += `</ul>`;
-                resultArea.innerHTML = storeHtmlRestaurant;
-
-            } else {
-                resultArea.innerHTML = "No Restaurant";
-            }
+        } else {
+            resultArea.innerHTML = "No Restaurant";
         }
-
     }
+
 
     async clearResults() {
         let randomResultArea = document.getElementById("randomRestaurant");
@@ -142,15 +137,15 @@ class RestaurantPage extends BaseClass {
         submitReviewButton.disabled = true;
 
         // let restaurantId = document.getElementsByName("restaurantName").value ;
-        let restaurantName = document.getElementById("review-restaurant-name").value;
-        let userId = document.getElementById("review-restaurant-userId").value;
         let title = document.getElementById("review-restaurant-title").value;
         let rating = document.getElementById("review-restaurant-rating").value;
         let price = document.getElementById("review-restaurant-price").value;
         let description = document.getElementById("review-restaurant-description").value;
 
         // restaurantId is pulled from dataStore
-        let restaurantId = this.checkRestaurants(restaurantName);
+        let restaurantId = this.dataStore.get("restaurantId");
+        let restaurantName = this.dataStore.get("restaurantName");
+        let userId = sessionStorage.getItem("userId");
 
         let createdReview = await this.client.createReview(restaurantId, restaurantName, userId, title,
             rating, price, description, this.errorHandler());
@@ -158,9 +153,13 @@ class RestaurantPage extends BaseClass {
 
         if (createdReview) {
             this.showMessage(`Submitted review for ${createdReview.restaurantName}!`)
+            let resultArea = document.getElementById("randomRestaurant");
+            resultArea.innerHTML = createdReview;
         } else {
             this.errorHandler("Error submitting!  Try again...");
         }
+
+
 
         // reset the form
         document.getElementById("review-restaurant-form").reset();
@@ -184,11 +183,48 @@ class RestaurantPage extends BaseClass {
         generateRestaurantButton.disabled = true;
 
         let randomRestaurant = await this.client.getRandomRestaurant(this.errorHandler);
+        this.dataStore.set("restaurantId", randomRestaurant.restaurantId);
+        this.dataStore.set("restaurantName", randomRestaurant.restaurantName);
 
         // populates form field with random restaurant name
         let resultArea = document.getElementById("randomRestaurant");
+
         if (randomRestaurant) {
-            resultArea.innerHTML = randomRestaurant.restaurantName;
+            await this.renderRestaurant(randomRestaurant);
+        } else {
+            resultArea.innerHTML = "No restaurant available";
+        }
+
+
+
+        // Re-enable
+        generateRestaurantButton.innerText = 'Generate';
+        generateRestaurantButton.disabled = false;
+//        this.onRefresh();
+    }
+    async onGetRandomRestaurantFiltered(event) {
+        // Prevent the page from refreshing on form submit
+        event.preventDefault();
+
+
+        // Set the loading flag for the submit/create button
+
+        let generateRestaurantButton = document.getElementById('generate-random-filtered');
+        generateRestaurantButton.innerText = 'generating...';
+        generateRestaurantButton.disabled = true;
+
+        let price = document.getElementById('get-restaurant-filtered-price').value;
+        let category = document.getElementById('get-restaurant-filtered-category').value;
+
+        let randomRestaurant = await this.client.getRandomRestaurantFiltered(price, category, this.errorHandler);
+        this.dataStore.set("restaurantId", randomRestaurant.restaurantId);
+        this.dataStore.set("restaurantName", randomRestaurant.restaurantName);
+
+        // populates form field with random restaurant name
+        let resultArea = document.getElementById("randomRestaurant");
+
+        if (randomRestaurant) {
+            await this.renderRestaurant(randomRestaurant);
         } else {
             resultArea.innerHTML = "No restaurant available";
         }
@@ -292,11 +328,9 @@ class RestaurantPage extends BaseClass {
 const main = async () => {
     const restaurantPage = new RestaurantPage();
 
-    // var expanded = false;
-    //
-    // function showCheckboxes() {
-    //
-    // }
+    if (sessionStorage.getItem("userId") == null){
+        window.location.href = "login.html";
+    }
     restaurantPage.mount();
 
 };
