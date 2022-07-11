@@ -86,7 +86,7 @@ public class ReviewService {
         List<Review> reviews = getAllReviews();
 
         if(reviews.isEmpty()){
-            throw new ReviewNotFoundException("getallReviews failed");
+            throw new ReviewNotFoundException("getAllReviews failed");
         }
 
         List<Review> reviewsForUser = new ArrayList<>();
@@ -111,6 +111,37 @@ public class ReviewService {
                 .forEach(review -> reviews.add((new Review(review.getRestaurantId(), review.getRestaurantName(), review.getUserId(), review.getRating(), review.getPrice(), review.getTitle(), review.getDescription()))));
         return reviews;
     }
+
+    public Restaurant getAverageRatingAndPriceForRestaurant(UUID restaurantId){
+
+        // Restaurant has to equal if it does
+        // Must get the average price and rating
+        // Take all the rating numbers and divide them by that many rating posted. // Will have to divide by the size of the array.
+
+        List<Review> reviews = findAllReviewsForRestaurant(restaurantId);
+
+        if(reviews.isEmpty()){
+            throw new ReviewNotFoundException("There is currently no reviews for this restaurant!");
+        }
+
+        Double averagePrice = 0.0;
+        Double averageRating = 0.0;
+         for(Review review : reviews){
+             averagePrice += review.getPrice();
+             averageRating += review.getRating();
+         }
+        averagePrice =  averagePrice / reviews.size();
+        averageRating = averageRating / reviews.size();
+
+        Restaurant restaurant = new Restaurant();
+        restaurant.setRestaurantId(reviews.get(0).getRestaurantId());
+        restaurant.setRestaurantName(reviews.get(0).getRestaurantName());
+        restaurant.setAveragePrice(averagePrice);
+        restaurant.setAverageRating(averageRating);
+
+        return restaurant;
+    }
+
 
     public void updateReview(Review review) {
         ReviewRecord reviewRecord = new ReviewRecord();

@@ -98,6 +98,7 @@ public class ReviewController {
                 reviewCreateRequest.getTitle(),
                 reviewCreateRequest.getDescription());
         reviewService.addNewReview(review);
+        restaurantService.updateRestaurant(review.getRestaurantId());
 
         ReviewResponse reviewResponse = createReviewResponse(review);
 

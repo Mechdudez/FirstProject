@@ -6,7 +6,6 @@ import com.kenzie.restaurant.randomizer.controller.model.RestaurantCreateRequest
 import com.kenzie.restaurant.randomizer.controller.model.RestaurantGetRequest;
 import com.kenzie.restaurant.randomizer.controller.model.RestaurantResponse;
 import com.kenzie.restaurant.randomizer.controller.model.RestaurantUpdateRequest;
-import com.kenzie.restaurant.randomizer.controller.sampleRestaurants.SampleRestaurantGenerator;
 import com.kenzie.restaurant.randomizer.service.RestaurantService;
 import com.kenzie.restaurant.randomizer.service.model.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,6 @@ import static java.util.UUID.randomUUID;
 public class RestaurantController {
     // Pulls from Service
     private RestaurantService restaurantService;
-
-    private SampleRestaurantGenerator sampleRestaurantGenerator;
 
     @Autowired
     RestaurantController(RestaurantService restaurantService) {

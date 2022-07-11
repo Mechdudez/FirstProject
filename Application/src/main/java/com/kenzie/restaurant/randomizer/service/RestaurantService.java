@@ -1,6 +1,5 @@
 package com.kenzie.restaurant.randomizer.service;
 
-import com.kenzie.restaurant.randomizer.controller.sampleRestaurants.SampleRestaurantGenerator;
 import com.kenzie.restaurant.randomizer.repositories.RestaurantRepository;
 import com.kenzie.restaurant.randomizer.repositories.model.RestaurantRecord;
 import com.kenzie.restaurant.randomizer.service.model.Restaurant;
@@ -23,7 +22,7 @@ public class RestaurantService {
 
     private final ReviewService reviewService;
 
-    private SampleRestaurantGenerator sampleRestaurantGenerator;
+
 
     @Autowired
     public RestaurantService(RestaurantRepository restaurantRepository, ReviewService reviewService){
@@ -133,7 +132,7 @@ public class RestaurantService {
         return sortedRestaurants;
     }
 
-    public Restaurant updateRestaurant(Restaurant restaurant){
+    public Restaurant updateRestaurant(UUID restaurantId){
 
         if (restaurantId == null){
             throw new IllegalArgumentException("No restaurant passed in");
@@ -145,7 +144,8 @@ public class RestaurantService {
         restaurantRecord.setRestaurantId(restaurant.getRestaurantId());
         restaurantRecord.setName(restaurant.getRestaurantName());
         restaurantRecord.setCategory(restaurant.getCategory());
-        restaurantRecord.setStoreHours(restaurant.getStoreHours());
+        restaurantRecord.setAverageRating(restaurant.getAverageRating());
+        restaurantRecord.setAveragePrice(restaurant.getAveragePrice());
 
         restaurantRepository.save(restaurantRecord);
 
