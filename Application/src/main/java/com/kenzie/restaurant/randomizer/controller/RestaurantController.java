@@ -61,6 +61,21 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurantResponse);
     }
 
+
+    @GetMapping("/restaurant/{price}{category}")
+    public ResponseEntity<RestaurantResponse> getSortedRestaurant(@PathVariable("price") Double price, @PathVariable("category") String category) {
+        Restaurant restaurant = restaurantService.getSortedRestaurant(price, category);
+
+        if (restaurant == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        RestaurantResponse response = createRestaurantResponse(restaurant);
+
+        return ResponseEntity.ok(response);
+    }
+
+
     @GetMapping("/all")
     public ResponseEntity<List<RestaurantResponse>> getAllRestaurants() {
         List<Restaurant> restaurants = restaurantService.getAllRestaurants();
