@@ -119,7 +119,6 @@ public class ReviewService {
         // Restaurant has to equal if it does
         // Must get the average price and rating
         // Take all the rating numbers and divide them by that many rating posted. // Will have to divide by the size of the array.
-
         List<Review> reviews = findAllReviewsForRestaurant(restaurantId);
 
         if(reviews.isEmpty()){

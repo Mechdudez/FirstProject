@@ -8,8 +8,7 @@ class RestaurantPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGetRandomRestaurant', 'onCreateRestaurant', 'renderRestaurant', 'clearResults', 'onManualClearResults', 'onGetReview', 'onCreateReview', 'onGetRandomRestaurantFiltered',
-            'renderReview'], this);
+        this.bindClassMethods(['onGetRandomRestaurant', 'onCreateRestaurant', 'renderRestaurant', 'clearResults', 'onManualClearResults', 'onGetReview', 'onCreateReview', 'onGetRandomRestaurantFiltered'], this);
         this.dataStore = new DataStore();
 
     }
@@ -90,27 +89,6 @@ class RestaurantPage extends BaseClass {
         }
     }
 
-    async renderReview(restaurant) {
-        let resultArea = document.getElementById("result-info");
-
-        let storeHtmlReview = "";
-
-        if (restaurant) {
-            storeHtmlReview += `<ul>`;
-            storeHtmlReview += `<p><h3<title> class="listName" style="color:red;">${restaurant.restaurantName}</title></h3></p>`;
-            storeHtmlReview += `<p><b>Description: </b>${restaurant.description}</p>`;
-            storeHtmlReview = `<p><b>rating: </b>${restaurant.rating}</p>`;
-            storeHtmlReview = `<p><b>price: </b>${restaurant.price}</p>`;
-            storeHtmlReview += `<hr></hr>`;
-            storeHtmlReview += `<p></p>`;
-            storeHtmlReview += `</ul>`;
-            resultArea.innerHTML = storeHtmlReview;
-
-        } else {
-            resultArea.innerHTML = "No Restaurant";
-        }
-    }
-
     async clearResults() {
         let randomResultArea = document.getElementById("randomRestaurant");
         let resultArea = document.getElementById("result-info");
@@ -145,9 +123,6 @@ class RestaurantPage extends BaseClass {
 //        resultArea.innerHTML = "";
         await this.clearResults();
     }
-
-    async onGetAllReviewsForRestaurant();
-
 
     async onCreateReview(event) {
         // Prevent the page from refreshing on form submit
@@ -228,9 +203,7 @@ class RestaurantPage extends BaseClass {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
 
-
         // Set the loading flag for the submit/create button
-
         let generateRestaurantButton = document.getElementById('generate-random-filtered');
         generateRestaurantButton.innerText = 'generating...';
         generateRestaurantButton.disabled = true;
@@ -239,8 +212,8 @@ class RestaurantPage extends BaseClass {
         let category = document.getElementById('get-restaurant-filtered-category').value;
 
         let randomRestaurant = await this.client.getRandomRestaurantFiltered(price, category, this.errorHandler);
-        this.dataStore.set("restaurantId", randomRestaurant.restaurantId);
-        this.dataStore.set("restaurantName", randomRestaurant.restaurantName);
+       // this.dataStore.set("restaurantId", randomRestaurant.restaurantId);
+       // this.dataStore.set("restaurantName", randomRestaurant.restaurantName);
 
         // populates form field with random restaurant name
         let resultArea = document.getElementById("randomRestaurant");
