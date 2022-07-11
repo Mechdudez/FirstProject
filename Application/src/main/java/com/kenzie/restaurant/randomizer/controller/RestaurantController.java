@@ -92,18 +92,6 @@ public class RestaurantController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/within/{price}{category}")
-    public ResponseEntity<RestaurantResponse> getSortedRestaurant(@PathVariable("price") Double price, @PathVariable("category") String category) {
-        Restaurant restaurant = restaurantService.getSortedRestaurant(price, category);
-
-        if (restaurant == null) {
-            return ResponseEntity.noContent().build();
-        }
-
-        RestaurantResponse response = createRestaurantResponse(restaurant);
-
-        return ResponseEntity.ok(response);
-    }
 
     @GetMapping("/random")
     public ResponseEntity<RestaurantResponse> getRandomRestaurant() {
