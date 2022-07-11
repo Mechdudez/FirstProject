@@ -9,4 +9,4 @@ reports:
  run-integration-tests:
    files:
      - 'IntegrationTests/build/test-results/test/run-integration-tests/*.xml'
-   file-format: "JUNITXML"
+   file-format: "JUNIT-XML"

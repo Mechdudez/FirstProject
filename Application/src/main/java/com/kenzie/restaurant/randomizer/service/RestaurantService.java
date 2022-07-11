@@ -24,7 +24,6 @@ public class RestaurantService {
 
     private final ReviewService reviewService;
 
-    private ReviewRepository reviewRepository;
 
 
 
@@ -32,7 +31,6 @@ public class RestaurantService {
     public RestaurantService(RestaurantRepository restaurantRepository, ReviewService reviewService){
         this.restaurantRepository = restaurantRepository;
         this.reviewService = reviewService;
-        this.reviewRepository = reviewRepository;
     }
 
 
@@ -118,33 +116,24 @@ public class RestaurantService {
 
     }
 
-    //TODO: implement after GetAllReviews
-//    public Review getSortedRestaurant(Double price, String category){
-//        List<Review> sortedList = sortReviews(category, price);
-//        Random rand = new Random();
-//
-//        if (sortedList.isEmpty()) {
-//            throw new IllegalArgumentException("No matching restaurant found.");
-//        } else {
-//            return setReviews(sortedList.get(rand.nextInt(sortedList.size())));
-//        }
-//
-//    }
-//
-//    public List<Review> sortReviews(String category, Double price){
-//
-//
-//        List<ReviewRecord> reviewRecords = reviewRepository.sortMyReview(price, category);
-//
-//        List<Review> sortedReviews = new ArrayList<>();
-//        for(ReviewRecord review : reviewRecords){
-//          //  if (restaurant.getAveragePrice().compareTo(price)<=0 && restaurant.getCategory().equals(category)){
-//                sortedReviews.add(new Review(review.getRestaurantId(), review.getRestaurantName(), review.getUserId(), review.getRating(), review.getPrice(), review.getTitle(), review.getDescription()));
-//          //  }
-//        }
-//
-//        return sortedReviews;
-//    }
+    public Restaurant getSortedRestaurant(Double price, String category){
+        List<Restaurant> restaurantList = getAllRestaurants();
+        List<Restaurant> sortedList = sortRestaurants(restaurantList, category, price);
+        Random rand = new Random();
+        return setReviews(sortedList.get(rand.nextInt(sortedList.size())));
+    }
+
+    public List<Restaurant> sortRestaurants(List<Restaurant> restaurantList, String category, Double price){
+
+        List<Restaurant> sortedRestaurants = new ArrayList<>();
+        for(Restaurant restaurant : restaurantList){
+            if (restaurant.getAveragePrice().compareTo(price)<=0 && restaurant.getCategory().equals(category)){
+                sortedRestaurants.add(restaurant);
+            }
+        }
+
+        return sortedRestaurants;
+    }
 
     public Restaurant updateRestaurant(UUID restaurantId){
 

@@ -9,5 +9,4 @@ import java.util.UUID;
 
 @EnableScan
 public interface RestaurantRepository extends CrudRepository<RestaurantRecord, UUID> {
-//   List<RestaurantRecord> sortMyRestaurant(Double price, String category);
 }
