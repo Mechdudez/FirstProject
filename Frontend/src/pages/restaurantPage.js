@@ -8,7 +8,8 @@ class RestaurantPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGetRandomRestaurant', 'onCreateRestaurant', 'renderRestaurant', 'clearResults', 'onManualClearResults', 'onGetReview', 'onCreateReview', 'onGetRandomRestaurantFiltered'], this);
+        this.bindClassMethods(['onGetRandomRestaurant', 'onCreateRestaurant', 'renderRestaurant', 'clearResults', 'onManualClearResults', 'onGetReview', 'onCreateReview', 'onGetRandomRestaurantFiltered',
+            'renderReview'], this);
         this.dataStore = new DataStore();
 
     }
@@ -89,6 +90,26 @@ class RestaurantPage extends BaseClass {
         }
     }
 
+    async renderReview(restaurant) {
+        let resultArea = document.getElementById("result-info");
+
+        let storeHtmlReview = "";
+
+        if (restaurant) {
+            storeHtmlReview += `<ul>`;
+            storeHtmlReview += `<p><h3<title> class="listName" style="color:red;">${restaurant.restaurantName}</title></h3></p>`;
+            storeHtmlReview += `<p><b>Description: </b>${restaurant.description}</p>`;
+            storeHtmlReview = `<p><b>rating: </b>${restaurant.rating}</p>`;
+            storeHtmlReview = `<p><b>price: </b>${restaurant.price}</p>`;
+            storeHtmlReview += `<hr></hr>`;
+            storeHtmlReview += `<p></p>`;
+            storeHtmlReview += `</ul>`;
+            resultArea.innerHTML = storeHtmlReview;
+
+        } else {
+            resultArea.innerHTML = "No Restaurant";
+        }
+    }
 
     async clearResults() {
         let randomResultArea = document.getElementById("randomRestaurant");
@@ -112,19 +133,20 @@ class RestaurantPage extends BaseClass {
         this.dataStore.set("review", result);
     }
 
-    async onManualClearResults(events) {
+    async onManualClearResults(event) {
         event.preventDefault();
 
-        let clearResultsButton = document.getElementById('clearResultsButton');
+        // let clearResultsButton = document.getElementById('clearResultsButton');
 //        let randomResultArea = document.getElementById("randomRestaurant");
 //        let resultArea = document.getElementById("result-info");
 //
 //
 //        randomResultArea.innerHTML = "";
 //        resultArea.innerHTML = "";
-        this.clearResults();
+        await this.clearResults();
     }
 
+    async onGetAllReviewsForRestaurant();
 
 
     async onCreateReview(event) {

@@ -2,12 +2,10 @@ package com.kenzie.restaurant.randomizer.controller;
 
 
 import com.google.gson.JsonObject;
-import com.kenzie.restaurant.randomizer.controller.model.RestaurantCreateRequest;
-import com.kenzie.restaurant.randomizer.controller.model.RestaurantGetRequest;
-import com.kenzie.restaurant.randomizer.controller.model.RestaurantResponse;
-import com.kenzie.restaurant.randomizer.controller.model.RestaurantUpdateRequest;
+import com.kenzie.restaurant.randomizer.controller.model.*;
 import com.kenzie.restaurant.randomizer.service.RestaurantService;
 import com.kenzie.restaurant.randomizer.service.model.Restaurant;
+import com.kenzie.restaurant.randomizer.service.model.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -82,19 +80,6 @@ public class RestaurantController {
     @GetMapping("/random")
     public ResponseEntity<RestaurantResponse> getRandomRestaurant() {
         Restaurant restaurant = restaurantService.getRandomRestaurant();
-
-        if (restaurant == null) {
-            return ResponseEntity.noContent().build();
-        }
-
-        RestaurantResponse response = createRestaurantResponse(restaurant);
-
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/within/{price}{category}")
-    public ResponseEntity<RestaurantResponse> getSortedRestaurant(@PathVariable("price") Double price, @PathVariable("category") String category) {
-        Restaurant restaurant = restaurantService.getSortedRestaurant(price, category);
 
         if (restaurant == null) {
             return ResponseEntity.noContent().build();

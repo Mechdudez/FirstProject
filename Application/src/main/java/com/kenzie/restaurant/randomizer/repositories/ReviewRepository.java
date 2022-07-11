@@ -8,5 +8,6 @@ import java.util.List;
 
 @EnableScan
 public interface ReviewRepository extends CrudRepository<ReviewRecord, String> {
-//    List<ReviewRecord> findMyReview(String review);
+    //TODO: below method should be called by service when getting random restaurant with filter
+//    List<ReviewRecord> sortMyReview(Double price, String review);
 }
