@@ -139,6 +139,7 @@
             margin-top: 15px;
             margin-bottom: 15px;
             font-size: 50px;
+            display: inline-block;
         }
 
         h1.finalRandom {
@@ -146,6 +147,11 @@
             margin-top: 0px;
             margin-bottom: 15px;
             font-size: 40px;
+        }
+
+        form.navForm {
+            display: inline-block;
+            padding-left: 25px;
         }
 
         h2 {
@@ -175,7 +181,9 @@
 <header class="header" id="header">
     <div class="site-title">
 <!--        <a class="header_home" href="restaurant.html">Restaurant Application</a>-->
-        <h1 class="main" href="restaurant.html" style="color:red;">Pick My Eats</h1>
+        <h1 class="main" href="restaurant.html" style="color:red;">Pick My Eats</h1><form class="navForm" action="http://localhost:5001/review.html">
+                                                                                    <button class="navButton" id="reviewPageButton">Review Page</button>
+                                                                                </form>
     </div>
 </header>
 <div class="card">
@@ -206,7 +214,7 @@
         <button type="submit" id="generate-random-filtered">Get a restaurant</button>
     </form>
 </div>
-<div class="card">"
+<div class="card">
     <h2>Add a Restaurant</h2>
     <form class="card-content" id="create-restaurant-form" accept-charset=utf-8>
         <p class="form-field">
