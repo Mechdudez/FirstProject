@@ -208,10 +208,10 @@ public class RestaurantServiceTests {
         storeHours.add(hours);
 
         RestaurantRecord restaurantRecord = new RestaurantRecord();
+        restaurantRecord.setRestaurantId(UUID.randomUUID());
         restaurantRecord.setStoreHours(storeHours);
         restaurantRecord.setName("bob");
         restaurantRecord.setCategory("burger");
-        restaurantRecord.setRestaurantId(UUID.fromString(randomUUID().toString()));
 
         Restaurant restaurant = new Restaurant(
                 restaurantRecord.getRestaurantId(),
@@ -220,10 +220,13 @@ public class RestaurantServiceTests {
                 restaurantRecord.getStoreHours());
 
 
-        ArgumentCaptor<RestaurantRecord> restaurantRecordArgumentCaptor = ArgumentCaptor.forClass(RestaurantRecord.class);
-        // WHEN
-        //restaurantService.updateRestaurant(restaurant);
 
+       ArgumentCaptor<RestaurantRecord> restaurantRecordArgumentCaptor = ArgumentCaptor.forClass(RestaurantRecord.class);
+        // WHEN
+        when(reviewService.getAverageRatingAndPriceForRestaurant(restaurant.getRestaurantId())).thenReturn(restaurant);
+        when(restaurantRepository.findById(restaurant.getRestaurantId())).thenReturn(Optional.of(restaurantRecord));
+
+        restaurantService.updateRestaurant(restaurant.getRestaurantId());
 
         //THEN
         verify(restaurantRepository).save(restaurantRecordArgumentCaptor.capture());
@@ -231,8 +234,8 @@ public class RestaurantServiceTests {
 
         Assertions.assertNotNull(restaurant);
         Assertions.assertEquals(storedRestaurant.getRestaurantId(), restaurant.getRestaurantId(), "The concert id matches");
-        Assertions.assertEquals(storedRestaurant.getName(), restaurant.getRestaurantName(), "The reservation date matches");
-        Assertions.assertEquals(storedRestaurant.getCategory(), restaurant.getCategory(), "The reservationClosed matches");
+        Assertions.assertEquals(storedRestaurant.getName(), restaurant.getRestaurantName(), "The reservationClosed servation date matches");
+        Assertions.assertEquals(storedRestaurant.getCategory(), restaurant.getCategory(), "The rematches");
         Assertions.assertEquals(storedRestaurant.getStoreHours(), restaurant.getStoreHours(), "The ticketPurchased matches");
     }
 

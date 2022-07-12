@@ -30,6 +30,16 @@ public class Restaurant {
         this.restaurantName = restaurantName;
         this.category = category;
         this.storeHours = storeHours;
+
+    }
+
+    public Restaurant(UUID restaurantId, String restaurantName, String category, List<String> storeHours, Double averagePrice, Double averageRating) {
+        this.restaurantId = restaurantId;
+        this.restaurantName = restaurantName;
+        this.category = category;
+        this.storeHours = storeHours;
+        this.averagePrice = averagePrice;
+        this.averageRating = averageRating;
     }
 
     public UUID getRestaurantId() {

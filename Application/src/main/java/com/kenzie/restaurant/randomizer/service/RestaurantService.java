@@ -92,8 +92,19 @@ public class RestaurantService {
 
         List<Restaurant> restaurantList = new ArrayList<>();
 
+        List<RestaurantRecord> recordList = new ArrayList<>();
         restaurantRepository.findAll()
-                .forEach(restaurant -> restaurantList.add(new Restaurant(restaurant.getRestaurantId(), restaurant.getName(), restaurant.getCategory(), restaurant.getStoreHours())));
+                        .forEach(recordList::add);
+
+        for (RestaurantRecord record : recordList){
+            if (record.getAveragePrice() != null){
+                restaurantList.add(new Restaurant(record.getRestaurantId(), record.getName(), record.getCategory(), record.getStoreHours(), record.getAveragePrice(), record.getAverageRating()));
+            } else {
+                restaurantList.add(new Restaurant(record.getRestaurantId(), record.getName(), record.getCategory(), record.getStoreHours()));
+            }
+
+        }
+
         return restaurantList;
     }
 
@@ -120,14 +131,19 @@ public class RestaurantService {
         List<Restaurant> restaurantList = getAllRestaurants();
         List<Restaurant> sortedList = sortRestaurants(restaurantList, category, price);
         Random rand = new Random();
-        return setReviews(sortedList.get(rand.nextInt(sortedList.size())));
+        if (restaurantList.isEmpty()) {
+            throw new RestaurantNotFoundException("No matching restaurant in database.");
+        } else {
+            return setReviews(sortedList.get(rand.nextInt(sortedList.size())));
+        }
+
     }
 
     public List<Restaurant> sortRestaurants(List<Restaurant> restaurantList, String category, Double price){
 
         List<Restaurant> sortedRestaurants = new ArrayList<>();
         for(Restaurant restaurant : restaurantList){
-            if (restaurant.getAveragePrice().compareTo(price)<=0 && restaurant.getCategory().equals(category)){
+            if (restaurant.getAveragePrice() != null && restaurant.getAveragePrice().compareTo(price)>=0 && restaurant.getCategory().equals(category)){
                 sortedRestaurants.add(restaurant);
             }
         }
@@ -146,7 +162,7 @@ public class RestaurantService {
         RestaurantRecord restaurantRecord = new RestaurantRecord();
         restaurantRecord.setRestaurantId(restaurant.getRestaurantId());
         restaurantRecord.setName(restaurant.getRestaurantName());
-        restaurantRecord.setCategory(restaurant.getCategory());
+        restaurantRecord.setCategory(restaurantRepository.findById(restaurantId).get().getCategory());
         restaurantRecord.setAverageRating(restaurant.getAverageRating());
         restaurantRecord.setAveragePrice(restaurant.getAveragePrice());
 

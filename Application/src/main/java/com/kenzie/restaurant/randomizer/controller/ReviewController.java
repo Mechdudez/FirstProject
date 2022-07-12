@@ -64,7 +64,7 @@ public class ReviewController {
         return ResponseEntity.ok(reviewResponses);
     }
 
-    @GetMapping("/restaurant/{restaurantId}/{userId}")
+    @GetMapping("/review/{restaurantId}/{userId}")
     public ResponseEntity<ReviewResponse> findReview(@PathVariable ("restaurantId") UUID restaurantId, @PathVariable("userId") String userId) {
         Review review = reviewService.findReview(restaurantId, userId);
 
