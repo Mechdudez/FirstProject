@@ -46,26 +46,6 @@ class RestaurantPage extends BaseClass {
         this.dataStore.set("review/all", allReviews);
     }
 
-    async checkRestaurants(inputRestaurantName) {
-        const allRestaurants = await this.client.getAllRestaurants(this.errorHandler)
-        let existingRestaurant = [];
-
-        //TODO: attempt to find more efficient method, .contains?
-        // if (allRestaurants.contains(restaurantName, inputRestaurantName))
-        if (allRestaurants && allRestaurants.length > 0) {
-            for (const restaurant of allRestaurants) {
-                if (restaurant.restaurantName == inputRestaurantName) {
-                    existingRestaurant.push(restaurant);
-                }
-            }
-        }
-        if (existingRestaurant.length > 0) {
-            return existingRestaurant.at(0).restaurantId;
-        } else {
-            this.errorHandler("Restaurant does not exist!");
-        }
-    }
-
 
     // Render Methods --------------------------------------------------------------------------------------------------
 
@@ -204,6 +184,7 @@ class RestaurantPage extends BaseClass {
         event.preventDefault();
 
         // Set the loading flag for the submit/create button
+
         let generateRestaurantButton = document.getElementById('generate-random-filtered');
         generateRestaurantButton.innerText = 'generating...';
         generateRestaurantButton.disabled = true;
@@ -299,9 +280,11 @@ class RestaurantPage extends BaseClass {
         //input all arguments and call createRestaurant() from restaurantClient
         const createdRestaurant = await this.client.createRestaurant(name, category, storeHours, this.errorHandler);
         this.dataStore.set("restaurants", createdRestaurant);
+        this.dataStore.set("restaurantId", createdRestaurant.restaurantId);
 
         if (createdRestaurant) {
             this.showMessage(`Created ${createdRestaurant.restaurantName}!`);
+            await this.renderRestaurant(createdRestaurant);
         } else {
             this.errorHandler("Error creating!  Try again...");
         }

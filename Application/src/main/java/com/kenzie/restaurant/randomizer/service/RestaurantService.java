@@ -142,12 +142,27 @@ public class RestaurantService {
     public List<Restaurant> sortRestaurants(List<Restaurant> restaurantList, String category, Double price){
 
         List<Restaurant> sortedRestaurants = new ArrayList<>();
-        for(Restaurant restaurant : restaurantList){
-            if (restaurant.getAveragePrice() != null && restaurant.getAveragePrice().compareTo(price)>=0 && restaurant.getCategory().equals(category)){
-                sortedRestaurants.add(restaurant);
-            }
-        }
+        for(Restaurant restaurant : restaurantList) {
 
+            if (category == null || price == null) {
+                throw new IllegalArgumentException("Null values passed in");
+            }
+
+            if (category.equals("none") && !price.equals(-1.0)) {
+                if (restaurant.getAveragePrice().compareTo(price) >= 0) {
+                    sortedRestaurants.add(restaurant);
+                }
+            } else if (price.equals(-1.0) && !category.equals("none")) {
+                if (restaurant.getCategory().equals(category)) {
+                    sortedRestaurants.add(restaurant);
+                }
+            } else {
+                if (restaurant.getAveragePrice() != null && restaurant.getAveragePrice().compareTo(price) >= 0 && restaurant.getCategory().equals(category)) {
+                    sortedRestaurants.add(restaurant);
+                }
+            }
+
+        }
         return sortedRestaurants;
     }
 
