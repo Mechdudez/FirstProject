@@ -233,10 +233,10 @@ public class RestaurantServiceTests {
         RestaurantRecord storedRestaurant = restaurantRecordArgumentCaptor.getValue();
 
         Assertions.assertNotNull(restaurant);
-        Assertions.assertEquals(storedRestaurant.getRestaurantId(), restaurant.getRestaurantId(), "The concert id matches");
-        Assertions.assertEquals(storedRestaurant.getName(), restaurant.getRestaurantName(), "The reservationClosed servation date matches");
-        Assertions.assertEquals(storedRestaurant.getCategory(), restaurant.getCategory(), "The rematches");
-        Assertions.assertEquals(storedRestaurant.getStoreHours(), restaurant.getStoreHours(), "The ticketPurchased matches");
+        Assertions.assertEquals(storedRestaurant.getRestaurantId(), restaurant.getRestaurantId(), "The restaurantId matches");
+        Assertions.assertEquals(storedRestaurant.getName(), restaurant.getRestaurantName(), "The restaurantName matches");
+        Assertions.assertEquals(storedRestaurant.getCategory(), restaurant.getCategory(), "The category matches");
+        Assertions.assertEquals(storedRestaurant.getStoreHours(), restaurant.getStoreHours(), "The storeHours matches");
     }
 
     @Test
