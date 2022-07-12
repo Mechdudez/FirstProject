@@ -18,8 +18,6 @@ import java.util.UUID;
 @Service
 public class ReviewService {
 
-    //private RestaurantService restaurantService;
-
     private ReviewRepository reviewRepository;
 
     @Autowired
@@ -82,8 +80,6 @@ public class ReviewService {
         return review;
     }
 
-
-
     public List<Review> getAllUserReviews(String userId) {
         List<Review> reviews = getAllReviews();
 
@@ -142,7 +138,6 @@ public class ReviewService {
 
         return restaurant;
     }
-
 
     public void updateReview(Review review) {
         ReviewRecord reviewRecord = new ReviewRecord();

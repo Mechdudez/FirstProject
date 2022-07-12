@@ -46,6 +46,16 @@ class ReviewPage extends BaseClass {
         resultArea.innerHTML = "";
     }
 
+
+    async firstRender() {
+        let restaurantId = sessionStorage.getItem("restaurantId");
+        let userId = sessionStorage.getItem("userId");
+
+        const review = await this.client.findReview(restaurantId, userId, this.errorHandler());
+
+        await this.renderReview(review);
+    }
+
     // Event Handlers --------------------------------------------------------------------------------------------------
     // to refresh all dataStore lists (KK)
     onRefresh() {

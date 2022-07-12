@@ -1,7 +1,6 @@
 import BaseClass from "../util/baseClass";
 import axios from 'axios'
 
-// var _List = require("collections/list");
 
 /**
  * Client to call the RestaurantService.
@@ -58,8 +57,7 @@ export default class RestaurantClient extends BaseClass {
     async createReview(restaurantId, restaurantName, userId, title,
                        rating, price, description, errorCallback) {
         try {
-            const response = await this.client.post(`/review`, {
-                //TODO: need to get restaurantId without user input (implemented now in restaurantPage.js)
+            const response = await this.client.post(`review`, {
                 "restaurantId": restaurantId,
                 "restaurantName": restaurantName,
                 "userId": userId,
@@ -88,13 +86,11 @@ export default class RestaurantClient extends BaseClass {
     async createRestaurant( name, category, storeHours, errorCallback) {
         try {
             const response = await this.client.post(`restaurants`, {
-                //TODO: need to generate UUID serverside instead of user input (KK)
-                //TODO: clarify function and application of userId (KK)
                 "name": name,
                 "category": category,
                 "storeHours":storeHours
-
             });
+
             return response.data;
         } catch (error) {
             this.handleError("createRestaurant", error, errorCallback);
@@ -117,7 +113,6 @@ export default class RestaurantClient extends BaseClass {
             this.handleError("getAllReviews", error, errorCallback)
         }
     }
-
 
     /**
      * Helper method to log the error and run any error functions.

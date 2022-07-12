@@ -105,11 +105,6 @@ class RestaurantPage extends BaseClass {
         let price = document.getElementById('get-restaurant-filtered-price').value;
         let category = document.getElementById('get-restaurant-filtered-category').value;
 
-        let randomRestaurant = await this.client.getRandomRestaurantFiltered(price, category, this.errorHandler);
-        this.dataStore.set("restaurantId", randomRestaurant.restaurantId);
-        this.dataStore.set("restaurantName", randomRestaurant.restaurantName);
-
-        // populates form field with random restaurant name
         let resultArea = document.getElementById("randomRestaurant");
 
         if (randomRestaurant) {

@@ -24,17 +24,11 @@ public class RestaurantService {
 
     private final ReviewService reviewService;
 
-
-
-
     @Autowired
     public RestaurantService(RestaurantRepository restaurantRepository, ReviewService reviewService){
         this.restaurantRepository = restaurantRepository;
         this.reviewService = reviewService;
     }
-
-
-
 
     //TODO implement later
 //    public List<Restaurant> getReadDate(List<Restaurant> restaurantList) throws IOException{
@@ -74,7 +68,6 @@ public class RestaurantService {
 
         return restaurant;
     }
-
 
     public Restaurant findByRestaurantId(UUID restaurantId) {
         Restaurant restaurantFromBackend = restaurantRepository.findById(restaurantId)

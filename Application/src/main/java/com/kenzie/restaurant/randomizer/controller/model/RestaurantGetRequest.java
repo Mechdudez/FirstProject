@@ -11,8 +11,6 @@ public class RestaurantGetRequest {
     @JsonProperty("restaurantId")
     private UUID restaurantId;
 
-
-
     public UUID getRestaurantId() {
         return restaurantId;
     }

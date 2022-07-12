@@ -42,14 +42,14 @@
     margin-left: 20px;
 }
 
-.navButton {
+#reviewPageButton {
     position:absolute;
     margin-top: -23px;
+    margin-left: -13px;
     background: #131921;
-    border-radius: 3px;
-    border: 2px;
-    border-color: #C50D0D;
-    text-decoration: none;
+    /*border-radius: 3px;*/
+    border: 2px solid white;
+    /*text-decoration: none;*/
     color: white;
 
 }
@@ -69,14 +69,26 @@
     background: #9E0808;
 }
 
-#clearResultsButton {
-    position:absolute;
-    margin-top: 25px;
-    margin-left: 10px;
+#resultHeader {
+    display: inline;
 }
 
-#resultHeader {
-    display: inline-block;
+.resultsButtons {
+    display: inline;
+    position:absolute;
+    margin-top: 4px;
+    margin-left: 0px;
+}
+
+#clearResultsButton {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#clearReviewResultsButton {
+    position:absolute;
+    margin-top: 4px;
+    margin-left: 10px;
 }
 
 .card {

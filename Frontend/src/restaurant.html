@@ -181,29 +181,30 @@
 <header class="header" id="header">
     <div class="site-title">
 <!--        <a class="header_home" href="restaurant.html">Restaurant Application</a>-->
-        <h1 class="main" href="restaurant.html" style="color:red;">Pick My Eats</h1><form class="navForm" action="http://localhost:5001/review.html">
-                                                                                    <button class="navButton" id="reviewPageButton">Review Page</button>
-                                                                                </form>
+        <h1 class="main" href="restaurant.html" style="color:red;">Pick My Eats</h1>
     </div>
 </header>
 <div class="card">
     <h2>Get a Random Restaurant</h2>
     <form class="card-content" id="get-restaurant-filtered-form" accept-charset=utf-8>
-        <p>Restaurant category</p>
-        <select name="restaurant-category" id="get-restaurant-filtered-category">
-            <option value="none">-none-</option>
-            <option value="burgers">Burgers</option>
-            <option value="pizza">Pizza</option>
-            <option value="chinese">Chinese</option>
-            <option value="fast food">Fast Food</option>
-            <option value="pasta">Pasta</option>
-            <option value="sushi">Sushi</option>
-            <option value="fried chicken">Fried Chicken</option>
-            <option value="chinese">Chinese</option>
-        </select>
+        <p>optional filters:</p>
+        <p class="form-field">
+            <label>Restaurant Category</label>
+            <select name="restaurant-category" id="get-restaurant-filtered-category">
+                <option value="none">-none-</option>
+                <option value="burgers">Burgers</option>
+                <option value="pizza">Pizza</option>
+                <option value="chinese">Chinese</option>
+                <option value="fast food">Fast Food</option>
+                <option value="pasta">Pasta</option>
+                <option value="sushi">Sushi</option>
+                <option value="fried chicken">Fried Chicken</option>
+                <option value="chinese">Chinese</option>
+            </select>
+        </p>
         <p class="form-field">
             <label>Max Price</label>
-            <input type="number" required class="validated-field" min="0" oninput="validity.valid||(value='');" id="get-restaurant-filtered-price">
+            <input type="number" placeholder="none" size="25" maxlength="4"  min="0" oninput="validity.valid||(value='');" id="get-restaurant-filtered-price">
         </p>
         <button type="submit" id="generate-random-filtered">Get a restaurant</button>
     </form>
@@ -524,7 +525,9 @@
     </form>
 </div>
 <div class="card" id="result">
-    <h2 id="resultHeader">Result: </h2><button type="submit" id="clearResultsButton">clear</button>
+    <h2 id="resultHeader">Result: </h2><div class="resultsButtons"><form class="navForm" action="http://localhost:5001/review.html">
+    <button id="reviewListedPageButton">review listed restaurant</button>
+</form><button type="submit" id="clearResultsButton">clear</button></div>
 
     <h1 class="finalRandom" id="randomRestaurant" style="color:red;"></h1>
     <p id="result-info"></p>

@@ -148,6 +148,11 @@
         font-size: 40px;
     }
 
+    form.navForm {
+        display: inline-block;
+        padding-left: 25px;
+    }
+
     h2 {
         font-family: 'Nunito', sans-serif;;
     }
@@ -175,7 +180,9 @@
 <header class="header" id="header">
     <div class="site-title">
         <!--        <a class="header_home" href="restaurant.html">Restaurant Application</a>-->
-        <h1 class="main" href="restaurant.html" style="color:red;">Pick My Eats</h1>
+        <h1 class="main" href="restaurant.html" style="color:red;">Pick My Eats</h1><form class="navForm" action="restaurant.html">
+        <button class="navButton" id="reviewPageButton">Home Page</button>
+    </form>
     </div>
 </header>
 <div class="card">
@@ -192,7 +199,7 @@
 </div>
 
 <div class="card" id="result">
-    <h2 id="resultHeader">Result: </h2><button type="submit" id="clearResultsButton">clear</button>
+    <h2 id="resultHeader">Result: </h2><button type="submit" id="clearReviewResultsButton">clear</button>
 
     <h1 class="finalRandom" id="randomRestaurant" style="color:red;"></h1>
     <p id="result-info"></p>

@@ -33,7 +33,6 @@ public class RestaurantController {
 
     }
 
-
     @GetMapping("/{restaurantId}")
     public ResponseEntity<RestaurantResponse> findByRestaurantId(@PathVariable("restaurantId") UUID restaurantId) {
         Restaurant restaurant = restaurantService.findByRestaurantId(restaurantId);
@@ -45,7 +44,6 @@ public class RestaurantController {
         RestaurantResponse restaurantResponse = createRestaurantResponse(restaurant);
         return ResponseEntity.ok(restaurantResponse);
     }
-
 
     @GetMapping("within/{price}/{category}")
     public ResponseEntity<RestaurantResponse> getSortedRestaurant(@PathVariable("price") Double price, @PathVariable("category") String category) {
@@ -59,7 +57,6 @@ public class RestaurantController {
 
         return ResponseEntity.ok(response);
     }
-
 
     @GetMapping("/all")
     public ResponseEntity<List<RestaurantResponse>> getAllRestaurants() {
@@ -76,7 +73,6 @@ public class RestaurantController {
 
         return ResponseEntity.ok(response);
     }
-
 
     @GetMapping("/random")
     public ResponseEntity<RestaurantResponse> getRandomRestaurant() {

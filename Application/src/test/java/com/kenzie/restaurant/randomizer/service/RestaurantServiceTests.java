@@ -241,7 +241,7 @@ public class RestaurantServiceTests {
     }
 
     @Test
-    void updateRestaurant_restaurantIsnull_throwsException() {
+    void updateRestaurant_restaurantIsNull_throwsException() {
         //GIVEN
 
         // WHEN //THEN

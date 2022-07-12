@@ -47,7 +47,6 @@ public class ReviewController {
         return ResponseEntity.ok(reviewResponses);
     }
 
-    //ToDo Fix this method of the controller
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<ReviewResponse>> getAllUserReviews(@PathVariable ("userId") String userId) {
         List<Review> reviews = reviewService.getAllUserReviews(userId);
@@ -100,7 +99,6 @@ public class ReviewController {
 
         ReviewResponse reviewResponse = createReviewResponse(review);
 
-        //TODO: verify correct pathing
         return ResponseEntity.created(URI.create("/review/all/" + reviewResponse.getRestaurantId())).body(reviewResponse);
     }
 
@@ -132,8 +130,6 @@ public class ReviewController {
         return ResponseEntity.ok(reviewResponses);
     }
 
-
-    //TODO implement after MVP viable
     @PutMapping
     public ResponseEntity<ReviewResponse> updateReview(@RequestBody ReviewUpdateRequest reviewUpdateRequest) {
         Review review = new Review(reviewUpdateRequest.getRestaurantId(),
