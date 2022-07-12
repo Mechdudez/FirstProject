@@ -8,7 +8,7 @@ class RestaurantPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGetRandomRestaurant', 'onCreateRestaurant', 'renderRestaurant', 'clearResults', 'onManualClearResults', 'onGetReview', 'onCreateReview', 'onGetRandomRestaurantFiltered'], this);
+        this.bindClassMethods(['onGetRandomRestaurant', 'onCreateRestaurant', 'renderRestaurant', 'clearResults', 'onManualClearResults', 'onGetRandomRestaurantFiltered'], this);
         this.dataStore = new DataStore();
 
     }
@@ -19,7 +19,6 @@ class RestaurantPage extends BaseClass {
     mount() {
         document.getElementById('get-restaurant-form').addEventListener('click', this.onGetRandomRestaurant);
         document.getElementById('create-restaurant-form').addEventListener('submit', this.onCreateRestaurant);
-        document.getElementById('review-restaurant-form').addEventListener('submit', this.onCreateReview);
         document.getElementById('get-restaurant-filtered-form').addEventListener('submit', this.onGetRandomRestaurantFiltered);
 
         document.getElementById('clearResultsButton').addEventListener('click', this.onManualClearResults);
@@ -84,12 +83,6 @@ class RestaurantPage extends BaseClass {
         this.fetchReviews();
     }
 
-    async onGetReview(event) {
-        event.preventDefault();
-
-        let result = await this.client.getAllReviews(this.errorHandler);
-        this.dataStore.set("review", result);
-    }
 
     async onManualClearResults(event) {
         event.preventDefault();
@@ -104,51 +97,6 @@ class RestaurantPage extends BaseClass {
         await this.clearResults();
     }
 
-    async onCreateReview(event) {
-        // Prevent the page from refreshing on form submit
-        event.preventDefault();
-
-        // Set the loading flag for the submit/create button
-        let submitReviewButton = document.getElementById('submitReviewButton');
-        submitReviewButton.innerText = 'submitting...';
-        submitReviewButton.disabled = true;
-
-        // let restaurantId = document.getElementsByName("restaurantName").value ;
-        let title = document.getElementById("review-restaurant-title").value;
-        let rating = document.getElementById("review-restaurant-rating").value;
-        let price = document.getElementById("review-restaurant-price").value;
-        let description = document.getElementById("review-restaurant-description").value;
-
-        // restaurantId is pulled from dataStore
-        let restaurantId = this.dataStore.get("restaurantId");
-        let restaurantName = this.dataStore.get("restaurantName");
-        let userId = sessionStorage.getItem("userId");
-
-        let createdReview = await this.client.createReview(restaurantId, restaurantName, userId, title,
-            rating, price, description, this.errorHandler());
-        this.dataStore.set("review", createdReview);
-
-        if (createdReview) {
-            this.showMessage(`Submitted review for ${createdReview.restaurantName}!`)
-            let resultArea = document.getElementById("randomRestaurant");
-            resultArea.innerHTML = createdReview;
-        } else {
-            this.errorHandler("Error submitting!  Try again...");
-        }
-
-
-
-        // reset the form
-        document.getElementById("review-restaurant-form").reset();
-
-        // Re-enable the form
-        submitReviewButton.innerText = 'Submit Review';
-        submitReviewButton.disabled = false;
-        this.onRefresh();
-
-
-
-    }
 
     async onGetRandomRestaurant(event) {
         // Prevent the page from refreshing on form submit
@@ -289,6 +237,11 @@ class RestaurantPage extends BaseClass {
             await this.renderRestaurant(createdRestaurant);
         } else {
             this.errorHandler("Error creating!  Try again...");
+        }
+
+        if (document.getElementById('create-restaurant-review-now').value == "true"){
+            sessionStorage.setItem("restaurantId", createdRestaurant.restaurantId);
+            window.location.href = "review.html";
         }
 
         // reset the form

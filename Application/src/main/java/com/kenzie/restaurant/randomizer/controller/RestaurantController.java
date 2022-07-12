@@ -34,21 +34,6 @@ public class RestaurantController {
     }
 
 
-    //TODO implement later
-//    @PostMapping("/all")
-//    public  ResponseEntity<List<RestaurantResponse>> getReadData() throws IOException {
-//        List<Restaurant> restaurantList = sampleRestaurantGenerator.readData();
-//
-//        if (restaurantList == null) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        List<RestaurantResponse> response = new ArrayList<>();
-//        for (Restaurant restaurant : restaurantList) {
-//            response.add(this.createRestaurantResponse(restaurant));
-//        }
-//        return ResponseEntity.ok(response);
-//    }
-
     @GetMapping("/{restaurantId}")
     public ResponseEntity<RestaurantResponse> findByRestaurantId(@PathVariable("restaurantId") UUID restaurantId) {
         Restaurant restaurant = restaurantService.findByRestaurantId(restaurantId);

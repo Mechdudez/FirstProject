@@ -179,18 +179,6 @@
     </div>
 </header>
 <div class="card">
-    <h2>Review Restaurant</h2>
-    <form class="card-content" id="review-restaurant-form" accept-charset=utf-8>
-        <p class="form-field">
-            <input name="title" placeholder="Review Title/Header" required class="validated-field" id="review-restaurant-title">
-            <input name="rating" placeholder="Your Review Rating (0-5, 5 is best)" required class="validated-field" id="review-restaurant-rating">
-            <input name="price" placeholder="How much did you spend? Round up to whole number of dollars." required class="validated-field" id="review-restaurant-price">
-            <textarea name="description" placeholder="Enter description here..." form="review-restaurant-form" id="review-restaurant-description"></textarea>
-        </p>
-        <button type="submit" id="submitReviewButton">Submit Review</button>
-    </form>
-</div>
-<div class="card">
     <h2>Get Random Restaurant</h2>
     <form class="card-content" id="get-restaurant-form" accept-charset=utf-8>
         <button type="button" id="generateRandomRestaurant">Get a restaurant</button>
@@ -522,6 +510,13 @@
             </ul>
         </div>
         </p>
+        <div>
+            Would you like to submit a review right away?
+            <select name="review-now" id="create-restaurant-review-now">
+                <option value=true>Yes</option>
+                <option value=false>No</option>
+            </select>
+        </div>
 <!--        <button type="submit">Add</button>-->
         <button type="submit" id="createRestaurantButton">Create</button>
     </form>

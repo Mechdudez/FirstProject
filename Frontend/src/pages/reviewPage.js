@@ -4,7 +4,7 @@ import RestaurantClient from "../api/restaurantClient";
 /**
  * Logic needed for the view playlist page of the website.
  */
-class RestaurantPage extends BaseClass {
+class ReviewPage extends BaseClass {
 
     constructor() {
         super();
@@ -108,8 +108,6 @@ class RestaurantPage extends BaseClass {
         submitReviewButton.innerText = 'Submit Review';
         submitReviewButton.disabled = false;
         this.onRefresh();
-
-
     }
 }
 
@@ -118,12 +116,17 @@ class RestaurantPage extends BaseClass {
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-    const restaurantPage = new RestaurantPage();
+    const reviewPage = new ReviewPage();
 
     if (sessionStorage.getItem("userId") == null){
         window.location.href = "login.html";
     }
-    restaurantPage.mount();
+
+    if (sessionStorage.getItem("restaurantId") == null){
+        window.location.href = "restaurant.html";
+    }
+
+    reviewPage.mount();
 
 };
 

@@ -41,6 +41,10 @@ class LoginPage extends BaseClass {
 const main = async () => {
     const loginPage = new LoginPage();
 
+    if (sessionStorage.getItem("userId") != null){
+        window.location.href = "restaurant.html";
+    }
+
     loginPage.mount();
 
 };

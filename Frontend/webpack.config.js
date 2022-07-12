@@ -9,7 +9,7 @@ module.exports = {
     usedExports: true
   },
   entry: {
-    examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
+    reviewPage: path.resolve(__dirname, 'src', 'pages', 'reviewPage.js'),
     restaurantPage: path.resolve(__dirname, 'src', 'pages', 'restaurantPage.js'),
     loginPage: path.resolve(__dirname, 'src', 'pages', 'loginPage.js')
   },
@@ -24,7 +24,7 @@ module.exports = {
 
     open: true,
 
-    openPage: 'http://localhost:8080',
+    openPage: 'http://localhost:8080/restaurant.html',
 
     // disableHostChecks, otherwise we get an error about headers and the page won't render
 
@@ -55,8 +55,8 @@ module.exports = {
     ]},
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
-      filename: 'index.html',
+      template: './src/review.html',
+      filename: 'review.html',
       inject: false
     }),
     new HtmlWebpackPlugin({
