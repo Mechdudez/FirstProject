@@ -21,8 +21,8 @@ import static java.util.UUID.randomUUID;
 @RequestMapping("/review")
 public class ReviewController {
 
-    private ReviewService reviewService;
-    private RestaurantService restaurantService;
+    private final ReviewService reviewService;
+    private final RestaurantService restaurantService;
 
 
     ReviewController(ReviewService reviewService, RestaurantService restaurantService){
@@ -30,7 +30,6 @@ public class ReviewController {
         this.restaurantService = restaurantService;
     }
 
-    // (7/9 KK)
     @GetMapping("/all")
     public ResponseEntity<List<ReviewResponse>> getAllReviews() {
         List<Review> reviews = reviewService.getAllReviews();

@@ -18,7 +18,7 @@ import java.util.UUID;
 @Service
 public class ReviewService {
 
-    private ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
 
     @Autowired
     public ReviewService(ReviewRepository reviewRepository) {

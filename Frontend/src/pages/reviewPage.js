@@ -125,8 +125,7 @@ class ReviewPage extends BaseClass {
 
         if (createdReview) {
             this.showMessage(`Submitted review for ${createdReview.restaurantName}!`)
-            let resultArea = document.getElementById("randomRestaurant");
-            resultArea.innerHTML = createdReview;
+            await this.renderReview(createdReview);
         } else {
             this.errorHandler("Error submitting!  Try again...");
         }
