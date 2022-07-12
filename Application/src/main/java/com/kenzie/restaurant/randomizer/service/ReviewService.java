@@ -123,10 +123,10 @@ public class ReviewService {
 
         Double averagePrice = 0.0;
         Double averageRating = 0.0;
-         for(Review review : reviews){
-             averagePrice += review.getPrice();
-             averageRating += review.getRating();
-         }
+        for(Review review : reviews){
+            averagePrice += review.getPrice();
+            averageRating += review.getRating();
+        }
         averagePrice =  averagePrice / reviews.size();
         averageRating = averageRating / reviews.size();
 
