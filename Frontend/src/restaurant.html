@@ -201,6 +201,7 @@
     <form class="card-content" id="get-restaurant-filtered-form" accept-charset=utf-8>
         <p>Restaurant category</p>
         <select name="restaurant-category" id="get-restaurant-filtered-category">
+            <option value="none">-none-</option>
             <option value="burgers">Burgers</option>
             <option value="pizza">Pizza</option>
             <option value="chinese">Chinese</option>
@@ -212,12 +213,12 @@
         </select>
         <p class="form-field">
             <label>Max Price</label>
-            <input type="text" required class="validated-field" id="get-restaurant-filtered-price">
+            <input type="number" required class="validated-field" min="0" oninput="validity.valid||(value='');" id="get-restaurant-filtered-price">
         </p>
         <button type="submit" id="generate-random-filtered">Get a restaurant</button>
     </form>
 </div>
-<div class="card">
+<div class="card">"
     <h2>Add a Restaurant</h2>
     <form class="card-content" id="create-restaurant-form" accept-charset=utf-8>
         <p class="form-field">

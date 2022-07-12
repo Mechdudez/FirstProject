@@ -20,7 +20,7 @@ class LoginPage extends BaseClass {
 
     }
 
-    async login() {
+    async login(event) {
         event.preventDefault();
 
         let userId = document.getElementById("login-userId");
@@ -30,7 +30,7 @@ class LoginPage extends BaseClass {
             this.showMessage(`Welcome ${sessionStorage.getItem("userId")}!`)
             window.location.href = "restaurant.html";
         } else {
-            this.errorHandler("Error submitting!  Try again...");
+            this.errorHandler("Error logging in!  Try again...");
         }
     }
 

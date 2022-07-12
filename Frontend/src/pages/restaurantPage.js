@@ -189,6 +189,8 @@ class RestaurantPage extends BaseClass {
         generateRestaurantButton.innerText = 'generating...';
         generateRestaurantButton.disabled = true;
 
+        document.getElementById('get-restaurant-filtered-price').value = -1;
+
         let price = document.getElementById('get-restaurant-filtered-price').value;
         let category = document.getElementById('get-restaurant-filtered-category').value;
 

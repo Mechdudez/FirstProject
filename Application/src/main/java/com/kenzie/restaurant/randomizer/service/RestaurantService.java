@@ -166,7 +166,7 @@ public class RestaurantService {
         return sortedRestaurants;
     }
 
-    public Restaurant updateRestaurant(UUID restaurantId){
+    public Restaurant updateRestaurant(UUID restaurantId) {
 
         if (restaurantId == null){
             throw new IllegalArgumentException("No restaurant passed in");
