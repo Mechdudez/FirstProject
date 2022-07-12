@@ -64,7 +64,7 @@ public class ReviewController {
         return ResponseEntity.ok(reviewResponses);
     }
 
-    @GetMapping("/review/{restaurantId}/{userId}")
+    @GetMapping("/{restaurantId}/{userId}")
     public ResponseEntity<ReviewResponse> findReview(@PathVariable ("restaurantId") UUID restaurantId, @PathVariable("userId") String userId) {
         Review review = reviewService.findReview(restaurantId, userId);
 
@@ -149,9 +149,7 @@ public class ReviewController {
 
         return ResponseEntity.ok(reviewResponse);
     }
-
-//
-//    @DeleteMapping("/{restaurantId}")
+    //    @DeleteMapping("/{restaurantId}")
 //    public ResponseEntity deleteRestaurantById(@PathVariable("restaurantId") String restaurantId) {
 //        reviewService.deleteRestaurant(restaurantId);
 //        return ResponseEntity.noContent().build();

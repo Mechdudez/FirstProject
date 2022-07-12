@@ -11,7 +11,7 @@ export default class RestaurantClient extends BaseClass {
     constructor(props = {}){
         super();
         const methodsToBind = ['clientLoaded', 'findByRestaurantId', 'createRestaurant', 'getAllRestaurants', 'createReview',
-            'getAllReviews', 'getRandomRestaurant', 'getRandomRestaurantFiltered'];
+            'getAllReviews', 'getRandomRestaurant', 'getRandomRestaurantFiltered', 'findReview'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -74,6 +74,15 @@ export default class RestaurantClient extends BaseClass {
             this.handleError("createReview", error, errorCallback);
         }
 
+    }
+
+    async findReview(restaurantId, userId, errorCallback){
+        try {
+            const response = await this.client.get(`/review/${restaurantId}/${userId}`)
+            return response.data;
+        } catch (error) {
+            this.handleError("findReview", error, errorCallback);
+        }
     }
 
     async createRestaurant( name, category, storeHours, errorCallback) {

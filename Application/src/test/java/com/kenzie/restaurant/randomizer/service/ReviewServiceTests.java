@@ -2,12 +2,14 @@ package com.kenzie.restaurant.randomizer.service;
 
 import com.kenzie.restaurant.randomizer.repositories.ReviewRepository;
 import com.kenzie.restaurant.randomizer.repositories.model.ReviewRecord;
+import com.kenzie.restaurant.randomizer.service.model.Restaurant;
 import com.kenzie.restaurant.randomizer.service.model.Review;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.ArgumentCaptor;
 
+import static java.util.UUID.randomUUID;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -262,6 +264,7 @@ public class ReviewServiceTests {
         });
 
     }
+
     @Test
     void updateReview_reviewIsUpdated_returnsNewUpdatedReview() {
         // GIVEN
@@ -281,9 +284,6 @@ public class ReviewServiceTests {
         reviewRecord.setPrice(price);
         reviewRecord.setRating(rating);
         reviewRecord.setDescription(description);
-
-
-        // UUID restaurantId, String restaurantName, String userId, int rating, Double price, String title, String description
 
         Review review = new Review(
                 reviewRecord.getRestaurantId(),
@@ -311,6 +311,58 @@ public class ReviewServiceTests {
         Assertions.assertEquals(storedReview.getRating(), review.getRating(), "The ticketPurchased matches");
         Assertions.assertEquals(storedReview.getTitle(), review.getTitle(), "The reservation closed date matches");
         Assertions.assertEquals(storedReview.getDescription(), review.getDescription(), "The reservation closed date matches");
+    }
+
+    @Test
+    void getAverageRatingAndPriceForRestaurant_validRestaurant_ReturnRatingAndPrice() {
+        //GIVEN
+        UUID restaurantId = UUID.randomUUID();
+        String restaurantName = "Bobbies Bistro";
+        String userId = "Bob";
+        Double price = 20.0;
+        int rating = 3;
+        String title = "Absolutely Awful";
+        String description = "What a terrible place";
+
+        ReviewRecord reviewRecord = new ReviewRecord();
+        reviewRecord.setRestaurantName(restaurantName);
+        reviewRecord.setTitle(title);
+        reviewRecord.setRestaurantId(restaurantId);
+        reviewRecord.setUserId(userId);
+        reviewRecord.setPrice(price);
+        reviewRecord.setRating(rating);
+        reviewRecord.setDescription(description);
+
+        String restaurantName2 = "Bobbies Bistro";
+        String userId2 = "Bobby";
+        Double price2 = 20.0;
+        int rating2 = 3;
+        String title2 = "Absolutely Awful";
+        String description2 = "What a terrible place";
+
+        ReviewRecord reviewRecord2 = new ReviewRecord();
+        reviewRecord2.setRestaurantName(restaurantName2);
+        reviewRecord2.setTitle(title2);
+        reviewRecord2.setRestaurantId(restaurantId);
+        reviewRecord2.setUserId(userId2);
+        reviewRecord2.setPrice(price2);
+        reviewRecord2.setRating(rating2);
+        reviewRecord2.setDescription(description2);
+
+        List<ReviewRecord> records = new ArrayList<>();
+        records.add(reviewRecord);
+        records.add(reviewRecord2);
+
+        //WHEN
+        when(reviewRepository.findAll()).thenReturn(records);
+
+        //THEN
+        Restaurant restaurant = reviewService.getAverageRatingAndPriceForRestaurant(restaurantId);
+
+        Assertions.assertEquals(restaurant.getAverageRating(), (rating + rating2) / records.size());
+        Assertions.assertEquals(restaurant.getAveragePrice(), (price + price2) / records.size());
+
+
     }
 
 }

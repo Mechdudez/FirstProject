@@ -183,7 +183,6 @@ public class RestaurantServiceTests {
 
     @Test
     void canAddRestaurant_RestaurantIsNull_ThrowsException() {
-
         //GIVEN // WHEN // THEN
         Assertions.assertThrows(RestaurantNotFoundException.class, () -> restaurantService.addNewRestaurant(null));
 
@@ -207,49 +206,63 @@ public class RestaurantServiceTests {
         String hours = "6:30am";
         storeHours.add(hours);
 
+
         RestaurantRecord restaurantRecord = new RestaurantRecord();
         restaurantRecord.setRestaurantId(UUID.randomUUID());
         restaurantRecord.setStoreHours(storeHours);
         restaurantRecord.setName("bob");
         restaurantRecord.setCategory("burger");
+        restaurantRecord.setAveragePrice(5.0);
+        restaurantRecord.setAverageRating(5.0);
+
 
         Restaurant restaurant = new Restaurant(
                 restaurantRecord.getRestaurantId(),
                 restaurantRecord.getName(),
                 restaurantRecord.getCategory(),
-                restaurantRecord.getStoreHours());
+                restaurantRecord.getStoreHours(),
+                restaurantRecord.getAveragePrice(),
+                restaurantRecord.getAverageRating());
 
-
-
-       ArgumentCaptor<RestaurantRecord> restaurantRecordArgumentCaptor = ArgumentCaptor.forClass(RestaurantRecord.class);
         // WHEN
         when(reviewService.getAverageRatingAndPriceForRestaurant(restaurant.getRestaurantId())).thenReturn(restaurant);
         when(restaurantRepository.findById(restaurant.getRestaurantId())).thenReturn(Optional.of(restaurantRecord));
 
-        restaurantService.updateRestaurant(restaurant.getRestaurantId());
+        Restaurant storedRestaurant = restaurantService.updateRestaurant(restaurant.getRestaurantId());
 
         //THEN
-        verify(restaurantRepository).save(restaurantRecordArgumentCaptor.capture());
-        RestaurantRecord storedRestaurant = restaurantRecordArgumentCaptor.getValue();
-
         Assertions.assertNotNull(restaurant);
         Assertions.assertEquals(storedRestaurant.getRestaurantId(), restaurant.getRestaurantId(), "The restaurantId matches");
-        Assertions.assertEquals(storedRestaurant.getName(), restaurant.getRestaurantName(), "The restaurantName matches");
+        Assertions.assertEquals(storedRestaurant.getRestaurantName(), restaurant.getRestaurantName(), "The restaurantName matches");
         Assertions.assertEquals(storedRestaurant.getCategory(), restaurant.getCategory(), "The category matches");
         Assertions.assertEquals(storedRestaurant.getStoreHours(), restaurant.getStoreHours(), "The storeHours matches");
+        Assertions.assertEquals(storedRestaurant.getAveragePrice(), restaurant.getAveragePrice(), "The price matches");
+        Assertions.assertEquals(storedRestaurant.getAverageRating(), restaurant.getAverageRating(), "The rating matches");
     }
 
     @Test
     void updateRestaurant_restaurantIsnull_throwsException() {
         //GIVEN
-//        UUID restaurantId = null;
-//        String name = null;
-//        String category = "bad food";
-//        String[] storeHours = new String[]{"Monday - Friday: 9-5", "Weekend: 12-6"};
-
 
         // WHEN //THEN
         Assertions.assertThrows(IllegalArgumentException.class, () -> restaurantService.updateRestaurant(null));
+    }
+
+    @Test
+    void getSortedRestaurant_noMatchingRestaurants_throwsException() {
+        //GIVEN
+        RestaurantRecord record = new RestaurantRecord();
+        record.setRestaurantId(UUID.randomUUID());
+        RestaurantRecord record2 = new RestaurantRecord();
+        record2.setRestaurantId(UUID.randomUUID());
+
+        List<RestaurantRecord> recordList = new ArrayList<>();
+        recordList.add(record);
+        recordList.add(record2);
+
+        when(restaurantRepository.findAll()).thenReturn(recordList);
+        //WHEN //THEN
+        Assertions.assertThrows(RestaurantNotFoundException.class, () -> restaurantService.getSortedRestaurant(5.0, "bob"));
     }
 
 }

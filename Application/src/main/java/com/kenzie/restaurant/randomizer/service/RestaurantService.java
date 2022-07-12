@@ -131,7 +131,7 @@ public class RestaurantService {
         List<Restaurant> restaurantList = getAllRestaurants();
         List<Restaurant> sortedList = sortRestaurants(restaurantList, category, price);
         Random rand = new Random();
-        if (restaurantList.isEmpty()) {
+        if (sortedList.isEmpty()) {
             throw new RestaurantNotFoundException("No matching restaurant in database.");
         } else {
             return setReviews(sortedList.get(rand.nextInt(sortedList.size())));
@@ -143,25 +143,22 @@ public class RestaurantService {
 
         List<Restaurant> sortedRestaurants = new ArrayList<>();
         for(Restaurant restaurant : restaurantList) {
+            if (restaurant.getAveragePrice() != null) {
 
-            if (category == null || price == null) {
-                throw new IllegalArgumentException("Null values passed in");
-            }
-
-            if (category.equals("none") && !price.equals(-1.0)) {
-                if (restaurant.getAveragePrice().compareTo(price) >= 0) {
-                    sortedRestaurants.add(restaurant);
-                }
-            } else if (price.equals(-1.0) && !category.equals("none")) {
-                if (restaurant.getCategory().equals(category)) {
-                    sortedRestaurants.add(restaurant);
-                }
-            } else {
-                if (restaurant.getAveragePrice() != null && restaurant.getAveragePrice().compareTo(price) >= 0 && restaurant.getCategory().equals(category)) {
-                    sortedRestaurants.add(restaurant);
+                if (category.equals("none") && price != null) {
+                    if (restaurant.getAveragePrice().compareTo(price) >= 0) {
+                        sortedRestaurants.add(restaurant);
+                    }
+                } else if (price == null && !category.equals("none")) {
+                    if (restaurant.getCategory().equals(category)) {
+                        sortedRestaurants.add(restaurant);
+                    }
+                } else {
+                    if (restaurant.getAveragePrice() != null && restaurant.getAveragePrice().compareTo(price) >= 0 && restaurant.getCategory().equals(category)) {
+                        sortedRestaurants.add(restaurant);
+                    }
                 }
             }
-
         }
         return sortedRestaurants;
     }

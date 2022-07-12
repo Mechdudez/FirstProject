@@ -8,7 +8,7 @@ class RestaurantPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGetRandomRestaurant', 'onCreateRestaurant', 'renderRestaurant', 'clearResults', 'onManualClearResults', 'onGetRandomRestaurantFiltered'], this);
+        this.bindClassMethods(['createReview', 'onCreateRestaurant', 'renderRestaurant', 'clearResults', 'onManualClearResults', 'onGetRandomRestaurantFiltered'], this);
         this.dataStore = new DataStore();
 
     }
@@ -17,7 +17,6 @@ class RestaurantPage extends BaseClass {
      * Once the page has loaded, set up the event handlers and fetch the restaurant/review list.
      */
     mount() {
-        document.getElementById('get-restaurant-form').addEventListener('click', this.onGetRandomRestaurant);
         document.getElementById('create-restaurant-form').addEventListener('submit', this.onCreateRestaurant);
         document.getElementById('get-restaurant-filtered-form').addEventListener('submit', this.onGetRandomRestaurantFiltered);
 
@@ -77,56 +76,20 @@ class RestaurantPage extends BaseClass {
     }
 
     // Event Handlers --------------------------------------------------------------------------------------------------
-    // to refresh all dataStore lists (KK)
-    onRefresh() {
-        this.fetchRestaurants();
-        this.fetchReviews();
-    }
-
-
     async onManualClearResults(event) {
         event.preventDefault();
 
-        // let clearResultsButton = document.getElementById('clearResultsButton');
-//        let randomResultArea = document.getElementById("randomRestaurant");
-//        let resultArea = document.getElementById("result-info");
-//
-//
-//        randomResultArea.innerHTML = "";
-//        resultArea.innerHTML = "";
         await this.clearResults();
     }
 
-
-    async onGetRandomRestaurant(event) {
-        // Prevent the page from refreshing on form submit
-        event.preventDefault();
-
-        // Set the loading flag for the submit/create button
-        let generateRestaurantButton = document.getElementById('generateRandomRestaurant');
-        generateRestaurantButton.innerText = 'generating...';
-        generateRestaurantButton.disabled = true;
-
-        let randomRestaurant = await this.client.getRandomRestaurant(this.errorHandler);
-        this.dataStore.set("restaurantId", randomRestaurant.restaurantId);
-        this.dataStore.set("restaurantName", randomRestaurant.restaurantName);
-
-        // populates form field with random restaurant name
-        let resultArea = document.getElementById("randomRestaurant");
-
-        if (randomRestaurant) {
-            await this.renderRestaurant(randomRestaurant);
-        } else {
-            resultArea.innerHTML = "No restaurant available";
+    async createReview(){
+        if (this.dataStore.get("restaurantId") != null) {
+            sessionStorage.setItem("restaurantId", this.dataStore.get("restaurantId"));
+            sessionStorage.setItem("restaurantName", this.dataStore.get("restaurantName"));
         }
-
-
-
-        // Re-enable
-        generateRestaurantButton.innerText = 'Generate';
-        generateRestaurantButton.disabled = false;
-//        this.onRefresh();
     }
+
+
     async onGetRandomRestaurantFiltered(event) {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
@@ -137,7 +100,7 @@ class RestaurantPage extends BaseClass {
         generateRestaurantButton.innerText = 'generating...';
         generateRestaurantButton.disabled = true;
 
-        document.getElementById('get-restaurant-filtered-price').value = -1;
+
 
         let price = document.getElementById('get-restaurant-filtered-price').value;
         let category = document.getElementById('get-restaurant-filtered-category').value;
@@ -160,7 +123,6 @@ class RestaurantPage extends BaseClass {
         // Re-enable
         generateRestaurantButton.innerText = 'Generate';
         generateRestaurantButton.disabled = false;
-//        this.onRefresh();
     }
 
 
@@ -222,10 +184,6 @@ class RestaurantPage extends BaseClass {
 
         // list of strings variable
         let storeHours = [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday];
-
-
-        //temporary restaurantId variable, Math.Random() may not be unique
-        //TODO: find better method, possibly uuidv4()
 
         //input all arguments and call createRestaurant() from restaurantClient
         const createdRestaurant = await this.client.createRestaurant(name, category, storeHours, this.errorHandler);

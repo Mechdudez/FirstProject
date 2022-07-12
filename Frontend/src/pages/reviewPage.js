@@ -1,6 +1,7 @@
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import RestaurantClient from "../api/restaurantClient";
+
 /**
  * Logic needed for the view playlist page of the website.
  */
@@ -8,7 +9,7 @@ class ReviewPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['clearResults', 'onManualClearResults', 'onGetReview', 'onCreateReview'], this);
+        this.bindClassMethods(['clearResults', 'firstRender', 'clearSessionStorage', 'onManualClearResults', 'onGetReview', 'onCreateReview', 'renderReview'], this);
         this.dataStore = new DataStore();
 
     }
@@ -19,13 +20,17 @@ class ReviewPage extends BaseClass {
     mount() {
         document.getElementById('review-restaurant-form').addEventListener('submit', this.onCreateReview);
 
-        document.getElementById('clearResultsButton').addEventListener('click', this.onManualClearResults);
-        // document.getElementById('generateRandomRestaurant').addEventListener("click", this.onGetRandomRestaurant);
+        document.getElementById('clearReviewResultsButton').addEventListener('click', this.onManualClearResults);
+        document.getElementById('reviewPageButton').addEventListener('click', this.clearSessionStorage);
 
 
         this.client = new RestaurantClient();
 
-        this.dataStore.addChangeListener(this.renderRestaurant);
+
+        this.firstRender();
+
+
+        this.dataStore.addChangeListener(this.renderReview);
 
     }
 
@@ -48,6 +53,31 @@ class ReviewPage extends BaseClass {
         this.fetchReviews();
     }
 
+    async renderReview(review) {
+        let resultArea = document.getElementById("result-info");
+
+        let storeHtmlReview = "";
+
+        if (review) {
+            storeHtmlReview += `<ul>`;
+            storeHtmlReview += `<p><h3 class="listName" style="color:red;">Past Review for:</h3></p>`;
+            storeHtmlReview += `<p><h3 class="listName" style="color:red;">${sessionStorage.getItem("restaurantName")}</h3></p>`;
+            storeHtmlReview += `<p><b>Title: </b>${review.title}</p>`;
+            storeHtmlReview += `<p><b>Rating: </b>${review.rating}</p>`;
+            storeHtmlReview += `<p><b>Price: </b>$${review.price}</p>`;
+            storeHtmlReview += `<p><b>Description: </b>${review.description}</p>`;
+            storeHtmlReview += `<hr></hr>`;
+            storeHtmlReview += `<p></p>`;
+            storeHtmlReview += `</ul>`;
+            resultArea.innerHTML = storeHtmlReview;
+
+        } else {
+            resultArea.innerHTML = "No Review";
+        }
+
+
+    }
+
     async onGetReview(event) {
         event.preventDefault();
 
@@ -58,13 +88,6 @@ class ReviewPage extends BaseClass {
     async onManualClearResults(event) {
         event.preventDefault();
 
-        // let clearResultsButton = document.getElementById('clearResultsButton');
-//        let randomResultArea = document.getElementById("randomRestaurant");
-//        let resultArea = document.getElementById("result-info");
-//
-//
-//        randomResultArea.innerHTML = "";
-//        resultArea.innerHTML = "";
         await this.clearResults();
     }
 
@@ -77,20 +100,18 @@ class ReviewPage extends BaseClass {
         submitReviewButton.innerText = 'submitting...';
         submitReviewButton.disabled = true;
 
-        // let restaurantId = document.getElementsByName("restaurantName").value ;
         let title = document.getElementById("review-restaurant-title").value;
         let rating = document.getElementById("review-restaurant-rating").value;
         let price = document.getElementById("review-restaurant-price").value;
         let description = document.getElementById("review-restaurant-description").value;
 
         // restaurantId is pulled from dataStore
-        let restaurantId = this.dataStore.get("restaurantId");
-        let restaurantName = this.dataStore.get("restaurantName");
+        let restaurantId = sessionStorage.getItem("restaurantId");
+        let restaurantName = sessionStorage.getItem("restaurantName");
         let userId = sessionStorage.getItem("userId");
 
         let createdReview = await this.client.createReview(restaurantId, restaurantName, userId, title,
             rating, price, description, this.errorHandler());
-        this.dataStore.set("review", createdReview);
 
         if (createdReview) {
             this.showMessage(`Submitted review for ${createdReview.restaurantName}!`)
@@ -105,9 +126,13 @@ class ReviewPage extends BaseClass {
         document.getElementById("review-restaurant-form").reset();
 
         // Re-enable the form
-        submitReviewButton.innerText = 'Submit Review';
-        submitReviewButton.disabled = false;
-        this.onRefresh();
+        submitReviewButton.innerText = 'Review Submitted';
+
+    }
+
+    async clearSessionStorage() {
+        sessionStorage.removeItem("restaurantId");
+        sessionStorage.removeItem("restaurantName");
     }
 }
 
@@ -118,13 +143,14 @@ class ReviewPage extends BaseClass {
 const main = async () => {
     const reviewPage = new ReviewPage();
 
-    if (sessionStorage.getItem("userId") == null){
+    if (sessionStorage.getItem("userId") == null) {
         window.location.href = "login.html";
     }
 
-    if (sessionStorage.getItem("restaurantId") == null){
+    if (sessionStorage.getItem("restaurantId") == null) {
         window.location.href = "restaurant.html";
     }
+
 
     reviewPage.mount();
 
