@@ -43,12 +43,12 @@
 }
 
 #reviewPageButton {
+    background: #C50D0D;
     position:absolute;
     margin-top: -23px;
     margin-left: -13px;
-    background: #131921;
     /*border-radius: 3px;*/
-    border: 2px solid white;
+    border: 2px #D61616;
     /*text-decoration: none;*/
     color: white;
 
