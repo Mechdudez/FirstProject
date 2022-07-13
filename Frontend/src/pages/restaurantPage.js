@@ -39,18 +39,20 @@ class RestaurantPage extends BaseClass {
 
         let storeHtmlRestaurant = "";
 
-        storeHtmlRestaurant += `<ul>`;
-        storeHtmlRestaurant += `<p><h3 class="listName" style="color:red;">${restaurant.restaurantName}</h3></p>`;
-        storeHtmlRestaurant += `<p><b>Category: </b>${restaurant.category}</p>`;
-        if(restaurant.averageRating != null) {
-            storeHtmlRestaurant += `<p><b>Average Rating: </b>${restaurant.averageRating}</p>`;
-            storeHtmlRestaurant += `<p><b>Average Price: </b>${restaurant.averagePrice}</p>`;
+        if(restaurant != null) {
+            storeHtmlRestaurant += `<ul>`;
+            storeHtmlRestaurant += `<p><h3 class="listName" style="color:red;">${restaurant.restaurantName}</h3></p>`;
+            storeHtmlRestaurant += `<p><b>Category: </b>${restaurant.category}</p>`;
+            if (restaurant.averageRating != null) {
+                storeHtmlRestaurant += `<p><b>Average Rating: </b>${restaurant.averageRating}</p>`;
+                storeHtmlRestaurant += `<p><b>Average Price: </b>${restaurant.averagePrice}</p>`;
+            }
+            storeHtmlRestaurant += `<p><b>Store Hours: </b>${restaurant.storeHours}</p>`;
+            storeHtmlRestaurant += `<hr></hr>`;
+            storeHtmlRestaurant += `<p></p>`;
+            storeHtmlRestaurant += `</ul>`;
+            resultArea.innerHTML = storeHtmlRestaurant;
         }
-        storeHtmlRestaurant += `<p><b>Store Hours: </b>${restaurant.storeHours}</p>`;
-        storeHtmlRestaurant += `<hr></hr>`;
-        storeHtmlRestaurant += `<p></p>`;
-        storeHtmlRestaurant += `</ul>`;
-        resultArea.innerHTML = storeHtmlRestaurant;
     }
 
     async clearResults() {
@@ -101,9 +103,9 @@ class RestaurantPage extends BaseClass {
 
             //TODO: this may return true even if randomRestaurant is empty
             // fix button hang on first random generate with empty database
-            if (randomRestaurant) {
-                this.dataStore.set("restaurantId", randomRestaurant.restaurantId);
-                this.dataStore.set("restaurantName", randomRestaurant.restaurantName);
+            if (randomRestaurant != null) {
+                await this.dataStore.set("restaurantId", randomRestaurant.restaurantId);
+                await this.dataStore.set("restaurantName", randomRestaurant.restaurantName);
                 // populates form field with random restaurant name
                 await this.renderRestaurant(randomRestaurant);
             } else {
