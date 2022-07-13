@@ -163,12 +163,13 @@ public class RestaurantService {
         }
 
         Restaurant restaurant = reviewService.getAverageRatingAndPriceForRestaurant(restaurantId);
+        RestaurantRecord previousRestaurant = restaurantRepository.findById(restaurantId).get();
 
         RestaurantRecord restaurantRecord = new RestaurantRecord();
         restaurantRecord.setRestaurantId(restaurant.getRestaurantId());
         restaurantRecord.setName(restaurant.getRestaurantName());
-        restaurantRecord.setCategory(restaurantRepository.findById(restaurantId).get().getCategory());
-        restaurantRecord.setStoreHours(restaurant.getStoreHours());
+        restaurantRecord.setCategory(previousRestaurant.getCategory());
+        restaurantRecord.setStoreHours(previousRestaurant.getStoreHours());
         restaurantRecord.setAverageRating(restaurant.getAverageRating());
         restaurantRecord.setAveragePrice(restaurant.getAveragePrice());
 
