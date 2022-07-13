@@ -39,6 +39,7 @@ export default class RestaurantClient extends BaseClass {
     async getRandomRestaurant(errorCallback) {
         try {
             const response = await this.client.get(`/restaurants/random`);
+
             return response.data;
         } catch (error) {
             this.handleError("getRandomRestaurant", error, errorCallback)

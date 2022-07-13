@@ -97,7 +97,8 @@ class RestaurantPage extends BaseClass {
 
             this.dataStore.set("restaurantId", randomRestaurant.restaurantId);
 
-
+            //TODO: this may return true even if randomRestaurant is empty
+            // fix button hang on first random generate with empty database
             if (randomRestaurant) {
                 // populates form field with random restaurant name
                 await this.renderRestaurant(randomRestaurant);
