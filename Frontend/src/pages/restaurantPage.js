@@ -42,8 +42,10 @@ class RestaurantPage extends BaseClass {
         storeHtmlRestaurant += `<ul>`;
         storeHtmlRestaurant += `<p><h3 class="listName" style="color:red;">${restaurant.restaurantName}</h3></p>`;
         storeHtmlRestaurant += `<p><b>Category: </b>${restaurant.category}</p>`;
-        storeHtmlRestaurant += `<p><b>Average Rating: </b>${restaurant.averageRating}</p>`;
-        storeHtmlRestaurant += `<p><b>Average Price: </b>${restaurant.averagePrice}</p>`;
+        if(restaurant.averageRating != null) {
+            storeHtmlRestaurant += `<p><b>Average Rating: </b>${restaurant.averageRating}</p>`;
+            storeHtmlRestaurant += `<p><b>Average Price: </b>${restaurant.averagePrice}</p>`;
+        }
         storeHtmlRestaurant += `<p><b>Store Hours: </b>${restaurant.storeHours}</p>`;
         storeHtmlRestaurant += `<hr></hr>`;
         storeHtmlRestaurant += `<p></p>`;
@@ -95,25 +97,25 @@ class RestaurantPage extends BaseClass {
         if (price == "" && category == "none") {
             let randomRestaurant = await this.client.getRandomRestaurant(this.errorHandler);
 
-            this.dataStore.set("restaurantId", randomRestaurant.restaurantId);
+
 
             //TODO: this may return true even if randomRestaurant is empty
             // fix button hang on first random generate with empty database
             if (randomRestaurant) {
+                this.dataStore.set("restaurantId", randomRestaurant.restaurantId);
+                this.dataStore.set("restaurantName", randomRestaurant.restaurantName);
                 // populates form field with random restaurant name
                 await this.renderRestaurant(randomRestaurant);
-                sessionStorage.setItem("restaurantId", randomRestaurant.restaurantId);
-                sessionStorage.setItem("restaurantName", randomRestaurant.restaurantName);
             } else {
                 resultArea.innerHTML = "No restaurant available";
             }
         } else {
             let randomRestaurant = await this.client.getRandomRestaurantFiltered(price, category, this.errorHandler);
             if (randomRestaurant) {
+                this.dataStore.set("restaurantId", randomRestaurant.restaurantId);
+                this.dataStore.set("restaurantName", randomRestaurant.restaurantName);
                 // populates form field with random restaurant name
                 await this.renderRestaurant(randomRestaurant);
-                sessionStorage.setItem("restaurantId", randomRestaurant.restaurantId);
-                sessionStorage.setItem("restaurantName", randomRestaurant.restaurantName);
             } else {
                 resultArea.innerHTML = "No restaurant available";
             }
@@ -187,6 +189,8 @@ class RestaurantPage extends BaseClass {
         const createdRestaurant = await this.client.createRestaurant(name, category, storeHours, this.errorHandler);
 
         if (createdRestaurant) {
+            this.dataStore.set("restaurantId", createdRestaurant.restaurantId);
+            this.dataStore.set("restaurantName", createdRestaurant.restaurantName);
             await this.showMessage(`Created ${createdRestaurant.restaurantName}!`);
             await this.renderRestaurant(createdRestaurant);
         } else {

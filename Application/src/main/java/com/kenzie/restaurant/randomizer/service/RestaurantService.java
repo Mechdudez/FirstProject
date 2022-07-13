@@ -168,6 +168,7 @@ public class RestaurantService {
         restaurantRecord.setRestaurantId(restaurant.getRestaurantId());
         restaurantRecord.setName(restaurant.getRestaurantName());
         restaurantRecord.setCategory(restaurantRepository.findById(restaurantId).get().getCategory());
+        restaurantRecord.setStoreHours(restaurant.getStoreHours());
         restaurantRecord.setAverageRating(restaurant.getAverageRating());
         restaurantRecord.setAveragePrice(restaurant.getAveragePrice());
 
