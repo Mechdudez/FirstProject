@@ -11,6 +11,8 @@ import java.util.UUID;
 
 public class Review {
 
+    private UUID reviewId;
+
     private UUID restaurantId;
 
     private String restaurantName;
@@ -26,7 +28,8 @@ public class Review {
     private String description;
 
 
-    public Review(UUID restaurantId, String restaurantName, String userId, int rating, Double price, String title, String description) {
+    public Review(UUID reviewId, UUID restaurantId, String restaurantName, String userId, int rating, Double price, String title, String description) {
+        this.reviewId = reviewId;
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.userId = userId;
@@ -37,6 +40,14 @@ public class Review {
     }
 
     public Review(){}
+
+    public UUID getReviewId() {
+        return reviewId;
+    }
+
+    public void setReviewId(UUID reviewId) {
+        this.reviewId = reviewId;
+    }
 
     public UUID getRestaurantId() {
         return restaurantId;
@@ -99,11 +110,11 @@ public class Review {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Review review = (Review) o;
-        return Objects.equals(restaurantId, review.restaurantId) && Objects.equals(userId, review.userId);
+        return Objects.equals(reviewId, review.reviewId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(restaurantId, userId);
+        return Objects.hash(reviewId);
     }
 }

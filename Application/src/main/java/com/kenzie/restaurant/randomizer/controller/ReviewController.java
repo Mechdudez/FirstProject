@@ -86,6 +86,7 @@ public class ReviewController {
         }
 
         Review review = new Review(
+                UUID.randomUUID(),
                 reviewCreateRequest.getRestaurantId(),
                 reviewCreateRequest.getRestaurantName(),
                 reviewCreateRequest.getUserId(),

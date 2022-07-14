@@ -24,6 +24,15 @@ public class ReviewRecord {
     
     private String description;
 
+    @DynamoDBHashKey(attributeName = "reviewId")
+    public UUID getReviewId() {
+        return reviewId;
+    }
+
+    public void setReviewId(UUID reviewId) {
+        this.reviewId = reviewId;
+    }
+
     @DynamoDBAttribute(attributeName = "userId")
     public String getUserId() {
         return userId;
@@ -93,11 +102,11 @@ public class ReviewRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ReviewRecord that = (ReviewRecord) o;
-        return Objects.equals(userId, that.userId) && Objects.equals(title, that.title);
+        return Objects.equals(reviewId, that.reviewId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, title);
+        return Objects.hash(reviewId);
     }
 }
