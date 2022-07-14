@@ -7,6 +7,9 @@ import java.util.UUID;
 
 public class ReviewUpdateRequest {
 
+    @JsonProperty("reviewId")
+    private UUID reviewId;
+
     @NotEmpty
     @JsonProperty("restaurantId")
     private UUID restaurantId;
@@ -29,6 +32,14 @@ public class ReviewUpdateRequest {
 
     @JsonProperty("price")
     private Double price;
+
+    public UUID getReviewId() {
+        return reviewId;
+    }
+
+    public void setReviewId(UUID restaurantId) {
+        this.reviewId = reviewId;
+    }
 
     public UUID getRestaurantId() {
         return restaurantId;

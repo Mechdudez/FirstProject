@@ -131,7 +131,7 @@ public class ReviewController {
 
     @PutMapping
     public ResponseEntity<ReviewResponse> updateReview(@RequestBody ReviewUpdateRequest reviewUpdateRequest) {
-        Review review = new Review(reviewUpdateRequest.getRestaurantId(),
+        Review review = new Review(reviewUpdateRequest.getReviewId(), reviewUpdateRequest.getRestaurantId(),
                 reviewUpdateRequest.getRestaurantName(),
                 reviewUpdateRequest.getUserId(),
                 reviewUpdateRequest.getRating(),

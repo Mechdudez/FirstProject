@@ -38,7 +38,7 @@ public class ReviewServiceTests {
         int rating = 3;
         String title = "Absolutely Awful";
         String description = "What a terrible place";
-        Review review = new Review(restaurantId, restaurantName, userId, rating, price, title, description);
+        Review review = new Review(UUID.randomUUID(), restaurantId, restaurantName, userId, rating, price, title, description);
         ArgumentCaptor<ReviewRecord> reviewRecordArgumentCaptor = ArgumentCaptor.forClass(ReviewRecord.class);
 
         when(reviewRepository.save(any(ReviewRecord.class))).then(i -> i.getArgumentAt(0, ReviewRecord.class));
@@ -78,7 +78,7 @@ public class ReviewServiceTests {
         String title = "Absolutely Awful";
         String description = "What a terrible place";
 
-        Review review = new Review(restaurantId, restaurantName, userId, rating, price, title, description);
+        Review review = new Review(UUID.randomUUID(), restaurantId, restaurantName, userId, rating, price, title, description);
 
         String userId2 = "Bob2";
         Double price2 = 20.0;
@@ -86,7 +86,7 @@ public class ReviewServiceTests {
         String title2 = "Cant get worse";
         String description2 = "What a terrible place";
 
-        Review review2 = new Review(restaurantId, restaurantName, userId2, rating2, price2, title2, description2);
+        Review review2 = new Review(UUID.randomUUID(), restaurantId, restaurantName, userId2, rating2, price2, title2, description2);
 
         String userId3 = "Bob3";
         Double price3 = 20.0;
@@ -94,7 +94,7 @@ public class ReviewServiceTests {
         String title3 = "Somehow got worse";
         String description3 = "What a terrible place";
 
-        Review review3 = new Review(restaurantId, restaurantName, userId3, rating3, price3, title3, description3);
+        Review review3 = new Review(UUID.randomUUID(), restaurantId, restaurantName, userId3, rating3, price3, title3, description3);
 
         ReviewRecord reviewRecord = new ReviewRecord();
         reviewRecord.setRestaurantId(review.getRestaurantId());
@@ -144,7 +144,7 @@ public class ReviewServiceTests {
         String title = "Absolutely Awful";
         String description = "What a terrible place";
 
-        Review review = new Review(restaurantId, restaurantName, userId, rating, price, title, description);
+        Review review = new Review(UUID.randomUUID(), restaurantId, restaurantName, userId, rating, price, title, description);
 
         ReviewRecord reviewRecord = new ReviewRecord();
         reviewRecord.setRestaurantId(review.getRestaurantId());
@@ -178,7 +178,7 @@ public class ReviewServiceTests {
         String title = "Absolutely Awful";
         String description = "What a terrible place";
 
-        Review review = new Review(restaurantId, restaurantName, userId, rating, price, title, description);
+        Review review = new Review(UUID.randomUUID(), restaurantId, restaurantName, userId, rating, price, title, description);
 
         UUID restaurantId2 = UUID.randomUUID();
         String restaurantName2 = "Bobbies Bistro";
@@ -188,7 +188,7 @@ public class ReviewServiceTests {
         String title2 = "Absolutely amazing";
         String description2 = "What a terrible place";
 
-        Review review2 = new Review(restaurantId2, restaurantName2, userId2, rating2, price2, title2, description2);
+        Review review2 = new Review(UUID.randomUUID(), restaurantId2, restaurantName2, userId2, rating2, price2, title2, description2);
 
         UUID restaurantId3 = UUID.randomUUID();
         String restaurantName3 = "Bobbies Bistro";
@@ -198,7 +198,7 @@ public class ReviewServiceTests {
         String title3 = "Absolutely Awful";
         String description3 = "What a terrible place";
 
-        Review review3 = new Review(restaurantId3, restaurantName3, userId3, rating3, price3, title3, description3);
+        Review review3 = new Review(UUID.randomUUID(), restaurantId3, restaurantName3, userId3, rating3, price3, title3, description3);
 
         ReviewRecord reviewRecord = new ReviewRecord();
         reviewRecord.setRestaurantId(review.getRestaurantId());
@@ -285,7 +285,7 @@ public class ReviewServiceTests {
         reviewRecord.setRating(rating);
         reviewRecord.setDescription(description);
 
-        Review review = new Review(
+        Review review = new Review(UUID.randomUUID(),
                 reviewRecord.getRestaurantId(),
                 reviewRecord.getRestaurantName(),
                 reviewRecord.getUserId(),

@@ -1,18 +1,19 @@
 package com.kenzie.restaurant.randomizer.repositories.model;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 import java.util.Objects;
 import java.util.UUID;
 
 @DynamoDBTable(tableName = "reviews")
 public class ReviewRecord {
+
+    private UUID reviewId;
+
     private UUID restaurantId;
 
     private String restaurantName;
-    
+
     private String userId;
 
     private String title;
@@ -23,8 +24,7 @@ public class ReviewRecord {
     
     private String description;
 
-
-    @DynamoDBHashKey(attributeName = "userId")
+    @DynamoDBAttribute(attributeName = "userId")
     public String getUserId() {
         return userId;
     }

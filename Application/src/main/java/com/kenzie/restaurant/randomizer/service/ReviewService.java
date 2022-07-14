@@ -68,6 +68,7 @@ public class ReviewService {
 
 
         ReviewRecord reviewRecord = new ReviewRecord();
+        reviewRecord.setReviewId(review.getReviewId());
         reviewRecord.setRestaurantId(review.getRestaurantId());
         reviewRecord.setRestaurantName(review.getRestaurantName());
         reviewRecord.setUserId(review.getUserId());
@@ -106,7 +107,7 @@ public class ReviewService {
         List<Review> reviews = new ArrayList<>();
         reviewRepository
                 .findAll()
-                .forEach(review -> reviews.add((new Review(review.getRestaurantId(), review.getRestaurantName(), review.getUserId(), review.getRating(), review.getPrice(), review.getTitle(), review.getDescription()))));
+                .forEach(review -> reviews.add((new Review(review.getReviewId(), review.getRestaurantId(), review.getRestaurantName(), review.getUserId(), review.getRating(), review.getPrice(), review.getTitle(), review.getDescription()))));
         return reviews;
     }
 

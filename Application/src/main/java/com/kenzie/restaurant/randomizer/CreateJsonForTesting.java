@@ -25,7 +25,7 @@ public class CreateJsonForTesting {
 
         System.out.println(gson.toJson(request));
 
-        // Json example to create a restaurant
+//         Json example to create a restaurant
 //         {
 //            "name":"HardlyFood",
 //            "category":"good food",
