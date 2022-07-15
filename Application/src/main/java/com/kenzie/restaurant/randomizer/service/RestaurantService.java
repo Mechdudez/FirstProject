@@ -147,7 +147,7 @@ public class RestaurantService {
                         sortedRestaurants.add(restaurant);
                     }
                 } else {
-                    if (restaurant.getAveragePrice() != null && restaurant.getAveragePrice().compareTo(price) >= 0 && restaurant.getCategory().equals(category)) {
+                    if (restaurant.getAveragePrice() != null && restaurant.getAveragePrice().compareTo(price) <= 0 && restaurant.getCategory().equals(category)) {
                         sortedRestaurants.add(restaurant);
                     }
                 }
